@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { logout } from "@/actions";
-import { useEffect } from "react";
 
 const buttonStyle =
   "w-24 h-12 border-2 rounded-lg font-bold text-center text-gray-800 border-gray-400 hover:bg-gray-500 hover:border-gray-500 hover:text-gray-100 transition duration-100 hover:duration-500 ease-in-out ";
@@ -40,11 +39,10 @@ export function UserButton() {
   );
 }
 
-export function ShipButton({ id, children }: any) {
+export function ShipButton({ imoNumber, children }: any) {
   const router = useRouter();
-
   function handleClick() {
-    router.push(`/status/${id}`);
+    router.push(`/status/${imoNumber}`);
   }
   return (
     <button style={{ cursor: "pointer" }} onClick={handleClick}>
@@ -61,4 +59,10 @@ export function LogOut() {
   );
 }
 
-
+export function AddShipButton() {
+  return (
+    <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+      <Link href="/forms/ship">Add Ship</Link>
+    </button>
+  );
+}

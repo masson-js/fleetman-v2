@@ -1,3 +1,3 @@
-export default function pageID() {
-  return <div>page</div>;
+export default function ShipEnhanced () {
+  return <div>enhanced </div>;
 }

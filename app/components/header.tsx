@@ -6,9 +6,9 @@ export default async function Header() {
 
   return (
     <header className="flex bg-gray-200 h-16 justify-end items-center">
-      <nav className="flex mx-8 gap-4">
-        {session.userId && <p>Welcome back</p>}
-        <span>{session.username}</span>
+      <nav className="flex mx-8 gap-2 items-center">
+        {session.userId && <p className="font-semibold">Hi,</p>}
+        <span className="font-semibold flex mr-6">{session.username}</span>
         {!session.username && <LoginButton />}
         {!session.username && <RegistrationButton />}
         {session.userId && <LogOut />}

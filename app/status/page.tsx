@@ -1,5 +1,5 @@
 import { getAllUserShips, getSession } from "@/actions";
-import { ShipButton } from "../components/buttons";
+import { AddShipButton, ShipButton } from "../components/buttons";
 import Header from "../components/header";
 import SideNavigation from "../components/sidenavigation";
 import {
@@ -7,7 +7,6 @@ import {
   getInspectionIcon,
   getStatusColorClass,
 } from "../helpers";
-
 
 export default async function Status() {
   const session = await getSession();
@@ -52,40 +51,40 @@ export default async function Status() {
                   key={ship.id}
                 >
                   <td className="px-4 py-2">
-                    <ShipButton id={ship.id}>{ship.name}</ShipButton>
+                    <ShipButton imoNumber={ship.imoNumber}>{ship.name}</ShipButton>
                   </td>
                   <td className="px-4 py-2">
-                    <ShipButton id={ship.id}>{ship.type}</ShipButton>
+                    <ShipButton imoNumber={ship.imoNumber}>{ship.type}</ShipButton>
                   </td>
                   <td className="px-4 py-2">
-                    <ShipButton id={ship.id}>{ship.imoNumber}</ShipButton>
+                    <ShipButton imoNumber={ship.imoNumber}>{ship.imoNumber}</ShipButton>
                   </td>
                   <td className="px-4 py-2">
-                    <ShipButton id={ship.id}>{ship.deadweight}</ShipButton>
+                    <ShipButton imoNumber={ship.imoNumber}>{ship.deadweight}</ShipButton>
                   </td>
                   <td className="px-4 py-2">
-                    <ShipButton id={ship.id}>{ship.yearBuilt}</ShipButton>
+                    <ShipButton imoNumber={ship.imoNumber}>{ship.yearBuilt}</ShipButton>
                   </td>
                   <td
                     className={`px-6 py-2 ${getStatusColorClass(
                       ship.currentStatus
                     )}`}
                   >
-                    <ShipButton id={ship.id}>{ship.currentStatus}</ShipButton>
+                    <ShipButton imoNumber={ship.imoNumber}>{ship.currentStatus}</ShipButton>
                   </td>
                   <td className="px-4 py-2">
-                    <ShipButton id={ship.id}>{ship.portOfRegistry}</ShipButton>
+                    <ShipButton imoNumber={ship.imoNumber}>{ship.portOfRegistry}</ShipButton>
                   </td>
                   <td className="px-4 py-2">
-                    <ShipButton id={ship.id}>{ship.ecoStandard}</ShipButton>
+                    <ShipButton imoNumber={ship.imoNumber}>{ship.ecoStandard}</ShipButton>
                   </td>
                   <td className="px-4 py-2">
-                    <ShipButton id={ship.id}>
+                    <ShipButton imoNumber={ship.imoNumber}>
                       {durationCalc(ship.routes)}
                     </ShipButton>
                   </td>
                   <td className="px-4 py-2">
-                    <ShipButton id={ship.id}>
+                    <ShipButton imoNumber={ship.imoNumber}>
                       <img
                         src={getInspectionIcon(ship.inspections)}
                         alt="Inspection Status"
@@ -97,6 +96,9 @@ export default async function Status() {
               ))}
             </tbody>
           </table>
+          <div className="flex m-6 border-t border-black pt-6 justify-center items-center">
+            <AddShipButton />
+          </div>
         </section>
       </div>
     </div>

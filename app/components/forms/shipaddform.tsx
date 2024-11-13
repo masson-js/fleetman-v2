@@ -1,13 +1,18 @@
 "use client";
-import { createShip, getSession } from "@/actions";
+import { createShip } from "@/actions";
 import { useActionState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ShipAddForm({ userName }: any) {
   const [state, formAction] = useActionState<any, FormData>(
     createShip,
     undefined
   );
+  const router = useRouter();
 
+  function navHandler() {
+    router.push("/status");
+  }
   return (
     <div className="flex flex-col relative  w-full h-screen items-center mt-6 bg-gray-100 text-gray-800">
       <div className="flex flex-row m-4 gap-2">
@@ -111,6 +116,7 @@ export default function ShipAddForm({ userName }: any) {
           <option value="fix">Fix</option>
         </select>
         <button
+          onClick={() => navHandler()}
           type="submit"
           className="w-full bg-gray-400 text-white py-2 rounded-md hover:bg-black transition duration-150"
         >

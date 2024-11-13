@@ -18,18 +18,7 @@ export default function SideNavigation() {
             Status
           </Link>
         </li>
-        <li className={buttonStyle}>
-          <Link href="/fleetmap" className="flex flex-row">
-            <Image
-              src="/map.png"
-              alt="Map Icon"
-              className="w-6 h-6 mr-2"
-              width={24}
-              height={24}
-            />
-            Fleet on Map
-          </Link>
-        </li>
+      
         <li className={buttonStyle}>
           <Link
             href="/inspections"
@@ -85,6 +74,18 @@ export default function SideNavigation() {
               height={24}
             />
             Crews
+          </Link>
+        </li>
+        <li className={buttonStyle}>
+          <Link href="/fleetmap" className="flex flex-row">
+            <Image
+              src="/map.png"
+              alt="Map Icon"
+              className="w-6 h-6 mr-2"
+              width={24}
+              height={24}
+            />
+            Fleet on Map
           </Link>
         </li>
       </ul>
