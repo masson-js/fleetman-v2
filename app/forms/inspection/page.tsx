@@ -1,19 +1,20 @@
-import { getSession } from "@/actions";
-import ShipAddForm from "../../components/forms/shipaddform";
+import { getAllUserShips } from "@/actions";
+import InspectionAddForm from "@/app/components/forms/inspectionadd";
+
 import Header from "@/app/components/header";
 import SideNavigation from "@/app/components/sidenavigation";
 
 export default async function ShipDataCreating() {
-  const session = await getSession();
-  const userName = session.username;
+  const shipsData = await getAllUserShips();
+  const shipsNames = shipsData.map((ship) => ship.name);
 
   return (
     <div className="flex flex-col w-full h-auto">
       <Header />
       <div className="flex w-full m-6">
         <SideNavigation />
-        <div className="flex ml-10 h-auto justify-center">
-          <ShipAddForm />
+        <div className="flex flex-col ml-10 h-auto justify-center">
+          <InspectionAddForm shipsNames={shipsNames} />
         </div>
       </div>
     </div>

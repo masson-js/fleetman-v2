@@ -1,5 +1,14 @@
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "company" TEXT;
+-- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "userId" TEXT,
+    "email" TEXT,
+    "name" TEXT,
+    "password" TEXT NOT NULL,
+    "company" TEXT,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Ship" (
@@ -8,8 +17,11 @@ CREATE TABLE "Ship" (
     "type" TEXT NOT NULL,
     "flag" TEXT NOT NULL,
     "imoNumber" TEXT NOT NULL,
+    "mmsi" TEXT NOT NULL,
+    "callsign" TEXT NOT NULL,
     "deadweight" INTEGER NOT NULL,
     "length" DOUBLE PRECISION NOT NULL,
+    "beam" DOUBLE PRECISION NOT NULL,
     "width" DOUBLE PRECISION NOT NULL,
     "yearBuilt" INTEGER NOT NULL,
     "currentStatus" TEXT NOT NULL,
@@ -25,6 +37,7 @@ CREATE TABLE "ShipFuel" (
     "id" SERIAL NOT NULL,
     "shipId" INTEGER NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
+    "refuelDate" TIMESTAMP(3),
     "fuelType" TEXT NOT NULL,
     "amount" DOUBLE PRECISION NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
@@ -39,7 +52,8 @@ CREATE TABLE "ShipRoute" (
     "shipId" INTEGER NOT NULL,
     "start" TEXT NOT NULL,
     "destination" TEXT NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "date" TIMESTAMP(3) NOT NULL,
+    "arrivalDate" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "ShipRoute_pkey" PRIMARY KEY ("id")
 );
@@ -52,6 +66,14 @@ CREATE TABLE "Certification" (
     "issuedDate" TIMESTAMP(3) NOT NULL,
     "expiryDate" TIMESTAMP(3) NOT NULL,
     "issuingAuthority" TEXT NOT NULL,
+    "standard" TEXT NOT NULL,
+    "complianceLevel" TEXT NOT NULL,
+    "verificationDate" TIMESTAMP(3) NOT NULL,
+    "certificateNumber" TEXT NOT NULL,
+    "inspectionRequirements" TEXT,
+    "nextInspectionDate" TIMESTAMP(3),
+    "inspectorName" TEXT,
+    "certificationCompany" TEXT,
     "remarks" TEXT,
 
     CONSTRAINT "Certification_pkey" PRIMARY KEY ("id")
@@ -68,6 +90,12 @@ CREATE TABLE "Inspection" (
     "recommendations" TEXT,
     "nextInspectionDate" TIMESTAMP(3),
     "inspectionReport" TEXT,
+    "complianceStandards" TEXT NOT NULL,
+    "deficienciesFound" TEXT,
+    "correctiveActions" TEXT,
+    "verificationStatus" TEXT NOT NULL,
+    "duration" INTEGER,
+    "isEUCompliance" BOOLEAN NOT NULL,
 
     CONSTRAINT "Inspection_pkey" PRIMARY KEY ("id")
 );
@@ -80,10 +108,15 @@ CREATE TABLE "Fixture" (
     "startDate" TIMESTAMP(3) NOT NULL,
     "endDate" TIMESTAMP(3) NOT NULL,
     "totalCost" DOUBLE PRECISION NOT NULL,
+    "currency" TEXT,
     "paymentTerms" TEXT NOT NULL,
     "cargoDescription" TEXT,
     "deliveryLocation" TEXT,
     "fixtureType" TEXT NOT NULL,
+    "brokerName" TEXT,
+    "status" TEXT NOT NULL,
+    "cancellationTerms" TEXT,
+    "isCompleted" BOOLEAN NOT NULL DEFAULT false,
     "notes" TEXT,
 
     CONSTRAINT "Fixture_pkey" PRIMARY KEY ("id")
@@ -97,7 +130,15 @@ CREATE TABLE "Logbook" (
     "location" TEXT NOT NULL,
     "operationType" TEXT NOT NULL,
     "eventDescription" TEXT NOT NULL,
+    "weatherConditions" TEXT,
+    "seaConditions" TEXT,
+    "speed" DOUBLE PRECISION,
+    "engineStatus" TEXT,
+    "fuelConsumption" DOUBLE PRECISION,
+    "crewCount" INTEGER,
+    "inspectionCheck" BOOLEAN NOT NULL DEFAULT false,
     "responsible" TEXT NOT NULL,
+    "notes" TEXT,
 
     CONSTRAINT "Logbook_pkey" PRIMARY KEY ("id")
 );
@@ -108,13 +149,32 @@ CREATE TABLE "Crew" (
     "shipId" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
     "role" TEXT NOT NULL,
+    "rank" TEXT,
     "joinDate" TIMESTAMP(3) NOT NULL,
+    "contractEndDate" TIMESTAMP(3),
+    "status" TEXT NOT NULL,
+    "qualifications" TEXT,
+    "certifications" TEXT,
+    "leaveDate" TIMESTAMP(3),
+    "nationality" TEXT,
 
     CONSTRAINT "Crew_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_userId_key" ON "User"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Ship_imoNumber_key" ON "Ship"("imoNumber");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Ship_mmsi_key" ON "Ship"("mmsi");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Ship_callsign_key" ON "Ship"("callsign");
 
 -- AddForeignKey
 ALTER TABLE "Ship" ADD CONSTRAINT "Ship_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

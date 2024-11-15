@@ -16,6 +16,7 @@ export default async function HomeNavigation() {
         {!session.userId && <LoginButton />}
         {!session.isLoggedIn && <RegistrationButton />}
         {!session.isLoggedIn && <TryDemoButton />}
+        {session.isLoggedIn && <LogOut/>}
       </div>
       <div className="flex flex-col mt-2 w-96">
         <Link href="/status">

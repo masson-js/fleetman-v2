@@ -126,8 +126,11 @@ export const createShip = async (
   let shipType = formData.get("type") as string;
   let shipFlag = formData.get("flag") as string;
   let shipIMO = formData.get("imoNumber") as string;
+  let shipMMSI = formData.get("mmsi") as string; // Новое поле
+  let shipCallsign = formData.get("callsign") as string; // Новое поле
   let shipdeadWeight = parseInt(formData.get("deadweight") as string, 10);
   let shipLength = parseFloat(formData.get("length") as string);
+  let shipBeam = parseFloat(formData.get("beam") as string); // Новое поле
   let shipWidth = parseFloat(formData.get("width") as string);
   let shipYearBuild = parseInt(formData.get("yearBuilt") as string, 10);
   let shipCurrentStatus = formData.get("currentStatus") as string;
@@ -148,8 +151,11 @@ export const createShip = async (
         type: shipType,
         flag: shipFlag,
         imoNumber: shipIMO,
+        mmsi: shipMMSI, // Новое поле
+        callsign: shipCallsign, // Новое поле
         deadweight: shipdeadWeight,
         length: shipLength,
+        beam: shipBeam, // Новое поле
         width: shipWidth,
         yearBuilt: shipYearBuild,
         currentStatus: shipCurrentStatus,
@@ -192,8 +198,6 @@ export const getAllUserShips = async () => {
 
     const allShips = user.ships;
 
-    console.log("all ships:", allShips);
-
     return allShips;
   } catch (error) {
     console.error("Error getting ships:", error);
@@ -201,4 +205,67 @@ export const getAllUserShips = async () => {
   } finally {
     await prisma.$disconnect();
   }
+};
+
+//ADD INSPECTION
+
+export const createInspection = async (
+  prevState: { error: undefined | string },
+  formData: FormData
+) => {
+  const session = await getSession();
+  const prisma = new PrismaClient();
+
+  const userSesId = session.userId;
+
+  let shipName = formData.get("shipname") as string;
+  let shipType = formData.get("type") as string;
+  let shipFlag = formData.get("flag") as string;
+  let shipIMO = formData.get("imoNumber") as string;
+  let shipMMSI = formData.get("mmsi") as string; // Новое поле
+  let shipCallsign = formData.get("callsign") as string; // Новое поле
+  let shipdeadWeight = parseInt(formData.get("deadweight") as string, 10);
+  let shipLength = parseFloat(formData.get("length") as string);
+  let shipBeam = parseFloat(formData.get("beam") as string); // Новое поле
+  let shipWidth = parseFloat(formData.get("width") as string);
+  let shipYearBuild = parseInt(formData.get("yearBuilt") as string, 10);
+  let shipCurrentStatus = formData.get("currentStatus") as string;
+  let shipPortRegistry = formData.get("portOfRegistry") as string;
+  let shipEco = formData.get("ecoStandard") as string;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const newShip = await prisma.ship.create({
+      data: {
+        name: shipName,
+        type: shipType,
+        flag: shipFlag,
+        imoNumber: shipIMO,
+        mmsi: shipMMSI, // Новое поле
+        callsign: shipCallsign, // Новое поле
+        deadweight: shipdeadWeight,
+        length: shipLength,
+        beam: shipBeam, // Новое поле
+        width: shipWidth,
+        yearBuilt: shipYearBuild,
+        currentStatus: shipCurrentStatus,
+        portOfRegistry: shipPortRegistry,
+        ecoStandard: shipEco,
+        userId: user.id,
+      },
+    });
+
+    return { success: true, newShip };
+  } catch (error) {
+    console.error("Error creating ship:", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+  redirect("/status");
 };

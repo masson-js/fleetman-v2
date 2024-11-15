@@ -66,3 +66,11 @@ export function AddShipButton() {
     </button>
   );
 }
+
+export function AddInspection() {
+  return (
+    <button className="bg-gray-500 hover:bg-gray-700 h-12 w-auto text-white font-bold py-2 px-4 rounded">
+      <Link href="/forms/inspection">Add Inspection to ship</Link>
+    </button>
+  );
+}

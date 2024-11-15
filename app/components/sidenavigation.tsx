@@ -85,7 +85,7 @@ export default function SideNavigation() {
               width={24}
               height={24}
             />
-            Fleet on Map
+            <p>Fleet on map</p>
           </Link>
         </li>
       </ul>

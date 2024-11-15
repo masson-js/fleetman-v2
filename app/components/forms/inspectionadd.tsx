@@ -5,15 +5,22 @@ import { useRouter } from "next/navigation";
 
 
 
-export default function ShipAddForm() {
+
+
+interface ShipsGetProps {
+  shipsNames: string[];
+}
+
+export default function InspectionAddForm({ shipsNames }: ShipsGetProps) {
   const [state, formAction] = useActionState<any, FormData>(
     createShip,
     undefined
   );
+  console.log(shipsNames)
   const router = useRouter();
 
   function navHandler() {
-    router.push("/status");
+    router.push("/inspections");
   }
   return (
     <form
@@ -124,7 +131,7 @@ export default function ShipAddForm() {
           placeholder="port of registry"
           className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
-         <input
+        <input
           type="number"
           name="yearBuilt"
           required
@@ -155,10 +162,6 @@ export default function ShipAddForm() {
         </select>
       </div>
 
-      
-       
-      
-
       <button
         onClick={() => navHandler()}
         type="submit"
@@ -170,3 +173,18 @@ export default function ShipAddForm() {
     </form>
   );
 }
+
+
+// inspectionDate     DateTime  // Дата проверки
+//   inspectorName      String    // Имя проверяющего
+//   inspectionType     String    // Тип проверки (напр., регулярная, внеплановая)
+//   results            String    // Результаты проверки
+//   recommendations    String?   // Рекомендации после проверки
+//   nextInspectionDate DateTime? // Дата следующей проверки (если применимо)
+//   inspectionReport   String?   // Ссылка на отчет о проверке (например, PDF-файл или URL)  
+//   complianceStandards  String    // Стандарты, по которым проводилась проверка (MARPOL, SOLAS, ISO и т.д.)
+//   deficienciesFound    String?   // Выявленные несоответствия
+//   correctiveActions    String?   // Корректирующие действия для устранения недостатков
+//   verificationStatus   String    // Статус проверки (например, "пройдено", "требуется доработка")
+//   duration             Int?      // Продолжительность инспекции (в часах или минутах)
+//   isEUCompliance       Boolean   /
