@@ -15,6 +15,7 @@ export default async function Status() {
     return <div>Извините, вам нужно войти в систему, чтобы увидеть данные</div>;
   }
   const shipsData = await getAllUserShips();
+ 
 
   function RoutesCalc() {
     const routes: Array<any> = []

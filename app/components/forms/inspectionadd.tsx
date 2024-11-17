@@ -3,10 +3,6 @@ import { createShip } from "@/actions";
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 
-
-
-
-
 interface ShipsGetProps {
   shipsNames: string[];
 }
@@ -16,7 +12,7 @@ export default function InspectionAddForm({ shipsNames }: ShipsGetProps) {
     createShip,
     undefined
   );
-  console.log(shipsNames)
+  console.log(shipsNames);
   const router = useRouter();
 
   function navHandler() {
@@ -28,62 +24,58 @@ export default function InspectionAddForm({ shipsNames }: ShipsGetProps) {
       className="flex flex-col bg-white p-6 m-6 rounded-lg text-gray-700 items-center gap-4 w-auto"
     >
       <h2 className="flex justify-center font-semibold mt-4 mb-2">
-        Ship Information
+        Add Inspetion to the Ship
       </h2>
-      <div className="flex flex-row justify-center gap-4 w-full">
+      <div className="flex flex-col justify-center gap-4 w-full">
+        <div className="flex flex-row gap-4 items-center">
+          <label className="font-sans">Select your ship:</label>
+          <select
+            name="shipName"
+            required
+            className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+            defaultValue=""
+          >
+            {shipsNames.map((shipName) => (
+              <option value={shipName} key={shipName}>
+                {shipName}
+              </option>
+            ))}
+          </select>
+        </div>
         <input
           type="text"
-          name="shipname"
+          name="inspectorName"
           required
-          placeholder="ship name"
+          placeholder="inspector name"
           className="w-60 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
         <input
           type="text"
-          name="flag"
+          name="inspectionType"
           required
-          placeholder="flag"
+          placeholder="inspection type"
           className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
-        <input
-          type="text"
-          name="type"
+        <select
+          name="results"
           required
-          placeholder="ship type"
           className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
+          defaultValue=""
+        >
+          <option value="" disabled>
+            result
+          </option>
+          <option value="passed">passed</option>
+          <option value="failed">failed</option>
+        </select>
       </div>
-      <h2 className="flex justify-center font-semibold mt-4 mb-2">
-        Technical Specifications
-      </h2>
+      <h2 className="flex justify-center font-semibold mt-4 mb-2">Additions</h2>
       <div className="flex flex-row justify-center gap-4 w-full">
         <input
-          type="number"
-          name="deadweight"
+          type="text"
+          name="recommendations"
           required
-          placeholder="deadweight"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
-        <input
-          type="number"
-          step="0.1"
-          name="beam"
-          placeholder="Beam"
-          required
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
-        <input
-          type="number"
-          name="length"
-          required
-          placeholder="length"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
-        <input
-          type="number"
-          name="width"
-          required
-          placeholder="width"
+          placeholder="recommendations"
           className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
       </div>
@@ -140,7 +132,7 @@ export default function InspectionAddForm({ shipsNames }: ShipsGetProps) {
           max={new Date().getFullYear()}
           className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
           onInput={(e) => {
-            const target = e.target as HTMLInputElement; // Приведение типа
+            const target = e.target as HTMLInputElement;
             if (target.value.length > 4) {
               target.value = target.value.slice(0, 4);
             }
@@ -174,14 +166,13 @@ export default function InspectionAddForm({ shipsNames }: ShipsGetProps) {
   );
 }
 
-
 // inspectionDate     DateTime  // Дата проверки
 //   inspectorName      String    // Имя проверяющего
 //   inspectionType     String    // Тип проверки (напр., регулярная, внеплановая)
 //   results            String    // Результаты проверки
 //   recommendations    String?   // Рекомендации после проверки
 //   nextInspectionDate DateTime? // Дата следующей проверки (если применимо)
-//   inspectionReport   String?   // Ссылка на отчет о проверке (например, PDF-файл или URL)  
+//   inspectionReport   String?   // Ссылка на отчет о проверке (например, PDF-файл или URL)
 //   complianceStandards  String    // Стандарты, по которым проводилась проверка (MARPOL, SOLAS, ISO и т.д.)
 //   deficienciesFound    String?   // Выявленные несоответствия
 //   correctiveActions    String?   // Корректирующие действия для устранения недостатков
