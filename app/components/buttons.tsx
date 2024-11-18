@@ -67,10 +67,22 @@ export function AddShipButton() {
   );
 }
 
-export function AddInspection() {
+export function AddInspectionButton() {
   return (
-    <button className="bg-gray-500 hover:bg-gray-700 h-12 w-auto text-white font-bold py-2 px-4 rounded">
+    <button className="bg-gray-500 hover:bg-gray-700 h-12 w-48 text-white font-bold py-2 px-4 rounded text-sm">
       <Link href="/forms/inspection">Add Inspection to ship</Link>
+    </button>
+  );
+}
+
+export function InspectionEnhancedButton({ inspectionId, children }: any) {
+  const router = useRouter();
+  function handleClick() {
+    router.push(`/inspections/${inspectionId}`);
+  }
+  return (
+    <button style={{ cursor: "pointer" }} onClick={handleClick}>
+      {children}
     </button>
   );
 }

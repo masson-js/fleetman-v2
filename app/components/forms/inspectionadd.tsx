@@ -1,5 +1,5 @@
 "use client";
-import { createShip } from "@/actions";
+import { createInspection } from "@/actions";
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -7,157 +7,189 @@ interface ShipsGetProps {
   shipsNames: string[];
 }
 
-export default function InspectionAddForm({ shipsNames }: ShipsGetProps) {
+export default function AddInspectionForm({ shipsNames }: ShipsGetProps) {
   const [state, formAction] = useActionState<any, FormData>(
-    createShip,
+    createInspection,
     undefined
   );
-  console.log(shipsNames);
-  const router = useRouter();
 
-  function navHandler() {
-    router.push("/inspections");
-  }
   return (
     <form
       action={formAction}
-      className="flex flex-col bg-white p-6 m-6 rounded-lg text-gray-700 items-center gap-4 w-auto"
+      className="flex flex-col bg-white p-6 ml-12 mt-6 rounded-lg text-gray-700 gap-4 w-1/2 items-center"
     >
       <h2 className="flex justify-center font-semibold mt-4 mb-2">
         Add Inspetion to the Ship
       </h2>
-      <div className="flex flex-col justify-center gap-4 w-full">
-        <div className="flex flex-row gap-4 items-center">
-          <label className="font-sans">Select your ship:</label>
-          <select
-            name="shipName"
-            required
-            className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-            defaultValue=""
-          >
-            {shipsNames.map((shipName) => (
-              <option value={shipName} key={shipName}>
-                {shipName}
-              </option>
-            ))}
-          </select>
-        </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Select your ship:</label>
+        <select
+          name="shipName"
+          required
+          className=" w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          defaultValue=""
+        >
+          {shipsNames.map((shipName) => (
+            <option value={shipName} key={shipName}>
+              {shipName}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Inspection Date:</label>
+
+        <input
+          type="date"
+          name="inspectionDate"
+          min="2000-01-01"
+          max={new Date().toISOString().slice(0, 10)}
+          required
+          placeholder="ex. Martin Zoltz"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Inspector:</label>
         <input
           type="text"
           name="inspectorName"
           required
-          placeholder="inspector name"
-          className="w-60 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
-        <input
-          type="text"
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Inspection Type:</label>
+        <select
           name="inspectionType"
           required
-          placeholder="inspection type"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        >
+          <option disabled>Select type</option>
+          <option value="regular">Regular</option>
+          <option value="unscheduled">Unscheduled</option>
+          <option value="follow-up">Follow-Up</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Result:</label>
         <select
           name="results"
           required
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-          defaultValue=""
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         >
-          <option value="" disabled>
-            result
-          </option>
-          <option value="passed">passed</option>
-          <option value="failed">failed</option>
+          <option disabled>Select results</option>
+          <option value="passed">Passed</option>
+          <option value="failed">Failed</option>
+          <option value="pending">Pending</option>
         </select>
       </div>
-      <h2 className="flex justify-center font-semibold mt-4 mb-2">Additions</h2>
-      <div className="flex flex-row justify-center gap-4 w-full">
-        <input
-          type="text"
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Recommendations:</label>
+        <textarea
           name="recommendations"
-          required
-          placeholder="recommendations"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="Add recommendations (if any)"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 min-h-10"
+        ></textarea>
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">
+          Next Inspection Date: (optional)
+        </label>
+        <input
+          type="date"
+          name="nextInspectionDate"
+          min="2000-01-01"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
       </div>
-      <h2 className="flex justify-center font-semibold mt-4 mb-2">
-        Ship Identification
-      </h2>
-      <div className="flex flex-row justify-center gap-4 w-full">
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">
+          Link to inspection report (optional)
+        </label>
         <input
-          type="number"
-          name="mmsi"
-          required
-          placeholder="MMSI"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
-        <input
-          type="number"
-          name="imoNumber"
-          required
-          placeholder="IMO"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
-        <input
-          type="text"
-          name="callsign"
-          placeholder="Callsign"
-          required
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          type="url"
+          name="inspectionReport"
+          placeholder="Paste report URL or file link"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
       </div>
-      <h2 className="flex justify-center font-semibold mt-4 mb-2">
-        Registration and Status
-      </h2>
-      <div className="flex flex-row justify-center gap-4 w-full">
-        <input
-          type="text"
-          name="ecoStandard"
-          required
-          placeholder="ECO standard"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
-        <input
-          type="text"
-          name="portOfRegistry"
-          required
-          placeholder="port of registry"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
-        <input
-          type="number"
-          name="yearBuilt"
-          required
-          placeholder="Год постройки"
-          min="1900"
-          max={new Date().getFullYear()}
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-          onInput={(e) => {
-            const target = e.target as HTMLInputElement;
-            if (target.value.length > 4) {
-              target.value = target.value.slice(0, 4);
-            }
-          }}
-        />
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Compliance Standards:</label>
         <select
-          name="currentStatus"
+          name="complianceStandards"
           required
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-          defaultValue="" // Значение по умолчанию для пустого плейсхолдера
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         >
-          <option value="" disabled>
-            Выберите статус
-          </option>
-          <option value="in port">In Port</option>
-          <option value="on the way">On the Way</option>
-          <option value="waiting">Waiting</option>
-          <option value="fix">Fix</option>
+          <option value="">Select compliance standards</option>
+          <option value="MARPOL">MARPOL</option>
+          <option value="SOLAS">SOLAS</option>
+          <option value="ISO">ISO</option>
+          <option value="AFS">AFS</option>
+          <option value="SEEMP">SEEMP</option>
+          <option value="EEDI">EEDI</option>
+          <option value="ISM">ISM</option>
+          <option value="MLC 2006">MLC 2006</option>
+          <option value="STCW">STCW</option>
+          <option value="IMDG">IMDG</option>
+          <option value="other">Other</option>
         </select>
       </div>
-
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Deficiencies Found:</label>
+        <textarea
+          name="deficienciesFound"
+          placeholder="Describe deficiencies (if any)"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 min-h-10"
+        ></textarea>
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Corrective Actions:</label>
+        <textarea
+          name="correctiveActions"
+          placeholder="Describe corrective actions (if needed)"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 min-h-10"
+        ></textarea>
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Verification Status:</label>
+        <select
+          name="verificationStatus"
+          required
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 min-h-10"
+        >
+          <option value="" disabled>
+            Select verification status
+          </option>
+          <option value="passed">Passed</option>
+          <option value="requires-work">Requires Work</option>
+          <option value="failed">Failed</option>
+        </select>
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2"> Duration (in minutes):</label>
+        <input
+          type="number"
+          name="duration"
+          min="1"
+          placeholder="Enter duration"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2"> EU Compliance:</label>
+        <input
+          type="checkbox"
+          name="isEUCompliance"
+          className="border rounded"
+        />
+        <span className="m-1">Yes</span>
+      </div>
       <button
-        onClick={() => navHandler()}
+        
         type="submit"
-        className="w-full bg-gray-400 text-white py-2 rounded-md hover:bg-black transition duration-150"
+        className="w-40 m-6 bg-gray-400 text-white py-2 rounded-md hover:bg-black transition duration-150"
       >
         Submit
       </button>
@@ -165,17 +197,3 @@ export default function InspectionAddForm({ shipsNames }: ShipsGetProps) {
     </form>
   );
 }
-
-// inspectionDate     DateTime  // Дата проверки
-//   inspectorName      String    // Имя проверяющего
-//   inspectionType     String    // Тип проверки (напр., регулярная, внеплановая)
-//   results            String    // Результаты проверки
-//   recommendations    String?   // Рекомендации после проверки
-//   nextInspectionDate DateTime? // Дата следующей проверки (если применимо)
-//   inspectionReport   String?   // Ссылка на отчет о проверке (например, PDF-файл или URL)
-//   complianceStandards  String    // Стандарты, по которым проводилась проверка (MARPOL, SOLAS, ISO и т.д.)
-//   deficienciesFound    String?   // Выявленные несоответствия
-//   correctiveActions    String?   // Корректирующие действия для устранения недостатков
-//   verificationStatus   String    // Статус проверки (например, "пройдено", "требуется доработка")
-//   duration             Int?      // Продолжительность инспекции (в часах или минутах)
-//   isEUCompliance       Boolean   /

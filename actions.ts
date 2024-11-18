@@ -184,7 +184,7 @@ export const createShip = async (
   redirect("/status");
 };
 
-// GET APP USER SHIPS
+// GET APP USER SHIPS ///////////////////////////
 
 export const getAllUserShips = async () => {
   const session = await getSession();
@@ -281,16 +281,16 @@ export const createInspection = async (
     }
   } finally {
     await prisma.$disconnect();
+    redirect("/inspections");
   }
 };
 
 export const getAllInspections = async () => {
   const prisma = new PrismaClient();
   try {
- 
     const inspections = await prisma.inspection.findMany({
       include: {
-        ship: true, 
+        ship: true,
       },
     });
 
@@ -299,6 +299,6 @@ export const getAllInspections = async () => {
     console.error("Error fetching inspections:", error);
     throw new Error("Error fetching inspections");
   } finally {
-    await prisma.$disconnect(); 
+    await prisma.$disconnect();
   }
 };
