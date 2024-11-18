@@ -10,11 +10,9 @@ export default async function ShipDataCreating() {
   return (
     <div className="flex flex-col w-full h-auto">
       <Header />
-      <div className="flex w-full m-6">
+      <div className="flex m-6">
         <SideNavigation />
-        <div className="flex ml-10 h-auto justify-center">
-          <ShipAddForm />
-        </div>
+        <ShipAddForm />
       </div>
     </div>
   );

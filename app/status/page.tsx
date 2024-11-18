@@ -28,7 +28,6 @@ export default async function Status() {
       <Header />
       <div className="flex m-6">
         <SideNavigation />
-
         <section className="flex-1 m-6 max-w-max overflow-auto">
           <table className="table-auto border border-gray-300 rounded-lg overflow-hidden w-full">
             <thead>

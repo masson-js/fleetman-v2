@@ -11,9 +11,9 @@ export default async function Inspections() {
       <Header />
       <div className="flex w-auto h-auto m-6 flex-row">
         <SideNavigation />
-        <div className="flex flex-col items-center w-auto h-auto">
-          <AddInspectionButton />
+        <div className="flex flex-row mt-0 w-auto h-auto">
           <InspectionList/>
+          <AddInspectionButton />
         </div>
       </div>
     </div>

@@ -1,48 +1,35 @@
 import { getAllInspections } from "@/actions";
-import { InspectionEnhancedButton} from "../buttons";
+import { InspectionEnhancedButton } from "../buttons";
 
 export default async function InspectionList() {
   const inspections = await getAllInspections();
 
   return (
-    <div className=" m-6 flex w-auto h-auto">
+    <div className=" m-6 flex w-auto h-auto items-start">
       <table className="table-auto border border-gray-300 rounded-lg overflow-hidden w-full">
         <thead>
           <tr className="items-center">
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center rounded-tl-lg">
+            <th className="text-base px-4 py-2 bg-gray-300 text-center rounded-tl-lg w-28">
               Ship
             </th>
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center">
+            <th className="text-base px-4 py-2 bg-gray-300 text-center w-28">
               Inspector
             </th>
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center">Date</th>
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center">Type</th>
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center">
+            <th className="text-base px-4 py-2 bg-gray-300 text-center w-28">Date</th>
+            <th className="text-base px-4 py-2 bg-gray-300 text-center w-28">Type</th>
+            <th className="text-base px-4 py-2 bg-gray-300 text-center w-28">
               Result
             </th>
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center">
-              Recomendation
-            </th>
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center">
-              Next Inspect.
-            </th>
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center">
+            <th className="text-base px-4 py-2 bg-gray-300 text-center w-28">
               Standart
             </th>
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center">
-              Deficiencies
+            
+            <th className="text-base px-4 py-2 bg-gray-300 text-center w-28">
+             Status
             </th>
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center">
-              Action
-            </th>
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center ">
-              Ver. Status
-            </th>
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center">
-              Duration
-            </th>
-            <th className="text-xs px-4 py-2 bg-gray-300 text-center rounded-tr-lg">
-              EU Compliance
+            
+            <th className="text-base px-4 py-2 bg-gray-300 text-center rounded-tr-lg w-28">
+              EU Comp.
             </th>
           </tr>
         </thead>
@@ -52,9 +39,46 @@ export default async function InspectionList() {
               className="text-center hover:bg-slate-600 hover:text-white"
               key={inspection.id}
             >
-              <td className="px-4 py-2">
+              <td className="px-4 py-2 text-ls">
                 <InspectionEnhancedButton inspectionId={inspection.id}>
                   {inspection.ship.name}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={inspection.id}>
+                  {inspection.inspectorName}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={inspection.id}>
+                  {new Date(inspection.inspectionDate).toLocaleDateString(
+                    "en-US"
+                  )}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={inspection.id}>
+                  {inspection.inspectionType}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={inspection.id}>
+                  {inspection.results}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={inspection.id}>
+                  {inspection.complianceStandards}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={inspection.id}>
+                  {inspection.verificationStatus}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={inspection.id}>
+                  {inspection.isEUCompliance ? "YES" : "NO"}
                 </InspectionEnhancedButton>
               </td>
             </tr>

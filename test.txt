@@ -1,100 +1,172 @@
-{/* <div className="flex flex-col w-auto h-auto">
-<AddInspectionButton />
-<div className="flex flex-wrap m-6 w-auto h-auto">
-  {inspections.map((inspection) => (
-    <div
-      key={inspection.id}
-      className=" flex flex-col bg-white rounded-lg shadow-lg p-6 m-4 w-80"
+"use client";
+import { createShip } from "@/actions";
+import { useActionState } from "react";
+import { useRouter } from "next/navigation";
+
+
+
+export default function ShipAddForm() {
+  const [state, formAction] = useActionState<any, FormData>(
+    createShip,
+    undefined
+  );
+  const router = useRouter();
+
+  function navHandler() {
+    router.push("/status");
+  }
+  return (
+    <form
+      action={formAction}
+      className="flex flex-col bg-white p-6 m-6 rounded-lg text-gray-700 items-center gap-4 w-auto"
     >
-      <p className="text-s text-gray-600 mb-2">
-        <span className="font-bold">Ship Name:</span>{" "}
-        {inspection.ship.name}
-      </p>
+      <h2 className="flex justify-center font-semibold mt-4 mb-2">
+        Ship Information
+      </h2>
+      <div className="flex flex-row justify-center gap-4 w-full">
+        <input
+          type="text"
+          name="shipname"
+          required
+          placeholder="ship name"
+          className="w-60 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+        <input
+          type="text"
+          name="flag"
+          required
+          placeholder="flag"
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+        <input
+          type="text"
+          name="type"
+          required
+          placeholder="ship type"
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+      </div>
+      <h2 className="flex justify-center font-semibold mt-4 mb-2">
+        Technical Specifications
+      </h2>
+      <div className="flex flex-row justify-center gap-4 w-full">
+        <input
+          type="number"
+          name="deadweight"
+          required
+          placeholder="deadweight"
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+        <input
+          type="number"
+          step="0.1"
+          name="beam"
+          placeholder="Beam"
+          required
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+        <input
+          type="number"
+          name="length"
+          required
+          placeholder="length"
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+        <input
+          type="number"
+          name="width"
+          required
+          placeholder="width"
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+      </div>
+      <h2 className="flex justify-center font-semibold mt-4 mb-2">
+        Ship Identification
+      </h2>
+      <div className="flex flex-row justify-center gap-4 w-full">
+        <input
+          type="number"
+          name="mmsi"
+          required
+          placeholder="MMSI"
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+        <input
+          type="number"
+          name="imoNumber"
+          required
+          placeholder="IMO"
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+        <input
+          type="text"
+          name="callsign"
+          placeholder="Callsign"
+          required
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+      </div>
+      <h2 className="flex justify-center font-semibold mt-4 mb-2">
+        Registration and Status
+      </h2>
+      <div className="flex flex-row justify-center gap-4 w-full">
+        <input
+          type="text"
+          name="ecoStandard"
+          required
+          placeholder="ECO standard"
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+        <input
+          type="text"
+          name="portOfRegistry"
+          required
+          placeholder="port of registry"
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        />
+         <input
+          type="number"
+          name="yearBuilt"
+          required
+          placeholder="Год постройки"
+          min="1900"
+          max={new Date().getFullYear()}
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          onInput={(e) => {
+            const target = e.target as HTMLInputElement; // Приведение типа
+            if (target.value.length > 4) {
+              target.value = target.value.slice(0, 4);
+            }
+          }}
+        />
+        <select
+          name="currentStatus"
+          required
+          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          defaultValue="" // Значение по умолчанию для пустого плейсхолдера
+        >
+          <option value="" disabled>
+            Выберите статус
+          </option>
+          <option value="in port">In Port</option>
+          <option value="on the way">On the Way</option>
+          <option value="waiting">Waiting</option>
+          <option value="fix">Fix</option>
+        </select>
+      </div>
 
-      {/* Inspector Name */}
-      <p className="text-lg text-gray-600 mb-2">
-        <span className="font-bold">Inspector:</span>{" "}
-        {inspection.inspectorName}
-      </p>
+      
+       
+      
 
-      {/* Inspection Date */}
-      <p className="text-lg text-gray-600 mb-2">
-        <span className="font-bold">Date:</span>{" "}
-        {new Date(inspection.inspectionDate).toLocaleDateString()}
-      </p>
-
-      {/* Inspection Type */}
-      <p className="text-lg text-gray-600 mb-2">
-        <span className="font-bold">Type:</span>{" "}
-        {inspection.inspectionType}
-      </p>
-
-      {/* Inspection Results */}
-      <p className="text-lg text-gray-600 mb-2">
-        <span className="font-bold">Results:</span>{" "}
-        {inspection.results}
-      </p>
-
-      {/* Recommendations */}
-      {inspection.recommendations && (
-        <p className="text-lg text-gray-600 mb-2">
-          <span className="font-bold">Recommendations:</span>{" "}
-          {inspection.recommendations}
-        </p>
-      )}
-
-      {/* Next Inspection Date */}
-      {inspection.nextInspectionDate && (
-        <p className="text-lg text-gray-600 mb-2">
-          <span className="font-bold">Next Inspection Date:</span>{" "}
-          {new Date(
-            inspection.nextInspectionDate
-          ).toLocaleDateString()}
-        </p>
-      )}
-
-      {/* Compliance Standards */}
-      <p className="text-lg text-gray-600 mb-2">
-        <span className="font-bold">Compliance Standards:</span>{" "}
-        {inspection.complianceStandards}
-      </p>
-
-      {/* Deficiencies Found */}
-      {inspection.deficienciesFound && (
-        <p className="text-lg text-gray-600 mb-2">
-          <span className="font-bold">Deficiencies Found:</span>{" "}
-          {inspection.deficienciesFound}
-        </p>
-      )}
-
-      {/* Corrective Actions */}
-      {inspection.correctiveActions && (
-        <p className="text-lg text-gray-600 mb-2">
-          <span className="font-bold">Corrective Actions:</span>{" "}
-          {inspection.correctiveActions}
-        </p>
-      )}
-
-      {/* Verification Status */}
-      <p className="text-lg text-gray-600 mb-2">
-        <span className="font-bold">Verification Status:</span>{" "}
-        {inspection.verificationStatus}
-      </p>
-
-      {/* Duration */}
-      {inspection.duration && (
-        <p className="text-lg text-gray-600 mb-2">
-          <span className="font-bold">Duration:</span>{" "}
-          {inspection.duration} hours
-        </p>
-      )}
-
-      {/* EU Compliance */}
-      <p className="text-lg text-gray-600 mb-2">
-        <span className="font-bold">EU Compliance:</span>{" "}
-        {inspection.isEUCompliance ? "Yes" : "No"}
-      </p>
-    </div>
-  ))}
-</div>
-</div> */}
+      <button
+        onClick={() => navHandler()}
+        type="submit"
+        className="w-full bg-gray-400 text-white py-2 rounded-md hover:bg-black transition duration-150"
+      >
+        Submit
+      </button>
+      {state?.error && <p>{state.error}</p>}
+    </form>
+  );
+}

@@ -3,8 +3,6 @@ import { createShip } from "@/actions";
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 
-
-
 export default function ShipAddForm() {
   const [state, formAction] = useActionState<any, FormData>(
     createShip,
@@ -18,53 +16,76 @@ export default function ShipAddForm() {
   return (
     <form
       action={formAction}
-      className="flex flex-col bg-white p-6 m-6 rounded-lg text-gray-700 items-center gap-4 w-auto"
+      className="flex flex-col bg-white p-6 ml-12 mt-6 rounded-lg text-gray-700 gap-4 w-1/2 items-center"
     >
       <h2 className="flex justify-center font-semibold mt-4 mb-2">
-        Ship Information
+        Add your ship to Manager
       </h2>
-      <div className="flex flex-row justify-center gap-4 w-full">
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Ship name:</label>
         <input
           type="text"
           name="shipname"
           required
-          placeholder="ship name"
-          className="w-60 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="Asta Maria II"
+          className=" w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Country flag:</label>
         <input
           type="text"
           name="flag"
           required
-          placeholder="flag"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
-        <input
-          type="text"
-          name="type"
-          required
-          placeholder="ship type"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="USA"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
       </div>
-      <h2 className="flex justify-center font-semibold mt-4 mb-2">
-        Technical Specifications
-      </h2>
-      <div className="flex flex-row justify-center gap-4 w-full">
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Ship type:</label>
+
+        <select
+          name="type"
+          required
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        >
+          <option disabled>Select ship type</option>
+          <option value="container">Container ship</option>
+          <option value="tanker">Tanker</option>
+          <option value="bulk-carrier">Bulk carrier</option>
+          <option value="ro-ro">Ro-Ro</option>
+          <option value="general-cargo">General cargo ship</option>
+          <option value="passenger">Passenger ship</option>
+          <option value="Feeder">Feeder ship</option>
+          <option value="Heavy-lift">Heavy lift ship</option>
+          <option value="livestock-carrier">Livestock carrier</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Deadweight: (DWT)</label>
         <input
           type="number"
           name="deadweight"
           required
-          placeholder="deadweight"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="40 000 DWT"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
+      </div>
+      <div className="flex flex-wrap items-center">
+      <label className="font-sans w-40 m-2">Beam: (ft)</label>
         <input
           type="number"
           step="0.1"
           name="beam"
-          placeholder="Beam"
+          placeholder="82"
           required
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+         className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
+        </div>
+          
+        <div>
         <input
           type="number"
           name="length"
@@ -124,7 +145,7 @@ export default function ShipAddForm() {
           placeholder="port of registry"
           className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
-         <input
+        <input
           type="number"
           name="yearBuilt"
           required
@@ -154,10 +175,6 @@ export default function ShipAddForm() {
           <option value="fix">Fix</option>
         </select>
       </div>
-
-      
-       
-      
 
       <button
         onClick={() => navHandler()}
