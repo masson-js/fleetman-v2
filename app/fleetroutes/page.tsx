@@ -1,7 +1,7 @@
 import Header from "../components/header";
 import SideNavigation from "../components/sidenavigation";
 
-export default async function FleetMap() {
+export default async function FleetRoutes() {
   return (
     <div className="flex flex-col">
       <Header />

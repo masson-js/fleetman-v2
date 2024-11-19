@@ -32,3 +32,9 @@ export function getStatusColorClass(status: any) {
       return "bg-gray-300";
   }
 }
+
+function RoutesCalc() {
+  const routes: Array<any> = [];
+
+  return routes.length === 0 ? 0 : routes.length;
+}

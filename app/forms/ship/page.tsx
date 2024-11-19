@@ -8,7 +8,7 @@ export default async function ShipDataCreating() {
   const userName = session.username;
 
   return (
-    <div className="flex flex-col w-full h-auto">
+    <div className="flex flex-col mb-24 w-full h-auto">
       <Header />
       <div className="flex m-6">
         <SideNavigation />

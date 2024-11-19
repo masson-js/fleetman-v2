@@ -39,7 +39,7 @@ export function UserButton() {
   );
 }
 
-export function ShipButton({ imoNumber, children }: any) {
+export function StatusEnhancedButton({ imoNumber, children }: any) {
   const router = useRouter();
   function handleClick() {
     router.push(`/status/${imoNumber}`);
@@ -61,7 +61,7 @@ export function LogOut() {
 
 export function AddShipButton() {
   return (
-    <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+    <button className="flex m-2 px-2 justify-start hover:underline">
       <Link href="/forms/ship">Add Ship</Link>
     </button>
   );
@@ -79,6 +79,29 @@ export function InspectionEnhancedButton({ inspectionId, children }: any) {
   const router = useRouter();
   function handleClick() {
     router.push(`/inspections/${inspectionId}`);
+  }
+  return (
+    <button style={{ cursor: "pointer" }} onClick={handleClick}>
+      {children}
+    </button>
+  );
+}
+
+export function CertificationEnhancedButton({ inspectionId, children }: any) {
+  const router = useRouter();
+  function handleClick() {
+    router.push(`/certification/${inspectionId}`);
+  }
+  return (
+    <button style={{ cursor: "pointer" }} onClick={handleClick}>
+      {children}
+    </button>
+  );
+}
+export function LogbookEnhancedButton({ logbookId, children }: any) {
+  const router = useRouter();
+  function handleClick() {
+    router.push(`/logbooks/${logbookId}`);
   }
   return (
     <button style={{ cursor: "pointer" }} onClick={handleClick}>

@@ -9,26 +9,30 @@ export default async function InspectionList() {
       <table className="table-auto border border-gray-300 rounded-lg overflow-hidden w-full">
         <thead>
           <tr className="items-center">
-            <th className="text-base px-4 py-2 bg-gray-300 text-center rounded-tl-lg w-28">
+            <th className="text-sm  px-4 py-1 bg-gray-300 text-center rounded-tl-lg w-36">
               Ship
             </th>
-            <th className="text-base px-4 py-2 bg-gray-300 text-center w-28">
+            <th className="text-sm  px-4 py-1 bg-gray-300 text-center w-36">
               Inspector
             </th>
-            <th className="text-base px-4 py-2 bg-gray-300 text-center w-28">Date</th>
-            <th className="text-base px-4 py-2 bg-gray-300 text-center w-28">Type</th>
-            <th className="text-base px-4 py-2 bg-gray-300 text-center w-28">
+            <th className="text-sm  px-4 py-1 bg-gray-300 text-center w-28">
+              Date
+            </th>
+            <th className="text-sm  px-4 py-1 bg-gray-300 text-center w-28">
+              Type
+            </th>
+            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
               Result
             </th>
-            <th className="text-base px-4 py-2 bg-gray-300 text-center w-28">
+            <th className="text-sm  px-4 py-1 bg-gray-300 text-center w-28">
               Standart
             </th>
-            
-            <th className="text-base px-4 py-2 bg-gray-300 text-center w-28">
-             Status
+
+            <th className="text-sm  px-4 py-1 bg-gray-300 text-center w-36">
+              Status
             </th>
-            
-            <th className="text-base px-4 py-2 bg-gray-300 text-center rounded-tr-lg w-28">
+
+            <th className="text-sm  px-4 py-1 bg-gray-300 text-center rounded-tr-lg w-28">
               EU Comp.
             </th>
           </tr>

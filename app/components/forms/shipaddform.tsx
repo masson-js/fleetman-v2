@@ -74,85 +74,107 @@ export default function ShipAddForm() {
         />
       </div>
       <div className="flex flex-wrap items-center">
-      <label className="font-sans w-40 m-2">Beam: (ft)</label>
+        <label className="font-sans w-40 m-2">Beam: (ft)</label>
         <input
           type="number"
           step="0.1"
           name="beam"
-          placeholder="82"
+          placeholder="82 ft"
           required
-         className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
-        </div>
-          
-        <div>
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Length:</label>
         <input
           type="number"
           name="length"
           required
-          placeholder="length"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="100 ft"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Width:</label>
         <input
           type="number"
           name="width"
           required
-          placeholder="width"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="15 ft"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
       </div>
-      <h2 className="flex justify-center font-semibold mt-4 mb-2">
-        Ship Identification
-      </h2>
-      <div className="flex flex-row justify-center gap-4 w-full">
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">MMSI:</label>
         <input
           type="number"
           name="mmsi"
           required
-          placeholder="MMSI"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="123456789"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">IMO:</label>
         <input
           type="number"
           name="imoNumber"
           required
-          placeholder="IMO"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="1234567"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Call sign:</label>
         <input
           type="text"
           name="callsign"
-          placeholder="Callsign"
+          placeholder="MMU ex."
           required
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
       </div>
-      <h2 className="flex justify-center font-semibold mt-4 mb-2">
-        Registration and Status
-      </h2>
-      <div className="flex flex-row justify-center gap-4 w-full">
-        <input
-          type="text"
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">ECO standart:</label>
+        <select
           name="ecoStandard"
           required
-          placeholder="ECO standard"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+        >
+          <option disabled>Select ECO standart</option>
+          <option value="EEDI / EEXI">EEDI / EEXI</option>
+          <option value="CII">CII</option>
+          <option value="MARPOL Annex VI">MARPOL Annex VI</option>
+          <option value="Ballast Water Convention">
+            Ballast Water Convention
+          </option>
+          <option value="Green Passport">Green Passport</option>
+          <option value="Shore Power">Shore Power</option>
+          <option value="Alternative Fuels">Alternative Fuels</option>
+          <option value="Polar Code">Polar Code</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Port of registration:</label>
         <input
           type="text"
           name="portOfRegistry"
           required
           placeholder="port of registry"
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         />
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Year of built:</label>
         <input
           type="number"
           name="yearBuilt"
           required
-          placeholder="Год постройки"
+          placeholder="year of Built"
           min="1900"
           max={new Date().getFullYear()}
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
           onInput={(e) => {
             const target = e.target as HTMLInputElement; // Приведение типа
             if (target.value.length > 4) {
@@ -160,29 +182,34 @@ export default function ShipAddForm() {
             }
           }}
         />
+      </div>
+      <div className="flex flex-wrap items-center">
+        <label className="font-sans w-40 m-2">Current status:</label>
         <select
           name="currentStatus"
           required
-          className="w-40 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-          defaultValue="" // Значение по умолчанию для пустого плейсхолдера
+          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          defaultValue="unknown"
         >
           <option value="" disabled>
-            Выберите статус
+            Select Status
           </option>
           <option value="in port">In Port</option>
           <option value="on the way">On the Way</option>
           <option value="waiting">Waiting</option>
           <option value="fix">Fix</option>
+          <option value="other">Other</option>
         </select>
       </div>
-
-      <button
-        onClick={() => navHandler()}
-        type="submit"
-        className="w-full bg-gray-400 text-white py-2 rounded-md hover:bg-black transition duration-150"
-      >
-        Submit
-      </button>
+      <div>
+        <button
+          onClick={() => navHandler()}
+          type="submit"
+          className="w-40 bg-gray-400 text-white py-2 rounded-md hover:bg-black transition duration-150"
+        >
+          Submit
+        </button>
+      </div>
       {state?.error && <p>{state.error}</p>}
     </form>
   );

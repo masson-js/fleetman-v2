@@ -302,3 +302,181 @@ export const getAllInspections = async () => {
     await prisma.$disconnect();
   }
 };
+
+////////////////// CERTIFICATIONS ///////////////////////////
+
+export const createCertification = async (
+  prevState: { error: undefined | string },
+  formData: FormData
+) => {
+  const prisma = new PrismaClient();
+
+  // Получаем данные из formData
+  const shipName = formData.get("shipName") as string;
+  const type = formData.get("type") as string;
+  const issuedDate = new Date(formData.get("issuedDate") as string);
+  const expiryDate = new Date(formData.get("expiryDate") as string);
+  const issuingAuthority = formData.get("issuingAuthority") as string;
+  const standard = formData.get("standard") as string;
+  const complianceLevel = formData.get("complianceLevel") as string;
+  const verificationDate = new Date(formData.get("verificationDate") as string);
+  const certificateNumber = formData.get("certificateNumber") as string;
+  const inspectionRequirements =
+    (formData.get("inspectionRequirements") as string) || null;
+  const nextInspectionDate = formData.get("nextInspectionDate")
+    ? new Date(formData.get("nextInspectionDate") as string)
+    : null;
+  const inspectorName = (formData.get("inspectorName") as string) || null;
+  const certificationCompany =
+    (formData.get("certificationCompany") as string) || null;
+  const remarks = (formData.get("remarks") as string) || null;
+
+  try {
+    // Ищем судно по имени
+    const ship = await prisma.ship.findFirst({
+      where: { name: shipName },
+    });
+
+    if (!ship) {
+      return { success: false, error: "Ship not found" };
+    }
+
+    // Создаём новый сертификат
+    const newCertification = await prisma.certification.create({
+      data: {
+        shipId: ship.id, // Указываем существующий shipId
+        type: type,
+        issuedDate: issuedDate,
+        expiryDate: expiryDate,
+        issuingAuthority: issuingAuthority,
+        standard: standard,
+        complianceLevel: complianceLevel,
+        verificationDate: verificationDate,
+        certificateNumber: certificateNumber,
+        inspectionRequirements: inspectionRequirements,
+        nextInspectionDate: nextInspectionDate,
+        inspectorName: inspectorName,
+        certificationCompany: certificationCompany,
+        remarks: remarks,
+      },
+    });
+
+    return { success: true, newCertification };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error creating certification:", error.message);
+      return { success: false, error: error.message };
+    } else {
+      console.error("Unknown error:", error);
+      return { success: false, error: "Certification creation failed" };
+    }
+  } finally {
+    await prisma.$disconnect();
+    redirect("/certifications");
+  }
+};
+
+export const getAllCertifications = async () => {
+  const prisma = new PrismaClient();
+  try {
+    const certifications = await prisma.certification.findMany({
+      include: {
+        ship: true,
+      },
+    });
+
+    return certifications;
+  } catch (error) {
+    console.error("Error fetching inspections:", error);
+    throw new Error("Error fetching inspections");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+//////////////////// LOGBOOK ///////////////////
+
+export const createLogbook = async (
+  prevState: { error: undefined | string },
+  formData: FormData
+) => {
+  const prisma = new PrismaClient();
+
+  const shipName = formData.get("shipName") as string;
+  const date = new Date(formData.get("date") as string);
+  const location = formData.get("location") as string;
+  const operationType = formData.get("operationType") as string;
+  const eventDescription = formData.get("eventDescription") as string;
+  const weatherConditions =
+    (formData.get("weatherConditions") as string) || null;
+  const seaConditions = (formData.get("seaConditions") as string) || null;
+  const speed = parseFloat(formData.get("speed") as string) || null;
+  const engineStatus = (formData.get("engineStatus") as string) || null;
+  const fuelConsumption =
+    parseFloat(formData.get("fuelConsumption") as string) || null;
+  const crewCount = parseInt(formData.get("crewCount") as string) || null;
+  const inspectionCheck = formData.get("inspectionCheck") === "on";
+  const responsible = formData.get("responsible") as string;
+  const notes = (formData.get("notes") as string) || null;
+
+  try {
+    const ship = await prisma.ship.findFirst({
+      where: { name: shipName },
+    });
+
+    if (!ship) {
+      return { success: false, error: "Ship not found" };
+    }
+
+    const newLogbookEntry = await prisma.logbook.create({
+      data: {
+        shipId: ship.id,
+        date: date,
+        location: location,
+        operationType: operationType,
+        eventDescription: eventDescription,
+        weatherConditions: weatherConditions,
+        seaConditions: seaConditions,
+        speed: speed,
+        engineStatus: engineStatus,
+        fuelConsumption: fuelConsumption,
+        crewCount: crewCount,
+        inspectionCheck: inspectionCheck,
+        responsible: responsible,
+        notes: notes,
+      },
+    });
+
+    return { success: true, newLogbookEntry };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error creating logbook entry:", error.message);
+      return { success: false, error: error.message };
+    } else {
+      console.error("Unknown error:", error);
+      return { success: false, error: "Logbook entry creation failed" };
+    }
+  } finally {
+    await prisma.$disconnect();
+
+    redirect("/logbooks");
+  }
+};
+
+export const getAllLogbooks = async () => {
+  const prisma = new PrismaClient();
+  try {
+    const logbooks = await prisma.logbook.findMany({
+      include: {
+        ship: true,
+      },
+    });
+
+    return logbooks;
+  } catch (error) {
+    console.error("Error fetching logbooks:", error);
+    throw new Error("Error fetching logbooks");
+  } finally {
+    await prisma.$disconnect();
+  }
+};

@@ -1,10 +1,11 @@
 import { getAllUserShips } from "@/actions";
-import AddInspectionForm from "@/app/components/forms/inspectionadd";
+import AddCertifcationForm from "@/app/components/forms/certification";
+
 
 import Header from "@/app/components/header";
 import SideNavigation from "@/app/components/sidenavigation";
 
-export default async function InspectionCreating() {
+export default async function CertificationCreating() {
   const shipsData = await getAllUserShips();
   const shipsNames = shipsData.map((ship) => ship.name);
 
@@ -13,8 +14,7 @@ export default async function InspectionCreating() {
       <Header />
       <div className="flex m-6">
         <SideNavigation />
-        <AddInspectionForm shipsNames={shipsNames} />
-        <p>inspection</p>
+        <AddCertifcationForm shipsNames={shipsNames} />
       </div>
     </div>
   );
