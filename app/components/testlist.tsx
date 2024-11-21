@@ -1,5 +1,5 @@
 import { getAllCrewMembers, getAllUserShips } from "@/actions";
-import { UniversalRouterButton } from "../buttons";
+import { UniversalRouterButton } from "./buttons";
 
 export default async function TestCrewList() {
   const crews = await getAllCrewMembers();

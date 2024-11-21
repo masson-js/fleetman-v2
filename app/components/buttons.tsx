@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { logout } from "@/actions";
 
@@ -130,5 +130,25 @@ export function CrewEnhancedButton({ crewId, children }: any) {
     <button style={{ cursor: "pointer" }} onClick={handleClick}>
       {children}
     </button>
+  );
+}
+
+export function UniversalRouterButton({ pathRoute, pathSlug, children }: any) {
+  const router = useRouter();
+
+  function handleClick() {
+    router.push(`/${pathRoute}/${pathSlug}`);
+  }
+
+  return (
+    <div
+      onClick={handleClick}
+      style={{ cursor: "pointer !important" }}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && handleClick()}
+    >
+      {children}
+    </div>
   );
 }

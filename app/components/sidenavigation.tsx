@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function SideNavigation() {
-  const buttonStyle = "flex m-2 px-2 justify-start hover:underline";
+  const buttonStyle = "flex m-2 px-2 justify-start hover:underline cursor-pointer";
   return (
     <div className="flex flex-col">
       <section className="flex">

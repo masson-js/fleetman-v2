@@ -1,6 +1,7 @@
 import FixtureList from "../components/fixtures/list";
 import Header from "../components/header";
 import SideNavigation from "../components/sidenavigation";
+import TestFixtureList from "../components/testlist";
 
 export default async function Fixtures() {
   return (
@@ -12,7 +13,7 @@ export default async function Fixtures() {
           <h1 className="mx-6 text-3xl font-bold italic opacity-85">
            Fixtures
           </h1>
-          <FixtureList />
+          <FixtureList/>
         </div>
       </div>
     </div>
