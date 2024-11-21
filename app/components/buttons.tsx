@@ -109,3 +109,26 @@ export function LogbookEnhancedButton({ logbookId, children }: any) {
     </button>
   );
 }
+
+export function FixtureEnhancedButton({ fixtureId, children }: any) {
+  const router = useRouter();
+  function handleClick() {
+    router.push(`/fixtures/${fixtureId}`);
+  }
+  return (
+    <button style={{ cursor: "pointer" }} onClick={handleClick}>
+      {children}
+    </button>
+  );
+}
+export function CrewEnhancedButton({ crewId, children }: any) {
+  const router = useRouter();
+  function handleClick() {
+    router.push(`/crews/${crewId}`);
+  }
+  return (
+    <button style={{ cursor: "pointer" }} onClick={handleClick}>
+      {children}
+    </button>
+  );
+}

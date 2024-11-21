@@ -19,19 +19,19 @@ export default async function LogbookList() {
               Date
             </th>
             <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
-              Operation Type
+              Operation
             </th>
             <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
-              Weather Conditions
+              Weather
             </th>
             <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
-              Sea Conditions
+              Sea
             </th>
             <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
-              Speed (knots)
+              Speed
             </th>
             <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
-              Engine Status
+              Engine
             </th>
            
            

@@ -1,4 +1,5 @@
 import { getAllUserShips } from "@/actions";
+import AddCrewForm from "@/app/components/forms/crew";
 import AddInspectionForm from "@/app/components/forms/inspectionadd";
 
 import Header from "@/app/components/header";
@@ -13,8 +14,7 @@ export default async function FixtureCreating() {
       <Header />
       <div className="flex m-6">
         <SideNavigation />
-        <p>crew form</p>
-        <AddInspectionForm shipsNames={shipsNames} />
+        <AddCrewForm shipsNames={shipsNames} />
       </div>
     </div>
   );

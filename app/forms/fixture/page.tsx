@@ -1,5 +1,5 @@
 import { getAllUserShips } from "@/actions";
-import AddInspectionForm from "@/app/components/forms/inspectionadd";
+import AddFixtureForm from "@/app/components/forms/fixtures";
 
 import Header from "@/app/components/header";
 import SideNavigation from "@/app/components/sidenavigation";
@@ -11,10 +11,10 @@ export default async function FixtureCreating() {
   return (
     <div className="flex flex-col w-full h-auto">
       <Header />
-      <div className="flex m-6">
+      <div className="flex m-6 justify-between">
         <SideNavigation />
-        <p>fixtures form</p>
-        <AddInspectionForm shipsNames={shipsNames} />
+        <AddFixtureForm shipsNames={shipsNames} />
+        <span className="w-40 h-auto">Data</span>
       </div>
     </div>
   );

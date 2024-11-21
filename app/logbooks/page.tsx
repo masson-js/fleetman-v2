@@ -10,7 +10,7 @@ export default async function Logbooks() {
         <SideNavigation />
         <div className="flex flex-col mt-0 w-auto h-auto">
           <h1 className="mx-6 text-3xl font-bold italic opacity-85">
-           Inspections
+           LogBooks
           </h1>
           <LogbookList />
         </div>
