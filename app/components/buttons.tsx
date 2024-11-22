@@ -54,7 +54,7 @@ export function StatusEnhancedButton({ imoNumber, children }: any) {
 export function LogOut() {
   return (
     <form action={logout}>
-      <button className={buttonStyle}>Log out</button>
+      <button className="hover:underline">Log out</button>
     </form>
   );
 }

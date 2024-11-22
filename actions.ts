@@ -657,3 +657,22 @@ export const getAllCrewMembers = async () => {
     await prisma.$disconnect();
   }
 };
+
+export const getCrewMember = async ({ memberID }: { memberID: string }) => {
+  const prisma = new PrismaClient();
+
+  try {
+    const crewMember = await prisma.crew.findFirst({
+      where: {
+        id: memberID, // Фильтрация по memberID
+      },
+    });
+
+    return crewMember; // Возвращаем найденного члена экипажа
+  } catch (error) {
+    console.error("Error fetching crew member:", error);
+    throw new Error("Error fetching crew member");
+  } finally {
+    await prisma.$disconnect();
+  }
+};

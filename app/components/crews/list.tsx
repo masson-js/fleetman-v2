@@ -17,7 +17,7 @@ export default async function TestCrewList() {
             <h2 className="font-thin text-sm">Type: {ship.type}</h2>
             <h2 className="font-thin text-sm">IMO: {ship.imoNumber}</h2>
           </div>
-          <div className="flex flex-row items-center">
+          <div className="flex flex-row items-start">
             <h3 className="font-bold mt-4">Crew Members:</h3>
             <div className="flex flex-col ml-2 mt-4 flex-wrap border-l-4 border-blue-400 ">
               {crews
