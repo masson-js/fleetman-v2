@@ -39,10 +39,10 @@ export function UserButton() {
   );
 }
 
-export function StatusEnhancedButton({ imoNumber, children }: any) {
+export function StatusEnhancedButton({ shipId, children }: any) {
   const router = useRouter();
   function handleClick() {
-    router.push(`/status/${imoNumber}`);
+    router.push(`/status/${shipId}`);
   }
   return (
     <button style={{ cursor: "pointer" }} onClick={handleClick}>

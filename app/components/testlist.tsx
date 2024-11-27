@@ -1,50 +1,98 @@
-import { getAllCrewMembers, getAllUserShips } from "@/actions";
-import { UniversalRouterButton } from "./buttons";
+import { getAllUserShips } from "@/actions";
+import {
+  InspectionEnhancedButton,
+  StatusEnhancedButton,
+} from "@/app/components/buttons";
+import WaveIcon from "./waveicon";
 
-export default async function TestCrewList() {
-  const crews = await getAllCrewMembers();
+export default async function TestLinst() {
   const userShips = await getAllUserShips();
 
+  if (!userShips || userShips.length === 0) {
+    return <WaveIcon />;
+  }
+
   return (
-    <div className="flex m-6 w-auto h-auto gap-4 flex-wrap">
-      {userShips.map((ship) => (
-        <div
-          key={ship.id}
-          className="flex p-6 flex-col h-auto w-auto bg-gray-200 hover:bg-slate-300 "
-        >
-          <h1 className="italic text-3xl">{ship.name}</h1>
-          <div className="flex flex-row flex-wrap gap-4 mt-2">
-            <h2 className="font-thin text-sm">Type: {ship.type}</h2>
-            <h2 className="font-thin text-sm">IMO: {ship.imoNumber}</h2>
-          </div>
-          <div className="flex flex-row items-center">
-            <h3 className="font-bold mt-4">Crew Members:</h3>
-            <div className="flex flex-col ml-2 mt-4 flex-wrap border-l-4 border-blue-400 ">
-              {crews
-                .filter((crewMember) => crewMember.shipId === ship.id)
-                .map((crewMember) => (
-                  <UniversalRouterButton
-                    key={crewMember.id}
-                    pathRoute="crews"
-                    pathSlug={crewMember.id}
-                  >
-                    <div className="flex flex-col ml-2 my-2">
-                      <div className="flex flex-row flex-wrap gap-4 justify-between">
-                        <h2>{crewMember.name}</h2>
-                        <span>|</span>
-                        <h2>{crewMember.role}</h2>
-                        <span>|</span>
-                        <h2>{crewMember.nationality}</h2>
-                        <span>|</span>
-                        <h2>{crewMember.status}</h2>
-                      </div>
-                    </div>
-                  </UniversalRouterButton>
-                ))}
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
+    <section className="flex-1 m-6 max-w-max overflow-auto">
+      <table className="table-auto border border-gray-300 rounded-lg overflow-hidden w-full">
+        <thead>
+          <tr className="items-center">
+            <th className="text-sm px-4 py-1 bg-gray-300 text-center rounded-tl-lg w-36">
+              Ship
+            </th>
+            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
+              Type
+            </th>
+            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
+              IMO
+            </th>
+            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
+              MMSI
+            </th>
+            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
+              Built
+            </th>
+            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
+              Port
+            </th>
+            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-56">
+              ECO
+            </th>
+            <th className="text-sm px-4 py-1 bg-gray-300 text-center rounded-tr-lg w-28">
+              Status
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {userShips.map((ship) => (
+            <tr
+              className="text-center hover:bg-slate-600 hover:text-white"
+              key={ship.id}
+            >
+              <td className="px-4 py-2 text-ls">
+                <StatusEnhancedButton inspectionId={ship.id}>
+                  {ship.name}
+                </StatusEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={ship.id}>
+                  {ship.type}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={ship.id}>
+                  {ship.imoNumber}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={ship.id}>
+                  {ship.mmsi}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={ship.id}>
+                  {ship.yearBuilt}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={ship.id}>
+                  {ship.portOfRegistry}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={ship.id}>
+                  {ship.ecoStandard}
+                </InspectionEnhancedButton>
+              </td>
+              <td className="px-4 py-2 text-ls">
+                <InspectionEnhancedButton inspectionId={ship.id}>
+                  {ship.currentStatus}
+                </InspectionEnhancedButton>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
   );
 }

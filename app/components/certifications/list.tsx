@@ -1,5 +1,5 @@
-import { getAllCertifications } from "@/actions"; // Замените на нужную функцию для получения сертификатов
-import { CertificationEnhancedButton } from "../buttons"; // Возможно, нужно будет создать аналогичную кнопку для сертификатов
+import { getAllCertifications } from "@/actions";
+import { CertificationEnhancedButton } from "../buttons"
 
 export default async function CertificationList() {
   const certifications = await getAllCertifications();

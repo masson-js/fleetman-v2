@@ -120,7 +120,7 @@ export const createShip = async (
   const session = await getSession();
   const prisma = new PrismaClient();
 
-  const userSesId = session.userId; // Получаем userId (UUID)
+  const userSesId = session.userId;
 
   // Извлечение данных из формы
   let shipName = formData.get("shipname") as string;
@@ -286,11 +286,36 @@ export const createInspection = async (
 };
 
 export const getAllInspections = async () => {
+  const session = await getSession();
   const prisma = new PrismaClient();
+
+  const userSesId = session?.userId;
+
+  if (!userSesId) {
+    throw new Error("User not authenticated");
+  }
+
   try {
+    // Находим пользователя и его корабли
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Получаем ID всех кораблей пользователя
+    const userShipIds = user.ships.map((ship) => ship.id);
+
+    // Находим инспекции только для кораблей этого пользователя
     const inspections = await prisma.inspection.findMany({
+      where: {
+        shipId: { in: userShipIds },
+      },
       include: {
-        ship: true,
+        ship: true, // Информация о корабле для каждой инспекции
       },
     });
 
@@ -377,9 +402,27 @@ export const createCertification = async (
 };
 
 export const getAllCertifications = async () => {
+  const session = await getSession();
   const prisma = new PrismaClient();
+
+  const userSesId = session?.userId;
+
   try {
+    // Находим пользователя и его корабли
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const userShipIds = user.ships.map((ship) => ship.id);
     const certifications = await prisma.certification.findMany({
+      where: {
+        shipId: { in: userShipIds },
+      },
       include: {
         ship: true,
       },
@@ -464,11 +507,30 @@ export const createLogbook = async (
 };
 
 export const getAllLogbooks = async () => {
+  const session = await getSession();
   const prisma = new PrismaClient();
+
+  const userSesId = session?.userId;
   try {
+    // Находим пользователя и его корабли
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Получаем ID всех кораблей пользователя
+    const userShipIds = user.ships.map((ship) => ship.id);
+
     const logbooks = await prisma.logbook.findMany({
+      where: {
+        shipId: { in: userShipIds },
+      },
       include: {
-        ship: true,
+        ship: true, // Информация о корабле для каждой инспекции
       },
     });
 
@@ -554,14 +616,35 @@ export const createFixture = async (
 };
 
 export const getAllFixtures = async () => {
+  const session = await getSession();
   const prisma = new PrismaClient();
+  const userSesId = session?.userId;
+
+  if (!userSesId) {
+    throw new Error("User not authenticated");
+  }
+
   try {
-    const fixtures = await prisma.fixture.findMany({
-      include: {
-        ship: true, // Включаем связанные данные о судне
-      },
+    // Находим пользователя и его корабли
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true },
     });
 
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Получаем ID всех кораблей пользователя
+    const userShipIds = user.ships.map((ship) => ship.id);
+    const fixtures = await prisma.fixture.findMany({
+      where: {
+        shipId: { in: userShipIds },
+      },
+      include: {
+        ship: true, // Информация о корабле для каждой инспекции
+      },
+    });
     return fixtures;
   } catch (error) {
     console.error("Error fetching fixtures:", error);
@@ -640,12 +723,33 @@ export const createCrew = async (
 };
 
 export const getAllCrewMembers = async () => {
+  const session = await getSession();
   const prisma = new PrismaClient();
+  const userSesId = session?.userId;
+
+  if (!userSesId) {
+    throw new Error("User not authenticated");
+  }
+
   try {
-    // Fetch all crew members with their related ship data
+    // Находим пользователя и его корабли
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Получаем ID всех кораблей пользователя
+    const userShipIds = user.ships.map((ship) => ship.id);
     const crewMembers = await prisma.crew.findMany({
+      where: {
+        shipId: { in: userShipIds },
+      },
       include: {
-        ship: true, // Include related ship data
+        ship: true, // Информация о корабле для каждой инспекции
       },
     });
 
@@ -664,15 +768,88 @@ export const getCrewMember = async ({ memberID }: { memberID: string }) => {
   try {
     const crewMember = await prisma.crew.findFirst({
       where: {
-        id: memberID, // Фильтрация по memberID
+        id: memberID,
       },
     });
 
-    return crewMember; // Возвращаем найденного члена экипажа
+    return crewMember;
   } catch (error) {
     console.error("Error fetching crew member:", error);
     throw new Error("Error fetching crew member");
   } finally {
     await prisma.$disconnect();
+  }
+};
+
+export const getTotalArraysCount = async () => {
+  const prisma = new PrismaClient();
+  const session = await getSession();  // Получаем сессию пользователя
+  const userSesId = session?.userId;  // Получаем userId из сессии
+
+  if (!userSesId) {
+    throw new Error("User not authenticated"); // Если нет userId в сессии, ошибка
+  }
+
+  try {
+    // Находим пользователя по userId
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true }, // Включаем корабли пользователя
+    });
+
+    if (!user) {
+      throw new Error("User not found"); // Если пользователь не найден
+    }
+
+    // Получаем только те корабли, которые принадлежат этому пользователю
+    const userShipIds = user.ships.map((ship) => ship.id);
+
+    // Получаем все суда этого пользователя с их ассоциированными массивами
+    const ships = await prisma.ship.findMany({
+      where: {
+        id: { in: userShipIds }, // Выбираем только корабли пользователя
+      },
+      include: {
+        fuelRecords: true,
+        routes: true,
+        certifications: true,
+        inspections: true,
+        fixtures: true,
+        crew: true,
+        logbooks: true,
+      },
+    });
+
+    // Подсчитываем общее количество записей в каждом массиве для всех судов
+    const totalArraysCount = ships.reduce(
+      (acc, ship) => {
+        acc.fuelRecordsCount += ship.fuelRecords.length;
+        acc.routesCount += ship.routes.length;
+        acc.certificationsCount += ship.certifications.length;
+        acc.inspectionsCount += ship.inspections.length;
+        acc.fixturesCount += ship.fixtures.length;
+        acc.crewCount += ship.crew.length;
+        acc.logbooksCount += ship.logbooks.length;
+        acc.shipsCount += 1;
+        return acc;
+      },
+      {
+        fuelRecordsCount: 0,
+        routesCount: 0,
+        certificationsCount: 0,
+        inspectionsCount: 0,
+        fixturesCount: 0,
+        crewCount: 0,
+        logbooksCount: 0,
+        shipsCount: 0, 
+      }
+    );
+
+    return totalArraysCount; // Возвращаем объект с общими счетчиками
+  } catch (error) {
+    console.error("Error fetching total arrays count:", error);
+    throw new Error("Error fetching total arrays count");
+  } finally {
+    await prisma.$disconnect(); // Отключаем Prisma
   }
 };

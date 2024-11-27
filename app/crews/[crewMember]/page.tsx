@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { getCrewMember } from "@/actions";
 import SideNavigation from "@/app/components/sidenavigation";
-import Header from "@/app/components/header";
-import ExtendedData from "@/app/components/crews/extended";
 import Link from "next/link";
+import WaveIcon from "@/app/components/waveicon";
 
 export default function CrewDetails() {
   const params = useParams();
@@ -35,7 +34,11 @@ export default function CrewDetails() {
   }, [memberID]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex content-center">
+        <WaveIcon />
+      </div>
+    );
   }
 
   if (error) {
@@ -52,24 +55,18 @@ export default function CrewDetails() {
       </header>
       <div className="flex w-auto h-auto m-6 flex-row justify-start">
         <SideNavigation />
-        <div className="flex w-auto h-auto justify-start">
-          <div className="flex gap-4">
-            <div className="flex flex-col items-center">
-              <h1 className="mx-6 mt-6 text-3xl font-bold italic opacity-85 ">
-                Crew Member Details:
+        <div className="flex w-auto h-auto justify-start ml-10">
+          <div className="flex gap-4 h-auto">
+            <div className="flex flex-col items-center h-auto">
+              <h1 className="mx-6 mt-6 text-3xl font-bold italic opacity-85 w-auto ">
+                {memberInfo.name}
               </h1>
-              <div className="flex flex-col w-60 h-60 bg-gray-300 mt-6">
-                <img src="/eugen.jpeg" />
+              <div className="flex flex-col w-60 h-6 mt-6">
+                <img className="flex rounded-full" src="/crew.webp" />
               </div>
             </div>
-            <div className="flex">
-              <div className="flex flex-col mt-6 ">
-                <p className="text-lg">
-                  Name:
-                  <span className="text-xl font-semibold ml-2">
-                    {memberInfo.name}
-                  </span>
-                </p>
+            <div className="flex ml-6 h-auto">
+              <div className="flex flex-col mt-6 border-l-4 border-blue-400 pl-6 h-auto">
                 <p className="text-lg">
                   Role:
                   <span className="text-xl font-semibold ml-2">

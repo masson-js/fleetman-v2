@@ -18,7 +18,7 @@ export default async function TestCrewList() {
             <h2 className="font-thin text-sm">IMO: {ship.imoNumber}</h2>
           </div>
           <div className="flex flex-row items-start">
-            <h3 className="font-bold mt-4">Crew Members:</h3>
+            {crews.length === 0 ? (<h3 className="font-bold mt-4">"you dont have crew members yet"</h3>) : (<h3 className="font-bold mt-4">Crew Members:</h3>)}
             <div className="flex flex-col ml-2 mt-4 flex-wrap border-l-4 border-blue-400 ">
               {crews
                 .filter((crewMember) => crewMember.shipId === ship.id)
@@ -29,7 +29,7 @@ export default async function TestCrewList() {
                     pathSlug={crewMember.id}
                   >
                     <div className="flex flex-col ml-2 my-2">
-                      <div className="flex flex-row flex-wrap gap-4 justify-between">
+                      <div className="flex flex-row flex-wrap gap-4 justify-between hover:underline">
                         <h2>{crewMember.name}</h2>
                         <span>|</span>
                         <h2>{crewMember.role}</h2>

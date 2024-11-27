@@ -1,10 +1,6 @@
+
 import { getAllUserShips } from "@/actions";
 import { InspectionEnhancedButton, StatusEnhancedButton } from "../buttons";
-import {
-  durationCalc,
-  getInspectionIcon,
-  getStatusColorClass,
-} from "@/app/helpers";
 
 export default async function StatusList() {
   const userShips = await getAllUserShips();
@@ -47,44 +43,44 @@ export default async function StatusList() {
               key={ship.id}
             >
               <td className="px-4 py-2 text-ls">
-                <StatusEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.name}
                 </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.type}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.imoNumber}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.mmsi}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
-                  {new Date(ship.yearBuilt).toLocaleDateString("en-US")}
-                </InspectionEnhancedButton>
+                <StatusEnhancedButton shipId={ship.id}>
+                  {ship.yearBuilt}
+                </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.portOfRegistry}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.ecoStandard}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.currentStatus}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
             </tr>
           ))}
