@@ -81,7 +81,7 @@ export function InspectionEnhancedButton({ inspectionId, children }: any) {
     router.push(`/inspections/${inspectionId}`);
   }
   return (
-    <button style={{ cursor: "pointer" }} onClick={handleClick}>
+    <button onClick={handleClick}>
       {children}
     </button>
   );

@@ -968,3 +968,106 @@ export const getInspectionsByShipId = async (shipId: string) => {
     await prisma.$disconnect();
   }
 };
+
+export const getCertificationsByShipId = async (shipId: string) => {
+  const session = await getSession();
+  const prisma = new PrismaClient();
+  const userSesId = session?.userId;
+
+  if (!userSesId) {
+    throw new Error("User not authenticated");
+  }
+
+  try {
+    // Find the user based on their session ID
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true }, // Include the ships associated with the user
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Check if the provided shipId belongs to the user
+    const userShipIds = user.ships.map((ship) => ship.id);
+
+    if (!userShipIds.includes(shipId)) {
+      throw new Error("User does not have access to this ship");
+    }
+
+    // Get the certifications for the provided shipId
+    const certifications = await prisma.certification.findMany({
+      where: {
+        shipId: shipId, // Filter certifications by the shipId
+      },
+      include: {
+        ship: true, // Optionally include ship details in the response
+      },
+    });
+
+    return certifications; // Return the certifications associated with the ship
+  } catch (error) {
+    console.error("Error fetching certifications:", error);
+    throw new Error("Error fetching certifications");
+  } finally {
+    await prisma.$disconnect(); // Ensure the Prisma client is properly disconnected
+  }
+};
+
+
+
+
+export const getShipDetails = async (shipId: string) => {
+  const session = await getSession(); // Получение текущей сессии пользователя
+  const prisma = new PrismaClient();
+  const userSesId = session?.userId;
+
+  if (!userSesId) {
+    throw new Error("User not authenticated");
+  }
+
+  try {
+    // Получение пользователя на основе ID из сессии
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true }, // Включить связанные корабли
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Проверяем, принадлежит ли корабль пользователю
+    const userShipIds = user.ships.map((ship) => ship.id);
+
+    if (!userShipIds.includes(shipId)) {
+      throw new Error("User does not have access to this ship");
+    }
+
+    // Если проверка успешна, получить детали корабля
+    const shipDetails = await prisma.ship.findUnique({
+      where: { id: shipId },
+      include: {
+        fuelRecords: true,      // Включить топливные записи
+        routes: true,           // Включить маршруты
+        certifications: true,   // Включить сертификаты
+        inspections: true,      // Включить инспекции
+        fixtures: true,         // Включить оборудование
+        crew: true,             // Включить экипаж
+        logbooks: true,         // Включить журналы
+      },
+    });
+
+    if (!shipDetails) {
+      throw new Error("Ship not found");
+    }
+
+    return shipDetails; // Возврат данных о корабле
+  } catch (error) {
+    console.error("Error fetching ship details:", error);
+    throw new Error("Failed to fetch ship details.");
+  } finally {
+    await prisma.$disconnect(); // Отключение клиента Prisma
+  }
+};

@@ -31,7 +31,8 @@ export default function ShipDetails() {
   const [shipInspectionsInfo, setShipInspectionsInfo] = useState<any>(null);
   const [inspectionsLoading, setInspectionsLoading] = useState<boolean>(true);
 
-
+  const [shipCertificationInfo, setCertificationInfo] = useState<any>(null);
+  const [certificationLoading, setCertificationLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (shipID) {
@@ -220,7 +221,7 @@ export default function ShipDetails() {
                     shipCrewInfo.map((member: any) => (
                       <CrewEnhancedButton crewId={member.id} key={member.name}>
                         <p
-                          className="text-sm hover:underline items-start"
+                          className="text-sm hover:bg-blue-100 items-start"
                           key={member.id}
                         >
                           <span className="text-sm font-thin  ">
@@ -254,21 +255,39 @@ export default function ShipDetails() {
                         {shipInspectionsInfo.map((inspection: any) => (
                           <tr
                             key={inspection.id}
-                            className="text-center text-sm"
+                            className="text-center text-sm hover:bg-blue-100"
                           >
                             <td className="w-20 font-thin">
-                              {new Date(
-                                inspection.inspectionDate
-                              ).toLocaleDateString("en-US")}
+                              <InspectionEnhancedButton
+                                inspectionId={inspection.id}
+                              >
+                                {new Date(
+                                  inspection.inspectionDate
+                                ).toLocaleDateString("en-US")}
+                              </InspectionEnhancedButton>
                             </td>
                             <td className="w-auto px-2 font-bold">
-                              {inspection.inspectorName}
+                              <InspectionEnhancedButton
+                                inspectionId={inspection.id}
+                              >
+                                {inspection.inspectorName}
+                              </InspectionEnhancedButton>
                             </td>
                             <td className="w-auto font-bold px-5">
-                              {inspection.inspectionType}
+                              <InspectionEnhancedButton
+                                inspectionId={inspection.id}
+                              >
+                                {" "}
+                                {inspection.inspectionType}{" "}
+                              </InspectionEnhancedButton>
                             </td>
                             <td className="w-auto font-bold px-5">
-                              {inspection.complianceStandards}
+                              <InspectionEnhancedButton
+                                inspectionId={inspection.id}
+                              >
+                                {" "}
+                                {inspection.complianceStandards}{" "}
+                              </InspectionEnhancedButton>
                             </td>
                             <td
                               className={`text-sm font-bold px-5 ${
@@ -281,7 +300,12 @@ export default function ShipDetails() {
                                   : ""
                               }`}
                             >
-                              {inspection.results}
+                              <InspectionEnhancedButton
+                                inspectionId={inspection.id}
+                              >
+                                {" "}
+                                {inspection.results}
+                              </InspectionEnhancedButton>
                             </td>
                           </tr>
                         ))}
@@ -294,10 +318,15 @@ export default function ShipDetails() {
               </div>
               <div className="flex flex-col mt-6 border-l-4 border-orange-500 pl-6 h-auto">
                 <div className="flex flex-col pb-2 items-start">
-                  <h2 className="text-lg font-bold items-start">Certifications:</h2>
+                  <h2 className="text-lg font-bold items-start">
+                    Certifications:
+                  </h2>
                   {shipCrewInfo && shipCrewInfo.length > 0 ? (
                     shipCrewInfo.map((member: any) => (
-                      <CrewEnhancedButton crewId={member.id} key={member.name}>
+                      <InspectionEnhancedButton
+                        crewId={member.id}
+                        key={member.name}
+                      >
                         <p
                           className="text-sm hover:underline items-start"
                           key={member.id}
@@ -309,7 +338,7 @@ export default function ShipDetails() {
                             {member.role}
                           </span>
                         </p>
-                      </CrewEnhancedButton>
+                      </InspectionEnhancedButton>
                     ))
                   ) : (
                     <p>No certifications available.</p>
