@@ -1,6 +1,6 @@
 "use client";
 import { createInspection } from "@/actions";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 
 
 interface ShipsGetProps {
@@ -12,6 +12,12 @@ export default function AddInspectionForm({ shipsNames }: ShipsGetProps) {
     createInspection,
     undefined
   );
+  const [isEUCompliance, setIsEUCompliance] = useState(false);
+
+  // Handle checkbox change
+  const handleEUComplianceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsEUCompliance(e.target.checked);
+  };
 
   return (
     <form
@@ -183,6 +189,8 @@ export default function AddInspectionForm({ shipsNames }: ShipsGetProps) {
           type="checkbox"
           name="isEUCompliance"
           className="border rounded"
+          checked={isEUCompliance}
+          onChange={handleEUComplianceChange}
         />
         <span className="m-1">Yes</span>
       </div>

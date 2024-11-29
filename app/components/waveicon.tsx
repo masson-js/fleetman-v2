@@ -1,4 +1,5 @@
-'use client'
+"use client"
+
 const WaveIcon = () => {
   return (
     <>
@@ -17,19 +18,19 @@ const WaveIcon = () => {
 
         @keyframes wave {
           0% {
-            transform: translate(-50%, -50%) rotate(0deg);
+            transform: translate(-50%, -50%) translateY(0);
           }
           25% {
-            transform: translate(calc(-50% - 10px), calc(-50%)) rotate(-5deg);
+            transform: translate(-50%, -50%) translateY(-10px); /* Icon moves up */
           }
           50% {
-            transform: translate(-50%, -50%) rotate(0deg);
+            transform: translate(-50%, -50%) translateY(0);
           }
           75% {
-            transform: translate(calc(-50% + 10px), calc(-50%)) rotate(5deg);
+            transform: translate(-50%, -50%) translateY(-10px); /* Icon moves up again */
           }
           100% {
-            transform: translate(-50%, -50%) rotate(0deg);
+            transform: translate(-50%, -50%) translateY(0);
           }
         }
       `}</style>

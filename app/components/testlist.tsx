@@ -1,14 +1,61 @@
+"use client";
+
 import { getAllUserShips } from "@/actions";
 import {
   InspectionEnhancedButton,
   StatusEnhancedButton,
 } from "@/app/components/buttons";
 import WaveIcon from "./waveicon";
+import { useEffect, useState } from "react";
+interface Ship {
+  id: string;
+  userId: string | null;
+  name: string;
+  type: string;
+  flag: string;
+  imoNumber: string;
+  mmsi: string;
+  callsign: string;
+  deadweight: number;
+  beam: number;
+  width: number;
+  yearBuilt: number;
+  currentStatus: string;
+  portOfRegistry: string;
+  ecoStandard: string;
+}
 
-export default async function TestLinst() {
-  const userShips = await getAllUserShips();
+export default function TestLinst() {
+  const [shipStatus, setShipStatus] = useState<Ship[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!userShips || userShips.length === 0) {
+  useEffect(() => {
+    if (!shipStatus) {
+      const fetchMemberData = async () => {
+        try {
+          setLoading(true);
+          const data = await getAllUserShips();
+          setShipStatus(data);
+        } catch (err) {
+          setError("Error fetching crew member");
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchMemberData();
+    }
+  }, [shipStatus]);
+
+  if (loading) {
+    return (
+      <div className="flex content-center">
+        <WaveIcon />
+      </div>
+    );
+  }
+
+  if (!shipStatus || shipStatus.length === 0) {
     return <WaveIcon />;
   }
 
@@ -44,50 +91,50 @@ export default async function TestLinst() {
           </tr>
         </thead>
         <tbody>
-          {userShips.map((ship) => (
+          {shipStatus.map((ship) => (
             <tr
               className="text-center hover:bg-slate-600 hover:text-white"
               key={ship.id}
             >
               <td className="px-4 py-2 text-ls">
-                <StatusEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.name}
                 </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.type}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.imoNumber}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.mmsi}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.yearBuilt}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.portOfRegistry}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.ecoStandard}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={ship.id}>
+                <StatusEnhancedButton shipId={ship.id}>
                   {ship.currentStatus}
-                </InspectionEnhancedButton>
+                </StatusEnhancedButton>
               </td>
             </tr>
           ))}
@@ -96,3 +143,53 @@ export default async function TestLinst() {
     </section>
   );
 }
+
+
+  {/* <div className="flex flex-col pb-2 w-auto h-auto">
+                    {shipInspectionsInfo && shipInspectionsInfo.length > 0 ? (
+                      shipInspectionsInfo.map((inspection: any) => (
+                        <InspectionEnhancedButton
+                          inspectionId={inspection.id}
+                          key={inspection.id}
+                        >
+                          <div
+                            className="text-sm hover:underline items-start flex"
+                            key={inspection.id}
+                          >
+                            <span className="text-sm font-bold mr-2">
+                             < {new Date(
+                                inspection.inspectionDate
+                              ).toLocaleDateString("en-US")}>
+                            </span>
+                            <span className="text-sm font-thin  ">
+                              {inspection.inspectorName}
+                            </span>
+                            <span className="text-sm font-bold ml-2">
+                              {inspection.inspectionType}
+                            </span>
+
+                            <span
+                              className={`text-sm font-bold ml-2 ${
+                                inspection.results === "passed"
+                                  ? "bg-green-500 text-white px-2 py-1"
+                                  : inspection.results === "pending"
+                                  ? "bg-yellow-500 text-white px-2 py-1"
+                                  : inspection.results === "failed"
+                                  ? "bg-red-500 text-white px-2 py-1"
+                                  : ""
+                              }`}
+                            >
+                              {inspection.results}
+                            </span>
+                            <span className="text-sm font-thin ml-2  ">
+                              {inspection.isEUCompliance
+                                ? "EU Complianced"
+                                : "not EU Complianced"}
+                            </span>
+                          </div>
+                        </InspectionEnhancedButton>
+                      ))
+                    ) : (
+                      <p>No inspections available.</p>
+                    )}
+                  </div> */}

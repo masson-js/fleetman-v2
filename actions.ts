@@ -240,7 +240,7 @@ export const createInspection = async (
     (formData.get("correctiveActions") as string) || null;
   const verificationStatus = formData.get("verificationStatus") as string;
   const duration = parseInt(formData.get("duration") as string, 10) || null;
-  const isEUCompliance = formData.get("isEUCompliance") === "true"; // Assuming "true" or "false" as string values
+  const isEUCompliance = formData.get("isEUCompliance") === "on";
 
   try {
     const ship = await prisma.ship.findFirst({
@@ -851,5 +851,120 @@ export const getTotalArraysCount = async () => {
     throw new Error("Error fetching total arrays count");
   } finally {
     await prisma.$disconnect(); // Отключаем Prisma
+  }
+};
+
+
+export const getShipStatus = async ({ shipID }: { shipID: string }) => {
+  const prisma = new PrismaClient();
+  console.log(shipID)
+  try {
+    const shipStatus = await prisma.ship.findFirst({
+      where: {
+        id: shipID,
+      },
+    });
+
+    return shipStatus;
+  } catch (error) {
+    console.error("Error fetching ship status:", error);
+    throw new Error("Error fetching ship status");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export const getCrewMembersByShipId = async (shipId: string) => {
+  const session = await getSession();
+  const prisma = new PrismaClient();
+  const userSesId = session?.userId;
+
+  if (!userSesId) {
+    throw new Error("User not authenticated");
+  }
+
+  try {
+    // Находим пользователя по его session ID
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Проверяем, что указанный shipId принадлежит пользователю
+    const userShipIds = user.ships.map((ship) => ship.id);
+
+    if (!userShipIds.includes(shipId)) {
+      throw new Error("User does not have access to this ship");
+    }
+
+    // Получаем список членов экипажа для указанного судна
+    const crewMembers = await prisma.crew.findMany({
+      where: {
+        shipId: shipId,
+      },
+      include: {
+        ship: true, // Информация о корабле для каждого члена экипажа
+      },
+    });
+
+    return crewMembers;
+  } catch (error) {
+    console.error("Error fetching crew members:", error);
+    throw new Error("Error fetching crew members");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+
+
+
+export const getInspectionsByShipId = async (shipId: string) => {
+  const session = await getSession();
+  const prisma = new PrismaClient();
+  const userSesId = session?.userId;
+
+  if (!userSesId) {
+    throw new Error("User not authenticated");
+  }
+
+  try {
+    // Находим пользователя по его session ID
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Проверяем, что указанный shipId принадлежит пользователю
+    const userShipIds = user.ships.map((ship) => ship.id);
+
+    if (!userShipIds.includes(shipId)) {
+      throw new Error("User does not have access to this ship");
+    }
+
+    // Получаем список инспекций для указанного судна
+    const inspections = await prisma.inspection.findMany({
+      where: {
+        shipId: shipId,
+      },
+      include: {
+        ship: true, // Информация о корабле для каждой инспекции
+      },
+    });
+
+    return inspections;
+  } catch (error) {
+    console.error("Error fetching inspections:", error);
+    throw new Error("Error fetching inspections");
+  } finally {
+    await prisma.$disconnect();
   }
 };

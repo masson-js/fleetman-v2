@@ -4,8 +4,10 @@ import Header from "../components/header";
 import SideNavigation from "../components/sidenavigation";
 
 import StatusList from "../components/status/list";
-import TestLinst from "../components/testlist";
+
 import StatusData from "../components/status/data";
+import WaveIcon from "../components/waveicon";
+import TestLinst from "../components/testlist";
 
 export default async function Status() {
   const session = await getSession();
