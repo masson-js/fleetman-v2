@@ -1,4 +1,4 @@
-import { getAllUserShips } from "@/actions";
+import { getAllUserShips } from "@/actions/ship";
 import AddCrewForm from "@/app/components/forms/crew";
 import AddInspectionForm from "@/app/components/forms/inspectionadd";
 

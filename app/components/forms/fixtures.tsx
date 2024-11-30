@@ -1,6 +1,6 @@
 "use client";
 
-import { createFixture } from "@/actions";
+import { createFixture } from "@/actions/fixture";
 import { useActionState } from "react";
 
 interface ShipsGetProps {

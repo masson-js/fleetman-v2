@@ -1,4 +1,4 @@
-import { getSession } from "@/actions";
+import { getSession } from "@/actions/session";
 import ShipAddForm from "../../components/forms/shipaddform";
 import Header from "@/app/components/header";
 import SideNavigation from "@/app/components/sidenavigation";

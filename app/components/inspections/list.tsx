@@ -1,4 +1,4 @@
-import { getAllInspections } from "@/actions";
+import { getAllInspections } from "@/actions/inspection";
 import { InspectionEnhancedButton } from "../buttons";
 
 export default async function InspectionList() {

@@ -1,5 +1,5 @@
 "use client";
-import { createCertification } from "@/actions";
+import { createCertification } from "@/actions/certification";
 import { useActionState } from "react";
 
 interface ShipsGetProps {

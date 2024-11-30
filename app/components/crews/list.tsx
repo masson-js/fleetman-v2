@@ -1,12 +1,13 @@
-import { getAllCrewMembers, getAllUserShips } from "@/actions";
-import { UniversalRouterButton } from "../buttons";
+import { getAllCrewMembers } from "@/actions/crew";
+import { StatusEnhancedButton, UniversalRouterButton } from "../buttons";
+import { getAllUserShips } from "@/actions/ship";
 
 export default async function TestCrewList() {
   const crews = await getAllCrewMembers();
   const userShips = await getAllUserShips();
 
   return (
-    <div className="flex m-6 w-auto h-auto gap-4 flex-wrap">
+    <div className="flex flex-col m-6 w-auto h-auto gap-4 flex-wrap">
       {userShips.map((ship) => (
         <div
           key={ship.id}
@@ -18,7 +19,13 @@ export default async function TestCrewList() {
             <h2 className="font-thin text-sm">IMO: {ship.imoNumber}</h2>
           </div>
           <div className="flex flex-row items-start">
-            {crews.length === 0 ? (<h3 className="font-bold mt-4">"you dont have crew members yet"</h3>) : (<h3 className="font-bold mt-4">Crew Members:</h3>)}
+            {crews.length === 0 ? (
+              <h3 className="font-bold mt-4">
+                "you dont have crew members yet"
+              </h3>
+            ) : (
+              <h3 className="font-bold mt-4">Crew Members:</h3>
+            )}
             <div className="flex flex-col ml-2 mt-4 flex-wrap border-l-4 border-blue-400 ">
               {crews
                 .filter((crewMember) => crewMember.shipId === ship.id)

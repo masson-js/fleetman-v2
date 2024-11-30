@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { getCrewMember } from "@/actions";
+import { getCrewMember } from "@/actions/crew";
 import SideNavigation from "@/app/components/sidenavigation";
 import Link from "next/link";
 import WaveIcon from "@/app/components/waveicon";

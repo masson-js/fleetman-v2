@@ -5,7 +5,7 @@ import {
   RegistrationButton,
   TryDemoButton,
 } from "./buttons";
-import { getSession } from "@/actions";
+import { getSession } from "@/actions/session";
 import Link from "next/link";
 
 export default async function HomeNavigation() {

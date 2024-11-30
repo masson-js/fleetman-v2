@@ -1,16 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import {
-  getAllCrewMembers,
-  getCrewMembersByShipId,
-  getInspectionsByShipId,
-  getShipStatus,
-} from "@/actions";
+import { getShipDetails } from "@/actions/ship";
+
 import SideNavigation from "@/app/components/sidenavigation";
-import Link from "next/link";
+
 import WaveIcon from "@/app/components/waveicon";
 import {
+  CertificationEnhancedButton,
   CrewEnhancedButton,
   InspectionEnhancedButton,
 } from "@/app/components/buttons";
@@ -22,63 +19,54 @@ export default function ShipDetails() {
     : params.shipIdentification;
 
   const [shipInfo, setShipInfo] = useState<any>(null);
+  const [crews, setCrews] = useState<any>(null);
+  const [inspections, setInspections] = useState<any>(null);
+  const [certifications, setCertifications] = useState<any>(null);
+
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-  const [shipCrewInfo, setShipCrewInfo] = useState<any>(null);
-  const [crewLoading, setCrewLoading] = useState<boolean>(true);
-
-  const [shipInspectionsInfo, setShipInspectionsInfo] = useState<any>(null);
-  const [inspectionsLoading, setInspectionsLoading] = useState<boolean>(true);
-
-  const [shipCertificationInfo, setCertificationInfo] = useState<any>(null);
-  const [certificationLoading, setCertificationLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (shipID) {
       const fetchShipData = async () => {
         try {
           setLoading(true);
-          const data = await getShipStatus({ shipID });
-          setShipInfo(data);
+          const data = await getShipDetails(shipID);
+
+          // Установка состояний
+          setShipInfo({
+            id: data?.id,
+            name: data?.name,
+            type: data?.type,
+            flag: data?.flag,
+            imoNumber: data?.imoNumber,
+            mmsi: data?.mmsi,
+            callsign: data?.callsign,
+            deadweight: data?.deadweight,
+            length: data?.length,
+            beam: data?.beam,
+            width: data?.width,
+            yearBuilt: data?.yearBuilt,
+            currentStatus: data?.currentStatus,
+            portOfRegistry: data?.portOfRegistry,
+            ecoStandard: data?.ecoStandard,
+          });
+          setCrews(data?.crew || []);
+          setInspections(data?.inspections || []);
+          setCertifications(data?.certifications || []);
         } catch (err) {
+          console.error(err);
           setError("Error fetching ship data");
         } finally {
           setLoading(false);
         }
       };
 
-      const fetchShipCrewData = async () => {
-        try {
-          setCrewLoading(true);
-          const data = await getCrewMembersByShipId(shipID);
-          setShipCrewInfo(data);
-        } catch (err) {
-          setError("Error fetching crew members");
-        } finally {
-          setCrewLoading(false);
-        }
-      };
-
-      const fetchShipInspectionsData = async () => {
-        try {
-          setInspectionsLoading(true);
-          const data = await getInspectionsByShipId(shipID);
-          setShipInspectionsInfo(data);
-        } catch (err) {
-          setError("Error fetching inspections");
-        } finally {
-          setInspectionsLoading(false);
-        }
-      };
-
       fetchShipData();
-      fetchShipCrewData();
-      fetchShipInspectionsData();
     }
   }, [shipID]);
 
-  if (loading || crewLoading || inspectionsLoading) {
+  if (loading) {
     return (
       <div className="flex content-center">
         <WaveIcon />
@@ -92,12 +80,7 @@ export default function ShipDetails() {
 
   return (
     <div className="flex flex-col">
-      <header className="flex w-auto h-16 bg-gray-200 items-center">
-        <Link className="ml-12 text-lg font-bold" href="/status">
-          {" "}
-          {`< GO BACK`}
-        </Link>
-      </header>
+     
       <div className="flex w-auto h-auto m-6 flex-row justify-start mb-20">
         <SideNavigation />
         <div className="flex w-auto h-auto justify-start ml-10">
@@ -217,8 +200,8 @@ export default function ShipDetails() {
               <div className="flex flex-col mt-6 border-l-4 border-green-500 pl-6 h-auto">
                 <div className="flex flex-col pb-2 items-start">
                   <h2 className="text-lg font-bold items-start">Crew:</h2>
-                  {shipCrewInfo && shipCrewInfo.length > 0 ? (
-                    shipCrewInfo.map((member: any) => (
+                  {crews && crews.length > 0 ? (
+                    crews.map((member: any) => (
                       <CrewEnhancedButton crewId={member.id} key={member.name}>
                         <p
                           className="text-sm hover:bg-blue-100 items-start"
@@ -244,7 +227,7 @@ export default function ShipDetails() {
                     Inspections:
                   </h2>
 
-                  {shipInspectionsInfo && shipInspectionsInfo.length > 0 ? (
+                  {inspections && inspections.length > 0 ? (
                     <table>
                       <thead>
                         <tr>
@@ -252,7 +235,7 @@ export default function ShipDetails() {
                         </tr>
                       </thead>
                       <tbody>
-                        {shipInspectionsInfo.map((inspection: any) => (
+                        {inspections.map((inspection: any) => (
                           <tr
                             key={inspection.id}
                             className="text-center text-sm hover:bg-blue-100"
@@ -321,24 +304,22 @@ export default function ShipDetails() {
                   <h2 className="text-lg font-bold items-start">
                     Certifications:
                   </h2>
-                  {shipCrewInfo && shipCrewInfo.length > 0 ? (
-                    shipCrewInfo.map((member: any) => (
-                      <InspectionEnhancedButton
-                        crewId={member.id}
-                        key={member.name}
+                  {certifications && certifications.length > 0 ? (
+                    certifications.map((certificate: any) => (
+                      <CertificationEnhancedButton
+                        certificate={certificate.id}
+                        key={certificate.id}
                       >
                         <p
                           className="text-sm hover:underline items-start"
-                          key={member.id}
+                          key={certificate.id}
                         >
                           <span className="text-sm font-thin  ">
-                            {member.name}
+                            {certificate.type}
                           </span>
-                          <span className="text-sm font-bold ml-2">
-                            {member.role}
-                          </span>
+                          <span className="text-sm font-bold ml-2"></span>
                         </p>
-                      </InspectionEnhancedButton>
+                      </CertificationEnhancedButton>
                     ))
                   ) : (
                     <p>No certifications available.</p>

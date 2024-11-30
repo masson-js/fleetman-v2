@@ -1,6 +1,6 @@
 "use client";
 
-import { getAllUserShips } from "@/actions";
+import { getAllUserShips } from "@/actions/ship";
 import {
   InspectionEnhancedButton,
   StatusEnhancedButton,

@@ -1,5 +1,5 @@
-import { getAllCertifications } from "@/actions";
-import { CertificationEnhancedButton } from "../buttons"
+import { getAllCertifications } from "@/actions/certification";
+import { CertificationEnhancedButton } from "../buttons";
 
 export default async function CertificationList() {
   const certifications = await getAllCertifications();
@@ -15,8 +15,12 @@ export default async function CertificationList() {
             <th className="text-sm px-4 py-1 bg-gray-300 text-center w-36">
               Authority
             </th>
-            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">Issued Date</th>
-            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">Type</th>
+            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
+              Issued Date
+            </th>
+            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
+              Type
+            </th>
             <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
               Number
             </th>
@@ -49,7 +53,9 @@ export default async function CertificationList() {
               </td>
               <td className="px-4 py-2 text-sm">
                 <CertificationEnhancedButton certificationId={certification.id}>
-                  {new Date(certification.issuedDate).toLocaleDateString("en-US")}
+                  {new Date(certification.issuedDate).toLocaleDateString(
+                    "en-US"
+                  )}
                 </CertificationEnhancedButton>
               </td>
               <td className="px-4 py-2 text-sm">
@@ -69,13 +75,17 @@ export default async function CertificationList() {
               </td>
               <td className="px-4 py-2 text-sm">
                 <CertificationEnhancedButton certificationId={certification.id}>
-                  {new Date(certification.verificationDate).toLocaleDateString("en-US")}
+                  {new Date(certification.verificationDate).toLocaleDateString(
+                    "en-US"
+                  )}
                 </CertificationEnhancedButton>
               </td>
               <td className="px-4 py-2 text-sm">
                 <CertificationEnhancedButton certificationId={certification.id}>
                   {certification.nextInspectionDate
-                    ? new Date(certification.nextInspectionDate).toLocaleDateString("en-US")
+                    ? new Date(
+                        certification.nextInspectionDate
+                      ).toLocaleDateString("en-US")
                     : "N/A"}
                 </CertificationEnhancedButton>
               </td>

@@ -1,5 +1,5 @@
 "use client";
-import { createInspection } from "@/actions";
+import { createInspection } from "@/actions/inspection";
 import { useActionState, useState } from "react";
 
 
@@ -14,7 +14,6 @@ export default function AddInspectionForm({ shipsNames }: ShipsGetProps) {
   );
   const [isEUCompliance, setIsEUCompliance] = useState(false);
 
-  // Handle checkbox change
   const handleEUComplianceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsEUCompliance(e.target.checked);
   };

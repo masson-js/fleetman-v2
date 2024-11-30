@@ -1,12 +1,4 @@
-import {
-  getAllCertifications,
-  getAllCrewMembers,
-  getAllFixtures,
-  getAllInspections,
-  getAllLogbooks,
-  getAllUserShips,
-  getTotalArraysCount,
-} from "@/actions";
+import { getTotalArraysCount } from "@/actions/counts";
 
 export default async function StatusData() {
   const {
@@ -19,14 +11,6 @@ export default async function StatusData() {
     logbooksCount,
     shipsCount,
   } = await getTotalArraysCount();
-
-  // const ships = await getAllUserShips();
-  // const crews = await getAllCrewMembers();
-  // const fixtures = await getAllFixtures();
-  // const logbooks = await getAllLogbooks();
-  // const inspections = await getAllInspections();
-  // const certifications = await getAllCertifications();
-  // const routes = [];
 
   return (
     <div className="flex flex-col mt-6 w-40 h-auto bg-gray-200">

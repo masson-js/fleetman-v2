@@ -1,4 +1,4 @@
-import {  getSession } from "@/actions";
+import {  getSession } from "@/actions/session";
 import Header from "../components/header";
 import SideNavigation from "../components/sidenavigation";
 

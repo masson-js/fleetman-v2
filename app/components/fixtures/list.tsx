@@ -1,4 +1,4 @@
-import { getAllFixtures } from "@/actions";
+import { getAllFixtures } from "@/actions/fixture";
 import { FixtureEnhancedButton } from "../buttons";
 
 export default async function FixtureList() {

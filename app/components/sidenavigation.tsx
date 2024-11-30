@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function SideNavigation() {
   const buttonStyle = "flex m-2 px-2 justify-start hover:underline cursor-pointer";
   return (
-    <div className="flex flex-col w-52 text-sm font-semibold">
+    <div className="flex flex-col w-auto text-sm font-semibold">
       <section className="flex">
         <ul className="flex flex-col justify-start mt-6">
           <li className={buttonStyle}>

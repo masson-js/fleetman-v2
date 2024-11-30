@@ -1,6 +1,5 @@
-import { getAllUserShips } from "@/actions";
+import { getAllUserShips } from "@/actions/ship";
 import AddCertifcationForm from "@/app/components/forms/certification";
-
 
 import Header from "@/app/components/header";
 import SideNavigation from "@/app/components/sidenavigation";

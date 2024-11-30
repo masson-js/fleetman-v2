@@ -1,4 +1,5 @@
-import { getAllCrewMembers, getAllUserShips } from "@/actions";
+import { getAllCrewMembers } from "@/actions/crew";
+import { getAllUserShips } from "@/actions/ship";
 
 export default async function CrewData() {
   const crews = await getAllCrewMembers();

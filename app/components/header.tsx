@@ -1,5 +1,5 @@
 "use server";
-import { getSession } from "@/actions";
+import { getSession } from "@/actions/session";
 import { LoginButton, LogOut, RegistrationButton } from "./buttons";
 
 export default async function Header() {

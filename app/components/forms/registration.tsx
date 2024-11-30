@@ -1,6 +1,6 @@
 "use client";
 
-import { registration } from "@/actions";
+import { registration } from "@/actions/registration";
 import Link from "next/link";
 import { useActionState } from "react";
 

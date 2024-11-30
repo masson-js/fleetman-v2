@@ -1,6 +1,6 @@
 "use client";
 
-import { login } from "@/actions";
+import { login } from "@/actions/login";
 import Link from "next/link";
 import { useActionState } from "react";
 

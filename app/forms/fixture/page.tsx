@@ -1,4 +1,4 @@
-import { getAllUserShips } from "@/actions";
+import { getAllUserShips } from "@/actions/ship";
 import AddFixtureForm from "@/app/components/forms/fixtures";
 
 import Header from "@/app/components/header";

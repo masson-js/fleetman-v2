@@ -1,5 +1,5 @@
-import { getAllLogbooks } from "@/actions";  // Assuming you have a method to fetch logbooks
-import { LogbookEnhancedButton } from "../buttons";  // Assuming you have a button component for logbooks
+import { getAllLogbooks } from "@/actions/logbook";
+import { LogbookEnhancedButton } from "../buttons";
 
 export default async function LogbookList() {
   const logbooks = await getAllLogbooks();
@@ -33,8 +33,6 @@ export default async function LogbookList() {
             <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
               Engine
             </th>
-           
-           
           </tr>
         </thead>
         <tbody>
@@ -63,7 +61,7 @@ export default async function LogbookList() {
                   {logbook.operationType}
                 </LogbookEnhancedButton>
               </td>
-              
+
               <td className="px-4 py-2 text-ls">
                 <LogbookEnhancedButton logbookId={logbook.id}>
                   {logbook.weatherConditions || "N/A"}
@@ -84,8 +82,6 @@ export default async function LogbookList() {
                   {logbook.engineStatus || "N/A"}
                 </LogbookEnhancedButton>
               </td>
-            
-             
             </tr>
           ))}
         </tbody>

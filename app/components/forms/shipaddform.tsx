@@ -1,5 +1,5 @@
 "use client";
-import { createShip } from "@/actions";
+import { createShip } from "@/actions/ship";
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -9,7 +9,7 @@ export default function ShipAddForm() {
     undefined
   );
   const router = useRouter();
-
+  console.log(state);
   function navHandler() {
     router.push("/status");
   }

@@ -1,6 +1,6 @@
 "use client";
 
-import { createCrew } from "@/actions";
+import { createCrew } from "@/actions/crew";
 import { useActionState } from "react";
 
 interface ShipsGetProps {
@@ -12,7 +12,6 @@ export default function AddCrewForm({ shipsNames }: ShipsGetProps) {
     createCrew,
     undefined
   );
-  console.log(state);
 
   return (
     <form
@@ -55,9 +54,7 @@ export default function AddCrewForm({ shipsNames }: ShipsGetProps) {
           required
           className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         >
-          <option disabled>
-            Select role
-          </option>
+          <option disabled>Select role</option>
           <option value="Captain">Captain</option>
           <option value="Chief Officer">Chief Officer</option>
           <option value="Second Officer">Second Officer</option>
@@ -101,7 +98,7 @@ export default function AddCrewForm({ shipsNames }: ShipsGetProps) {
         <select
           name="status"
           required
-           defaultValue=""
+          defaultValue=""
           className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
         >
           <option value="active">Active</option>

@@ -1,5 +1,5 @@
 "use client";
-import { createLogbook } from "@/actions";
+import { createLogbook } from "@/actions/logbook";
 import { useActionState } from "react";
 
 interface ShipsGetProps {
@@ -20,8 +20,6 @@ export default function AddLogbookForm({ shipsNames }: ShipsGetProps) {
       <h2 className="flex justify-center font-semibold mt-4 mb-2">
         Add Logbook for the Ship
       </h2>
-
-      {/* Ship Selection */}
       <div className="flex flex-wrap items-center">
         <label className="font-sans w-40 m-2">Select Ship:</label>
         <select
@@ -149,8 +147,6 @@ export default function AddLogbookForm({ shipsNames }: ShipsGetProps) {
           <option value="faulty">Faulty</option>
         </select>
       </div>
-
-      {/* Fuel Consumption */}
       <div className="flex flex-wrap items-center">
         <label className="font-sans w-40 m-2">Fuel Consumption (liters):</label>
         <input
@@ -161,8 +157,6 @@ export default function AddLogbookForm({ shipsNames }: ShipsGetProps) {
           placeholder="Enter fuel consumption (optional)"
         />
       </div>
-
-      {/* Crew Count */}
       <div className="flex flex-wrap items-center">
         <label className="font-sans w-40 m-2">Crew Count:</label>
         <input
@@ -172,14 +166,10 @@ export default function AddLogbookForm({ shipsNames }: ShipsGetProps) {
           placeholder="Enter number of crew members"
         />
       </div>
-
-      {/* Inspection Check */}
       <div className="flex flex-wrap items-center">
         <label className="font-sans w-40 m-2">Inspection Check:</label>
         <input type="checkbox" name="inspectionCheck" className="m-2" />
       </div>
-
-      {/* Responsible Person */}
       <div className="flex flex-wrap items-center">
         <label className="font-sans w-40 m-2">Responsible Person:</label>
         <input
@@ -190,8 +180,6 @@ export default function AddLogbookForm({ shipsNames }: ShipsGetProps) {
           placeholder="Enter responsible person"
         />
       </div>
-
-      {/* Notes */}
       <div className="flex flex-wrap items-center">
         <label className="font-sans w-40 m-2">Notes:</label>
         <textarea
@@ -201,7 +189,6 @@ export default function AddLogbookForm({ shipsNames }: ShipsGetProps) {
           placeholder="Enter any additional notes (optional)"
         />
       </div>
-
       <button
         type="submit"
         className="w-40 m-6 bg-gray-400 text-white py-2 rounded-md hover:bg-black transition duration-150"

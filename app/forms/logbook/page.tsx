@@ -1,6 +1,6 @@
-import { getAllUserShips } from "@/actions";
+import { getAllUserShips } from "@/actions/ship";
 import AddLogbookForm from "@/app/components/forms/addlogbook";
-import AddInspectionForm from "@/app/components/forms/inspectionadd";
+
 
 import Header from "@/app/components/header";
 import SideNavigation from "@/app/components/sidenavigation";
