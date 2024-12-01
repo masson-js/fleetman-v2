@@ -1,63 +1,8 @@
-"use client";
-
 import { getAllUserShips } from "@/actions/ship";
-import {
-  InspectionEnhancedButton,
-  StatusEnhancedButton,
-} from "@/app/components/buttons";
-import WaveIcon from "@/app/components/waveicon";
-import { useEffect, useState } from "react";
-interface Ship {
-  id: string;
-  userId: string | null;
-  name: string;
-  type: string;
-  flag: string;
-  imoNumber: string;
-  mmsi: string;
-  callsign: string;
-  deadweight: number;
-  beam: number;
-  width: number;
-  yearBuilt: number;
-  currentStatus: string;
-  portOfRegistry: string;
-  ecoStandard: string;
-}
+import Link from "next/link";
 
-export default function StatusList() {
-  const [shipStatus, setShipStatus] = useState<Ship[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!shipStatus) {
-      const fetchMemberData = async () => {
-        try {
-          setLoading(true);
-          const data = await getAllUserShips();
-          setShipStatus(data);
-        } catch (err) {
-          setError("Error fetching crew member");
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchMemberData();
-    }
-  }, [shipStatus]);
-
-  if (loading) {
-    return (
-      <div className="flex content-center">
-        <WaveIcon />
-      </div>
-    );
-  }
-
-  if (!shipStatus || shipStatus.length === 0) {
-    return <WaveIcon />;
-  }
+export default async function StatusList() {
+  const data = await getAllUserShips();
 
   return (
     <section className="flex-1 m-6 max-w-max overflow-auto">
@@ -91,50 +36,46 @@ export default function StatusList() {
           </tr>
         </thead>
         <tbody>
-          {shipStatus.map((ship) => (
+          {data.map((ship) => (
             <tr
               className="text-center hover:bg-slate-600 hover:text-white"
               key={ship.id}
             >
               <td className="px-4 py-2 text-ls">
-                <StatusEnhancedButton shipId={ship.id}>
-                  {ship.name}
-                </StatusEnhancedButton>
+                <Link href={`/status/${ship.id}`}>{ship.name}</Link>
               </td>
               <td className="px-4 py-2 text-ls">
-                <StatusEnhancedButton shipId={ship.id}>
-                  {ship.type}
-                </StatusEnhancedButton>
+                <Link href={`/status/${ship.id}`}>{ship.type}</Link>
               </td>
               <td className="px-4 py-2 text-ls">
-                <StatusEnhancedButton shipId={ship.id}>
-                  {ship.imoNumber}
-                </StatusEnhancedButton>
+                <Link href={`/status/${ship.id}`}>{ship.imoNumber}</Link>
               </td>
               <td className="px-4 py-2 text-ls">
-                <StatusEnhancedButton shipId={ship.id}>
-                  {ship.mmsi}
-                </StatusEnhancedButton>
+                <Link href={`/status/${ship.id}`}>{ship.mmsi}</Link>
               </td>
               <td className="px-4 py-2 text-ls">
-                <StatusEnhancedButton shipId={ship.id}>
-                  {ship.yearBuilt}
-                </StatusEnhancedButton>
+                <Link href={`/status/${ship.id}`}>{ship.yearBuilt}</Link>
               </td>
               <td className="px-4 py-2 text-ls">
-                <StatusEnhancedButton shipId={ship.id}>
-                  {ship.portOfRegistry}
-                </StatusEnhancedButton>
+                <Link href={`/status/${ship.id}`}>{ship.portOfRegistry}</Link>
               </td>
               <td className="px-4 py-2 text-ls">
-                <StatusEnhancedButton shipId={ship.id}>
-                  {ship.ecoStandard}
-                </StatusEnhancedButton>
+                <Link href={`/status/${ship.id}`}>{ship.ecoStandard}</Link>
               </td>
-              <td className="px-4 py-2 text-ls">
-                <StatusEnhancedButton shipId={ship.id}>
-                  {ship.currentStatus}
-                </StatusEnhancedButton>
+              <td className={`text-sm font-bold ${
+                        ship.currentStatus === "in port"
+                          ? "bg-green-500 text-white"
+                          : ship.currentStatus === "on the way"
+                          ? "bg-blue-500 text-white"
+                          : ship.currentStatus === "waiting"
+                          ? "bg-yellow-500 text-white"
+                          : ship.currentStatus === "fix"
+                          ? "bg-red-500 text-white"
+                          : ship.currentStatus === "other"
+                          ? "bg-gray-500 text-white"
+                          : "bg-gray-300 text-black"
+                      }`}>
+                <Link href={`/status/${ship.id}`}>{ship.currentStatus}</Link>
               </td>
             </tr>
           ))}

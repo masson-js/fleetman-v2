@@ -1,5 +1,6 @@
 import { getAllInspections } from "@/actions/inspection";
 import { InspectionEnhancedButton } from "../buttons";
+import Link from "next/link";
 
 export default async function InspectionList() {
   const inspections = await getAllInspections();
@@ -21,9 +22,7 @@ export default async function InspectionList() {
             <th className="text-sm  px-4 py-1 bg-gray-300 text-center w-28">
               Type
             </th>
-            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
-              Result
-            </th>
+
             <th className="text-sm  px-4 py-1 bg-gray-300 text-center w-28">
               Standart
             </th>
@@ -40,50 +39,56 @@ export default async function InspectionList() {
         <tbody>
           {inspections.map((inspection) => (
             <tr
-              className="text-center hover:bg-slate-600 hover:text-white"
+              className="text-center hover:bg-slate-600 hover:text-white "
               key={inspection.id}
             >
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={inspection.id}>
+                <Link href={`/inspections/${inspection.id}`}>
                   {inspection.ship.name}
-                </InspectionEnhancedButton>
+                </Link>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={inspection.id}>
+                <Link href={`/inspections/${inspection.id}`}>
                   {inspection.inspectorName}
-                </InspectionEnhancedButton>
+                </Link>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={inspection.id}>
+                <Link href={`/inspections/${inspection.id}`}>
                   {new Date(inspection.inspectionDate).toLocaleDateString(
                     "en-US"
                   )}
-                </InspectionEnhancedButton>
+                </Link>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={inspection.id}>
+                <Link href={`/inspections/${inspection.id}`}>
                   {inspection.inspectionType}
-                </InspectionEnhancedButton>
+                </Link>
               </td>
+
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={inspection.id}>
-                  {inspection.results}
-                </InspectionEnhancedButton>
-              </td>
-              <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={inspection.id}>
+                <Link href={`/inspections/${inspection.id}`}>
                   {inspection.complianceStandards}
-                </InspectionEnhancedButton>
+                </Link>
               </td>
-              <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={inspection.id}>
+              <td
+                className={`text-sm font-bold ${
+                  inspection.verificationStatus === "passed"
+                    ? "bg-green-500 text-white"
+                    : inspection.verificationStatus === "requires-work"
+                    ? "bg-yellow-500 text-white"
+                    : inspection.verificationStatus === "failed"
+                    ? "bg-red-500 text-white"
+                    : "bg-gray-300 text-black"
+                }`}
+              >
+                <Link href={`/inspections/${inspection.id}`}>
                   {inspection.verificationStatus}
-                </InspectionEnhancedButton>
+                </Link>
               </td>
               <td className="px-4 py-2 text-ls">
-                <InspectionEnhancedButton inspectionId={inspection.id}>
+                <Link href={`/inspections/${inspection.id}`}>
                   {inspection.isEUCompliance ? "YES" : "NO"}
-                </InspectionEnhancedButton>
+                </Link>
               </td>
             </tr>
           ))}

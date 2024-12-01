@@ -14,7 +14,7 @@ export const createInspection = async (
   const inspectionDate = new Date(formData.get("inspectionDate") as string);
   const inspectorName = formData.get("inspectorName") as string;
   const inspectionType = formData.get("inspectionType") as string;
-  const results = formData.get("results") as string;
+  const results = "N/A"
   const recommendations = (formData.get("recommendations") as string) || null;
   const nextInspectionDate = formData.get("nextInspectionDate")
     ? new Date(formData.get("nextInspectionDate") as string)
@@ -152,5 +152,83 @@ export const getInspectionsByShipId = async (shipId: string) => {
     throw new Error("Error fetching inspections");
   } finally {
     await prisma.$disconnect();
+  }
+};
+
+
+export const getInspectionById = async (inspectionId: string) => {
+  const session = await getSession();
+  const prisma = new PrismaClient();
+  const userSesId = session?.userId;
+
+  if (!userSesId) {
+    throw new Error("User not authenticated");
+  }
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Проверяем доступ к судну, связанного с инспекцией
+    const inspection = await prisma.inspection.findUnique({
+      where: {
+        id: inspectionId,
+      },
+      include: {
+        ship: true, // Информация о судне, которое связано с инспекцией
+      },
+    });
+
+    if (!inspection) {
+      throw new Error("Inspection not found");
+    }
+
+    // Проверяем, имеет ли пользователь доступ к этому судну
+    const userShipIds = user.ships.map((ship) => ship.id);
+    if (!userShipIds.includes(inspection.shipId)) {
+      throw new Error("User does not have access to this ship");
+    }
+
+    return inspection;
+  } catch (error) {
+    console.error("Error fetching inspection:", error);
+    throw new Error("Error fetching inspection");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export const deleteInspection = async (inspectionId: string) => {
+  const prisma = new PrismaClient();
+
+  try {
+    const inspection = await prisma.inspection.findUnique({
+      where: { id: inspectionId },
+    });
+    if (!inspection) {
+      return { success: false, error: "Inspection not found" };
+    }
+    await prisma.inspection.delete({
+      where: { id: inspectionId },
+    });
+
+    return { success: true };
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error deleting inspection:", error.message);
+      return { success: false, error: error.message };
+    } else {
+      console.error("Unknown error:", error);
+      return { success: false, error: "Inspection deletion failed" };
+    }
+  } finally {
+    await prisma.$disconnect();
+    redirect("/inspections");
   }
 };

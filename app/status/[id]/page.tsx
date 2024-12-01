@@ -1,75 +1,31 @@
-"use client";
-import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
 import { getShipDetails } from "@/actions/ship";
-
-import SideNavigation from "@/app/components/sidenavigation";
-
-import WaveIcon from "@/app/components/waveicon";
 import {
-  CertificationEnhancedButton,
-  CrewEnhancedButton,
   InspectionEnhancedButton,
+  UniversalRouterButton,
 } from "@/app/components/buttons";
+import Header from "@/app/components/header";
+import SideNavigation from "@/app/components/sidenavigation";
+import WaveIcon from "@/app/components/waveicon";
 
+export default async function ShipDetails({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const shipID = (await params).id
 
+  const ship = await getShipDetails(shipID);
+  const {
+    fuelRecords,
+    routes,
+    logbooks,
+    crew,
+    inspections,
+    fixtures,
+    certifications,
+  } = ship;
 
-
-export default function ShipDetails() {
-  const params = useParams();
-  const shipID = Array.isArray(params.shipIdentification)
-    ? params.shipIdentification[0]
-    : params.shipIdentification;
-
-  const [shipInfo, setShipInfo] = useState<any>(null);
-  const [crews, setCrews] = useState<any>(null);
-  const [inspections, setInspections] = useState<any>(null);
-  const [certifications, setCertifications] = useState<any>(null);
-
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (shipID) {
-      const fetchShipData = async () => {
-        try {
-          setLoading(true);
-          const data = await getShipDetails(shipID);
-
-          // Установка состояний
-          setShipInfo({
-            id: data?.id,
-            name: data?.name,
-            type: data?.type,
-            flag: data?.flag,
-            imoNumber: data?.imoNumber,
-            mmsi: data?.mmsi,
-            callsign: data?.callsign,
-            deadweight: data?.deadweight,
-            length: data?.length,
-            beam: data?.beam,
-            width: data?.width,
-            yearBuilt: data?.yearBuilt,
-            currentStatus: data?.currentStatus,
-            portOfRegistry: data?.portOfRegistry,
-            ecoStandard: data?.ecoStandard,
-          });
-          setCrews(data?.crew || []);
-          setInspections(data?.inspections || []);
-          setCertifications(data?.certifications || []);
-        } catch (err) {
-          console.error(err);
-          setError("Error fetching ship data");
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchShipData();
-    }
-  }, [shipID]);
-
-  if (loading) {
+  if (ship.length === 0) {
     return (
       <div className="flex content-center">
         <WaveIcon />
@@ -77,22 +33,16 @@ export default function ShipDetails() {
     );
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-
-
   return (
     <div className="flex flex-col">
-    {/* <HeaderSer/> */}
+      <Header />
       <div className="flex w-auto h-auto m-6 flex-row justify-start mb-20">
         <SideNavigation />
         <div className="flex w-auto h-auto justify-start ml-10">
           <div className="flex gap-4 h-auto">
             <div className="flex flex-col items-center h-auto">
               <h1 className="mx-6 mt-6 text-3xl font-bold italic opacity-85 w-auto ">
-                {shipInfo.name}
+                {ship.name}
               </h1>
               <div className="flex flex-col w-60 h-6 mt-6">
                 <img className="flex rounded-full" src="/output.jpg" />
@@ -106,39 +56,35 @@ export default function ShipDetails() {
                     Status:
                     <span
                       className={`text-sm font-bold p-1 ${
-                        shipInfo.currentStatus === "in port"
+                        ship.currentStatus === "in port"
                           ? "bg-green-500 text-white"
-                          : shipInfo.currentStatus === "on the way"
+                          : ship.currentStatus === "on the way"
                           ? "bg-blue-500 text-white"
-                          : shipInfo.currentStatus === "waiting"
+                          : ship.currentStatus === "waiting"
                           ? "bg-yellow-500 text-white"
-                          : shipInfo.currentStatus === "fix"
+                          : ship.currentStatus === "fix"
                           ? "bg-red-500 text-white"
-                          : shipInfo.currentStatus === "other"
+                          : ship.currentStatus === "other"
                           ? "bg-gray-500 text-white"
                           : "bg-gray-300 text-black"
                       }`}
                     >
-                      {shipInfo.currentStatus}
+                      {ship.currentStatus}
                     </span>
                   </p>
                   <p className="text-sm">
                     Type:
-                    <span className="text-sm font-bold ml-2">
-                      {shipInfo.type}
-                    </span>
+                    <span className="text-sm font-bold ml-2">{ship.type}</span>
                   </p>
 
                   <p className="text-sm">
                     Flag:
-                    <span className="text-sm font-bold ml-2">
-                      {shipInfo.flag}
-                    </span>
+                    <span className="text-sm font-bold ml-2">{ship.flag}</span>
                   </p>
                   <p className="text-sm">
                     City:
                     <span className="text-sm font-bold ml-2">
-                      {shipInfo.portOfRegistry}
+                      {ship.portOfRegistry}
                     </span>
                   </p>
                 </div>
@@ -146,25 +92,23 @@ export default function ShipDetails() {
                   <p className="text-sm ">
                     Callsign:
                     <span className="text-sm font-bold ml-2">
-                      {shipInfo.callsign}
+                      {ship.callsign}
                     </span>
                   </p>
                   <p className="text-sm ">
                     IMO:
                     <span className="text-sm font-bold ml-2">
-                      {shipInfo.imoNumber}
+                      {ship.imoNumber}
                     </span>
                   </p>
                   <p className="text-sm ">
                     MMSI:
-                    <span className="text-sm font-bold ml-2">
-                      {shipInfo.mmsi}
-                    </span>
+                    <span className="text-sm font-bold ml-2">{ship.mmsi}</span>
                   </p>
                   <p className="text-sm ">
                     ECO Standart:
                     <span className="text-sm font-bold ml-2">
-                      {shipInfo.ecoStandard}
+                      {ship.ecoStandard}
                     </span>
                   </p>
                 </div>
@@ -172,42 +116,42 @@ export default function ShipDetails() {
                   <p className="text-sm ">
                     Year of built:
                     <span className="text-sm font-bold ml-2">
-                      {shipInfo.yearBuilt}
+                      {ship.yearBuilt}
                     </span>
                   </p>
                   <p className="text-sm ">
                     Deadweight:
                     <span className="text-sm font-bold ml-2">
-                      {shipInfo.deadweight}
+                      {ship.deadweight}
                     </span>
                   </p>
 
                   <p className="text-sm ">
                     Length:
                     <span className="text-sm font-bold ml-2">
-                      {shipInfo.length}
+                      {ship.length}
                     </span>
                   </p>
                   <p className="text-sm ">
                     Width:
-                    <span className="text-sm font-bold ml-2">
-                      {shipInfo.width}
-                    </span>
+                    <span className="text-sm font-bold ml-2">{ship.width}</span>
                   </p>
                   <p className="text-sm ">
                     Beam:
-                    <span className="text-sm font-bold ml-2">
-                      {shipInfo.beam}
-                    </span>
+                    <span className="text-sm font-bold ml-2">{ship.beam}</span>
                   </p>
                 </div>
               </div>
               <div className="flex flex-col mt-6 border-l-4 border-green-500 pl-6 h-auto">
                 <div className="flex flex-col pb-2 items-start">
                   <h2 className="text-lg font-bold items-start">Crew:</h2>
-                  {crews && crews.length > 0 ? (
-                    crews.map((member: any) => (
-                      <CrewEnhancedButton crewId={member.id} key={member.name}>
+                  {crew && crew.length > 0 ? (
+                    crew.map((member: any) => (
+                      <UniversalRouterButton
+                        pathRoute="crews"
+                        pathSlug={member.id}
+                        key={member.name}
+                      >
                         <p
                           className="text-sm hover:bg-blue-100 items-start"
                           key={member.id}
@@ -219,7 +163,7 @@ export default function ShipDetails() {
                             {member.role}
                           </span>
                         </p>
-                      </CrewEnhancedButton>
+                      </UniversalRouterButton>
                     ))
                   ) : (
                     <p>No crew members available.</p>
@@ -311,7 +255,9 @@ export default function ShipDetails() {
                   </h2>
                   {certifications && certifications.length > 0 ? (
                     certifications.map((certificate: any) => (
-                      <CertificationEnhancedButton
+                      <UniversalRouterButton
+                        pathRoute="certifications"
+                        pathSlug={certificate.id}
                         certificate={certificate.id}
                         key={certificate.id}
                       >
@@ -324,7 +270,7 @@ export default function ShipDetails() {
                           </span>
                           <span className="text-sm font-bold ml-2"></span>
                         </p>
-                      </CertificationEnhancedButton>
+                      </UniversalRouterButton>
                     ))
                   ) : (
                     <p>No certifications available.</p>

@@ -3,6 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { logout } from "@/actions/logout";
+import { deleteInspection } from "@/actions/inspection";
 
 const buttonStyle =
   "w-24 h-12 border-2 rounded-lg font-bold text-center text-gray-800 border-gray-400 hover:bg-gray-500 hover:border-gray-500 hover:text-gray-100 transition duration-100 hover:duration-500 ease-in-out ";
@@ -80,11 +81,7 @@ export function InspectionEnhancedButton({ inspectionId, children }: any) {
   function handleClick() {
     router.push(`/inspections/${inspectionId}`);
   }
-  return (
-    <button onClick={handleClick}>
-      {children}
-    </button>
-  );
+  return <button onClick={handleClick}>{children}</button>;
 }
 
 export function CertificationEnhancedButton({ inspectionId, children }: any) {
@@ -150,5 +147,19 @@ export function UniversalRouterButton({ pathRoute, pathSlug, children }: any) {
     >
       {children}
     </div>
+  );
+}
+
+export function DeleteInspection({ inspectionId }: any) {
+  function handleClick() {
+    deleteInspection(inspectionId);
+  }
+  return (
+    <button
+      onClick={handleClick}
+      className="mt-4 bg-red-600 rounded-full w-auto h-6 flex items-center justify-center text-white hover:bg-red-500"
+    >
+      Delete
+    </button>
   );
 }

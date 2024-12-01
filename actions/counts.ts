@@ -68,3 +68,70 @@ export const getTotalArraysCount = async () => {
     await prisma.$disconnect();
   }
 };
+
+export const getInspectionStats = async () => {
+  const prisma = new PrismaClient();
+  const session = await getSession();
+  const userSesId = session?.userId;
+
+  if (!userSesId) {
+    throw new Error("User not authenticated");
+  }
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const userShipIds = user.ships.map((ship) => ship.id);
+
+    const inspections = await prisma.inspection.findMany({
+      where: {
+        shipId: { in: userShipIds },
+      },
+      select: {
+        verificationStatus: true,
+        complianceStandards: true,
+      },
+    });
+
+    const statusCounts = inspections.reduce(
+      (acc, inspection) => {
+        if (inspection.verificationStatus === "passed") {
+          acc.status.passed++;
+        } else if (inspection.verificationStatus === "requires-work") {
+          acc.status.requiresWork++;
+        } else if (inspection.verificationStatus === "failed") {
+          acc.status.failed++;
+        }
+
+        if (inspection.complianceStandards) {
+          acc.standards[inspection.complianceStandards] =
+            (acc.standards[inspection.complianceStandards] || 0) + 1;
+        }
+
+        return acc;
+      },
+      {
+        status: {
+          passed: 0,
+          requiresWork: 0,
+          failed: 0,
+        },
+        standards: {} as Record<string, number>,
+      }
+    );
+
+    return statusCounts;
+  } catch (error) {
+    console.error("Error fetching inspection stats:", error);
+    throw new Error("Error fetching inspection stats");
+  } finally {
+    await prisma.$disconnect();
+  }
+};

@@ -2,7 +2,6 @@
 import { createInspection } from "@/actions/inspection";
 import { useActionState, useState } from "react";
 
-
 interface ShipsGetProps {
   shipsNames: string[];
 }
@@ -75,19 +74,6 @@ export default function AddInspectionForm({ shipsNames }: ShipsGetProps) {
           <option value="unscheduled">Unscheduled</option>
           <option value="follow-up">Follow-Up</option>
           <option value="other">Other</option>
-        </select>
-      </div>
-      <div className="flex flex-wrap items-center">
-        <label className="font-sans w-40 m-2">Result:</label>
-        <select
-          name="results"
-          required
-          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        >
-          <option disabled>Select results</option>
-          <option value="passed">Passed</option>
-          <option value="failed">Failed</option>
-          <option value="pending">Pending</option>
         </select>
       </div>
       <div className="flex flex-wrap items-center">
@@ -194,7 +180,6 @@ export default function AddInspectionForm({ shipsNames }: ShipsGetProps) {
         <span className="m-1">Yes</span>
       </div>
       <button
-        
         type="submit"
         className="w-40 m-6 bg-gray-400 text-white py-2 rounded-md hover:bg-black transition duration-150"
       >

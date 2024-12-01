@@ -3,10 +3,8 @@ import { getSession } from "@/actions/session";
 import Header from "../components/header";
 import SideNavigation from "../components/sidenavigation";
 
-import StatusList from "../components/status/list";
-
 import StatusData from "../components/status/data";
-import WaveIcon from "../components/waveicon";
+import StatusList from "../components/status/list";
 
 export default async function Status() {
   const session = await getSession();
