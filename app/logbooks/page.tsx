@@ -6,12 +6,10 @@ export default async function Logbooks() {
   return (
     <div className="flex flex-col">
       <Header />
-      <div className="flex w-auto h-auto m-6 flex-row">
+      <div className="flex w-auto h-auto m-6 flex-row animate-fade-in">
         <SideNavigation />
-        <div className="flex flex-col mt-0 w-auto h-auto">
-          <h1 className="mx-6 text-3xl font-bold italic opacity-85">
-           LogBooks
-          </h1>
+        <div className="flex flex-col mt-0 w-auto h-auto animate-fade-in">
+         
           <LogbookList />
         </div>
       </div>

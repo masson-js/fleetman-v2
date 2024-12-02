@@ -5,7 +5,7 @@ import LoginForm from "@/app/components/forms/login";
 
 export default function LogIn() {
   return (
-    <main className="flex w-full h-screen">
+    <main className="flex w-full h-screen animate-fade-in">
       <div className="relative flex w-1/2 items-center justify-center flex-col bg-gray-200 text-gray-800">
         <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center opacity-15 z-0"></div>
 

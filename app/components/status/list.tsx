@@ -5,7 +5,7 @@ export default async function StatusList() {
   const data = await getAllUserShips();
 
   return (
-    <section className="flex-1 m-6 max-w-max overflow-auto">
+    <section className="flex-1 max-w-max overflow-auto">
       <table className="table-auto border border-gray-300 rounded-lg overflow-hidden w-full">
         <thead>
           <tr className="items-center">

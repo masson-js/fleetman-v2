@@ -1,14 +1,24 @@
-'user client'
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function SideNavigation() {
-  const buttonStyle = "flex m-2 px-2 justify-start hover:underline cursor-pointer";
+  const pathname = usePathname();
+
+  const activeStyle = "text-blue-500 font-bold underline";
+
+  const buttonStyle =
+    "flex m-2 px-2 justify-start hover:underline cursor-pointer";
   return (
     <div className="flex flex-col w-auto text-sm font-semibold">
       <section className="flex">
-        <ul className="flex flex-col justify-start mt-6">
-          <li className={buttonStyle}>
+        <ul className="flex flex-col justify-start ">
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/status" ? activeStyle : ""
+            }`}
+          >
             <Link href="/status" className="flex flex-row">
               <Image
                 src="/status.png"
@@ -21,7 +31,11 @@ export default function SideNavigation() {
             </Link>
           </li>
 
-          <li className={buttonStyle}>
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/inspections" ? activeStyle : ""
+            }`}
+          >
             <Link href="/inspections" className="flex flex-row">
               <Image
                 src="/document.png"
@@ -33,7 +47,11 @@ export default function SideNavigation() {
               Inspections
             </Link>
           </li>
-          <li className={buttonStyle}>
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/certifications" ? activeStyle : ""
+            }`}
+          >
             <Link href="/certifications" className="flex flex-row">
               <Image
                 src="/certification.png"
@@ -45,7 +63,11 @@ export default function SideNavigation() {
               Certifications
             </Link>
           </li>
-          <li className={buttonStyle}>
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/logbooks" ? activeStyle : ""
+            }`}
+          >
             <Link href="/logbooks" className="flex flex-row">
               <Image
                 src="/logbook.png"
@@ -57,7 +79,11 @@ export default function SideNavigation() {
               Logbooks
             </Link>
           </li>
-          <li className={buttonStyle}>
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/fixtures" ? activeStyle : ""
+            }`}
+          >
             <Link href="/fixtures" className="flex flex-row">
               <Image
                 src="/hands.png"
@@ -69,7 +95,11 @@ export default function SideNavigation() {
               Fixtures
             </Link>
           </li>
-          <li className={buttonStyle}>
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/crews" ? activeStyle : ""
+            }`}
+          >
             <Link href="/crews" className="flex flex-row">
               <Image
                 src="/crews.png"
@@ -81,7 +111,11 @@ export default function SideNavigation() {
               Crews
             </Link>
           </li>
-          <li className={buttonStyle}>
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/fleetroutes" ? activeStyle : ""
+            }`}
+          >
             <Link href="/fleetroutes" className="flex flex-row">
               <Image
                 src="/map.png"
@@ -97,7 +131,11 @@ export default function SideNavigation() {
       </section>
       <section className="flex border-t-2 border-gray-600 mt-2 border-opacity-20">
         <ul className="flex flex-col justify-center">
-          <li className={buttonStyle}>
+        <li
+            className={`${buttonStyle} ${
+              pathname === "/forms/ship" ? activeStyle : ""
+            }`}
+          >
             <Link href="/forms/ship" className="flex flex-row">
               <Image
                 src="/ship.png"
@@ -109,7 +147,11 @@ export default function SideNavigation() {
               <p>Add Ship</p>
             </Link>
           </li>
-          <li className={buttonStyle}>
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/forms/inspection" ? activeStyle : ""
+            }`}
+          >
             <Link href="/forms/inspection" className="flex flex-row">
               <Image
                 src="/addinspection.png"
@@ -121,7 +163,11 @@ export default function SideNavigation() {
               <p>Add Inspection</p>
             </Link>
           </li>
-          <li className={buttonStyle}>
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/forms/certification" ? activeStyle : ""
+            }`}
+          >
             <Link href="/forms/certification" className="flex flex-row">
               <Image
                 src="/addcer.png"
@@ -133,7 +179,11 @@ export default function SideNavigation() {
               <p>Add Certification</p>
             </Link>
           </li>
-          <li className={buttonStyle}>
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/forms/logbook" ? activeStyle : ""
+            }`}
+          >
             <Link href="/forms/logbook" className="flex flex-row">
               <Image
                 src="/addlogbook.png"
@@ -145,7 +195,11 @@ export default function SideNavigation() {
               <p>Add Logbook</p>
             </Link>
           </li>
-          <li className={buttonStyle}>
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/forms/fixture" ? activeStyle : ""
+            }`}
+          >
             <Link href="/forms/fixture" className="flex flex-row">
               <Image
                 src="/addfixture.png"
@@ -157,7 +211,11 @@ export default function SideNavigation() {
               <p>Add Fixture</p>
             </Link>
           </li>
-          <li className={buttonStyle}>
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/forms/crew" ? activeStyle : ""
+            }`}
+          >
             <Link href="/forms/crew" className="flex flex-row">
               <Image
                 src="/addcrew.png"
@@ -169,8 +227,12 @@ export default function SideNavigation() {
               <p>Add Crew</p>
             </Link>
           </li>
-         
-          <li className={buttonStyle}>
+
+          <li
+            className={`${buttonStyle} ${
+              pathname === "/forms/route" ? activeStyle : ""
+            }`}
+          >
             <Link href="/forms/route" className="flex flex-row">
               <Image
                 src="/routes.png"

@@ -4,7 +4,7 @@ export default async function InspectionData() {
   const { status, standards } = await getInspectionStats();
 
   return (
-    <div className="flex flex-col mt-6 w-40 h-auto gap-2 bg-gray-200">
+    <div className="flex flex-col w-40 h-auto gap-2 bg-gray-200">
       <h2 className="text-sm font-semibold mt-2 ml-2">Verification Status:</h2>
       <div className="flex flex-row items-center gap-1 ml-2 justify-between mx-4">
         <h3 className="text-sm font-thin">Passed:</h3>

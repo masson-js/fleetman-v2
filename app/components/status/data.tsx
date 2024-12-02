@@ -13,7 +13,7 @@ export default async function StatusData() {
   } = await getTotalArraysCount();
 
   return (
-    <div className="flex flex-col mt-6 w-40 h-auto bg-gray-200">
+    <div className="flex flex-col w-40 h-auto bg-gray-200">
       <div className="flex flex-row items-center gap-1 mt-6 ml-3">
         <h2 className="text-sm font-thin">Ships:</h2>
         <h2 className="text-lg font-semibold">{shipsCount}</h2>

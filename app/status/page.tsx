@@ -14,12 +14,11 @@ export default async function Status() {
   }
 
   return (
-    <div className="flex flex-col h-screen">
-      <Header />
-      <div className="flex m-6 justify-between">
-        <SideNavigation />
-        <div className="flex flex-col mt-0 w-auto h-auto">
-          <h1 className="mx-6 text-3xl font-bold italic opacity-85">Status</h1>
+    <div className="flex flex-col h-screen animate-fade-in">
+    <Header />
+    <div className="flex m-6 justify-between animate-fade-in">
+      <SideNavigation />
+      <div className="flex flex-col mt-0 w-auto h-auto animate-fade-in">
           <StatusList />
         </div>
         <StatusData />
