@@ -1,27 +1,30 @@
-import {  getSession } from "@/actions/session";
+import { getSession } from "@/actions/session";
 import Header from "../components/header";
 import SideNavigation from "../components/sidenavigation";
 
-import CertificationList from "../components/certifications/list";
-import { useParams } from "next/navigation";
+
+
+import ShipCardCertification from "../components/certifications/card";
+import CertificationData from "../components/certifications/data";
+import CertificationDataViz from "../components/dataviz/certifications/certification-dataviz";
 
 export default async function Certifications() {
   const session = await getSession();
- 
 
   if (!session || !session.isLoggedIn) {
-    return <div>Извините, вам нужно войти в систему, чтобы увидеть данные</div>;
+    return <div>You have to LogIn</div>;
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen animate-fade-in mb-40">
       <Header />
-      <div className="flex m-6">
+      <div className="flex m-6 justify-between animate-fade-in">
         <SideNavigation />
-        <div className="flex flex-col mt-0 w-auto h-auto">
-          <h1  className="mx-6 text-3xl font-bold italic opacity-85">Certifications</h1>
-          <CertificationList />
+        <div className="flex flex-row mt-0 w-auto h-auto animate-fade-in gap-4">
+          <ShipCardCertification />
+          <CertificationDataViz />
         </div>
+        <CertificationData />
       </div>
     </div>
   );

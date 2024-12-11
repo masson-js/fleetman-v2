@@ -1,18 +1,22 @@
 import Header from "../components/header";
-import LogbookList from "../components/logbooks/list";
+import LogBoookCards from "../components/logbooks/cards";
+
+import LogBookData from "../components/logbooks/data";
 import SideNavigation from "../components/sidenavigation";
 
 export default async function Logbooks() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-screen animate-fade-in mb-40">
       <Header />
-      <div className="flex w-auto h-auto m-6 flex-row animate-fade-in">
+      <div className="flex m-6 justify-between animate-fade-in">
         <SideNavigation />
-        <div className="flex flex-col mt-0 w-auto h-auto animate-fade-in">
-         
-          <LogbookList />
+        <div className="flex flex-col mt-0 w-auto h-auto animate-fade-in items-center">
+          <LogBoookCards />
         </div>
+        <LogBookData/>
       </div>
     </div>
   );
 }
+
+

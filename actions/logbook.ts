@@ -105,3 +105,42 @@ export const getAllLogbooks = async () => {
     await prisma.$disconnect();
   }
 };
+
+export const getLastLogbooksForShips = async () => {
+  const session = await getSession();
+  const prisma = new PrismaClient();
+
+  const userSesId = session?.userId;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const userShipIds = user.ships.map((ship) => ship.id);
+
+    const logbooksByShip: Record<string, any[]> = {};
+
+    for (const shipId of userShipIds) {
+      const logbooks = await prisma.logbook.findMany({
+        where: { shipId },
+        orderBy: { date: "desc" },
+        take: 10,
+      });
+
+      logbooksByShip[shipId] = logbooks;
+    }
+
+    return logbooksByShip;
+  } catch (error) {
+    console.error("Error fetching logbooks:", error);
+    throw new Error("Error fetching logbooks");
+  } finally {
+    await prisma.$disconnect();
+  }
+};

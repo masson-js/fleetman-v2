@@ -1,6 +1,6 @@
 import { getInspectionStats, getTotalArraysCount } from "@/actions/counts";
 
-export default async function InspectionData() {
+export default async function CertificationData() {
   const { status, standards } = await getInspectionStats();
 
   return (

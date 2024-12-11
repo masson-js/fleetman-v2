@@ -9,7 +9,7 @@ export default async function CrewData() {
   const activeMembers = crews.filter((member) => member.status === "active");
   const onLeavemembers = crews.filter((member) => member.status === "on-leave")
   return (
-    <div className="flex flex-col mt-6 w-40 h-auto bg-gray-200">
+    <div className="flex flex-col mt-6 w-40 h-auto ">
       <div className="flex flex-row items-center gap-1 mt-6 ml-3">
         <h2 className="text-sm font-thin">Ships:</h2>
         <h2 className="text-lg font-semibold">{ShipsCount}</h2>
