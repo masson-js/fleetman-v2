@@ -22,7 +22,7 @@ export default async function ShipCardInspection() {
               key={ship.id}
               className="flex p-6 flex-col h-auto w-auto bg-white hover:bg-blue-300"
             >
-              <Link href={`/status/${ship.id}`}><h1 className="italic text-3xl">{ship.name}</h1></Link>
+              <Link href={`/status/${ship.id}`}><h1 className="italic text-3xl hover:underline">{ship.name}</h1></Link>
               <div className="flex flex-row flex-wrap gap-4 mt-2">
                 <h2 className="font-semi text-sm">{ship.type}</h2>
                 <h2 className="font-thin text-sm">IMO: {ship.imoNumber}</h2>

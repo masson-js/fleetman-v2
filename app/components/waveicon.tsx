@@ -10,9 +10,7 @@ const WaveIcon = () => {
           height: 50px;
           background: url('/transportation.png') no-repeat center/contain;
           animation: wave 3s infinite ease-in-out;
-          position: absolute; /* Центрирование иконки */
-          top: 50%;
-          left: 50%;
+          
           transform: translate(-50%, -50%);
         }
 

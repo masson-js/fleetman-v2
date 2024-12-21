@@ -1,5 +1,5 @@
 import { getAllCrewMembers } from "@/actions/crew";
-import { UniversalRouterButton } from "../buttons";
+import { UniversalRouterButton } from "../../components/buttons";
 import { getAllUserShips } from "@/actions/ship";
 
 export default async function CrewList() {

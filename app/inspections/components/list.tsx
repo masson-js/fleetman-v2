@@ -1,5 +1,5 @@
 import { getAllInspections } from "@/actions/inspection";
-import { InspectionEnhancedButton } from "../buttons";
+import { InspectionEnhancedButton } from "../../components/buttons";
 import Link from "next/link";
 
 export default async function InspectionList() {

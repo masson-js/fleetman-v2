@@ -1,5 +1,5 @@
 import { getAllFixtures } from "@/actions/fixture";
-import { FixtureEnhancedButton } from "../buttons";
+import { FixtureEnhancedButton } from "@/app/components/buttons";
 
 export default async function FixtureList() {
   const fixtures = await getAllFixtures();

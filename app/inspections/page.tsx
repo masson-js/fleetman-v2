@@ -1,9 +1,9 @@
 import { getSession } from "@/actions/session";
 import Header from "../components/header";
 import SideNavigation from "../components/sidenavigation";
-import InspectionData from "../components/inspections/data";
+import InspectionData from "./components/data";
 import InspectionsDataViz from "../components/dataviz/inspections/inspections-dataviz";
-import ShipCardInspection from "../components/inspections/card";
+import ShipCardInspection from "./components/card";
 
 export default async function Inspections() {
   const session = await getSession();
@@ -16,8 +16,8 @@ export default async function Inspections() {
     <div className="flex flex-col h-screen animate-fade-in mb-40">
       <Header />
       <div className="flex m-6 justify-between animate-fade-in ">
-        <SideNavigation />
-        <div className="flex flex-row mt-0 w-auto h-auto animate-fade-in gap-4">
+        {/* <SideNavigation /> */}
+        <div className="flex flex-row mt-0 ml-20 w-auto h-auto animate-fade-in gap-4">
          
           <ShipCardInspection />
           <InspectionsDataViz />

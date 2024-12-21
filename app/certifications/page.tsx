@@ -4,8 +4,8 @@ import SideNavigation from "../components/sidenavigation";
 
 
 
-import ShipCardCertification from "../components/certifications/card";
-import CertificationData from "../components/certifications/data";
+import ShipCardCertification from "./components/card";
+import CertificationData from "./components/data";
 import CertificationDataViz from "../components/dataviz/certifications/certification-dataviz";
 
 export default async function Certifications() {
@@ -19,8 +19,8 @@ export default async function Certifications() {
     <div className="flex flex-col h-screen animate-fade-in mb-40">
       <Header />
       <div className="flex m-6 justify-between animate-fade-in">
-        <SideNavigation />
-        <div className="flex flex-row mt-0 w-auto h-auto animate-fade-in gap-4">
+   
+        <div className="flex flex-row mt-0 ml-20 w-auto h-auto animate-fade-in gap-4">
           <ShipCardCertification />
           <CertificationDataViz />
         </div>

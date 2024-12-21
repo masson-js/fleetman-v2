@@ -1,5 +1,5 @@
 import { getAllLogbooks } from "@/actions/logbook";
-import { LogbookEnhancedButton } from "../buttons";
+import { LogbookEnhancedButton } from "../../components/buttons";
 
 export default async function LogbookList() {
   const logbooks = await getAllLogbooks();
