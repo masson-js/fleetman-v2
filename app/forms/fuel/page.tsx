@@ -12,9 +12,9 @@ export default async function FuelCreating() {
     <div className="flex flex-col w-full h-auto">
       <Header />
       <div className="flex m-6">
-        <SideNavigation />
+      
         <AddInspectionForm shipsNames={shipsNames} />
-        <p>fuel</p>
+       
       </div>
     </div>
   );

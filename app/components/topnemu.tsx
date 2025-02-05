@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function TopNavigation() {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const pathname = usePathname();
 
@@ -29,21 +30,21 @@ export default function TopNavigation() {
   ];
 
   const addMenuItems = [
-    { path: "/forms/ship", label: "Add Ship", icon: "/ship.png" },
+    { path: "/forms/ship", label: "Ship", icon: "/ship.png" },
     {
       path: "/forms/inspection",
-      label: "Add Inspection",
+      label: "Inspection",
       icon: "/addinspection.png",
     },
     {
       path: "/forms/certification",
-      label: "Add Certification",
+      label: "Certification",
       icon: "/addcer.png",
     },
-    { path: "/forms/logbook", label: "Add Logbook", icon: "/addlogbook.png" },
-    { path: "/forms/fixture", label: "Add Fixture", icon: "/addfixture.png" },
-    { path: "/forms/crew", label: "Add Crew", icon: "/addcrew.png" },
-    { path: "/forms/route", label: "Add Route", icon: "/routes.png" },
+    { path: "/forms/logbook", label: "Logbook", icon: "/addlogbook.png" },
+    { path: "/forms/fixture", label: "Fixture", icon: "/addfixture.png" },
+    { path: "/forms/crew", label: "Crew", icon: "/addcrew.png" },
+    { path: "/forms/route", label: "Route", icon: "/routes.png" },
   ];
 
   const renderMenuItems = (
@@ -62,7 +63,7 @@ export default function TopNavigation() {
           <div
             className={`w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 ${
               pathname === item.path || hoveredButton === item.path
-                ? "bg-white shadow-md border-4 border-blue-400"
+                ? "bg-white shadow-md"
                 : "bg-transparent"
             }`}
           >
@@ -86,17 +87,35 @@ export default function TopNavigation() {
     ));
 
   return (
-    <div className="flex  text-sm font-semibold">
+    <div className="relative flex text-sm font-semibold items-center">
       <section className="flex justify-start">
         <ul className="flex flex-row items-center">
           {renderMenuItems(menuItems)}
         </ul>
       </section>
-      <section className="flex  border-opacity-20">
-        <ul className="flex flex-row items-center w-auto">
-          {renderMenuItems(addMenuItems)}
-        </ul>
-      </section>
+      
+      <div className="relative">
+  <button
+    onClick={() => setMenuOpen(!menuOpen)}
+    className={`border border-gray-600 px-2 py-1 rounded ${
+      menuOpen ? "bg-black text-white" : "text-black"
+    }`}
+  >
+    Add
+  </button>
+  {menuOpen && (
+    <ul className="absolute top-full left-0 mt-2 bg-white text-black shadow-md rounded w-40 z-50">
+      {addMenuItems.map((item) => (
+        <li key={item.path} className="px-4 py-2 hover:bg-gray-200">
+          <Link href={item.path} className="flex items-center space-x-2">
+            <Image src={item.icon} alt={item.label} width={20} height={20} />
+            <span>{item.label}</span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
     </div>
   );
 }

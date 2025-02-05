@@ -12,8 +12,8 @@ export default async function FixtureCreating() {
   return (
     <div className="flex flex-col w-full h-auto">
       <Header />
-      <div className="flex m-6">
-        <SideNavigation />
+      <div className="flex m-6 justify-center">
+    
         <AddCrewForm shipsNames={shipsNames} />
       </div>
     </div>

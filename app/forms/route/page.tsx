@@ -12,7 +12,7 @@ export default async function RouteCreating() {
     <div className="flex flex-col w-full h-auto">
       <Header />
       <div className="flex m-6">
-        <SideNavigation />
+       
         <p>route form</p>
         <AddInspectionForm shipsNames={shipsNames} />
       </div>

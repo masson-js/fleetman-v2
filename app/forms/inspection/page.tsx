@@ -11,10 +11,10 @@ export default async function InspectionCreating() {
   return (
     <div className="flex flex-col w-full h-auto">
       <Header />
-      <div className="flex m-6 justify-between">
-        <SideNavigation />
+      <div className="flex m-6 justify-center">
+     
         <AddInspectionForm shipsNames={shipsNames} />
-        <span className="w-40 h-auto">Data</span>
+       
       </div>
     </div>
   );
