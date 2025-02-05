@@ -2,7 +2,7 @@ import { getInspectionById } from "@/actions/inspection";
 import { DeleteInspection } from "@/app/components/buttons";
 
 import Header from "@/app/components/header";
-import SideNavigation from "@/app/components/sidenavigation";
+
 import WaveIcon from "@/app/components/waveicon";
 import Link from "next/link";
 

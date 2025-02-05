@@ -1,35 +1,51 @@
 import { getAllCertifications } from "@/actions/certification";
 import { getAllUserShips } from "@/actions/ship";
 import Link from "next/link";
-import { FileText, Calendar, User, ShieldCheck, ClipboardCheck, Anchor } from "lucide-react";
+import { FileText, Calendar, User, ShieldCheck, ClipboardCheck, Anchor, ChevronRight } from "lucide-react";
 
 export default async function ShipCardCertification() {
   const certifications = (await getAllCertifications()) || [];
   const userShips = (await getAllUserShips()) || [];
 
-  const getComplianceColor = (level: string): string => {
-    switch (level) {
-      case "full":
-        return "border-green-400 bg-green-50";
-      case "temporary":
-        return "border-yellow-400 bg-yellow-50";
-      case "limited":
-        return "border-red-400 bg-red-50";
+  // Функция для получения цвета бордера и фона сертификата
+  const getBorderColor = (status: string): string => {
+    switch (status) {
+      case "expired":
+        return "border-red-400 bg-red-50 hover:bg-red-100";
+      case "valid":
+        return "border-green-400 bg-green-50 hover:bg-green-100";
+      case "soon-expired":
+        return "border-yellow-400 bg-yellow-50 hover:bg-yellow-100";
       default:
-        return "border-gray-300 bg-gray-50";
+        return "border-blue-400 bg-blue-50";
     }
   };
 
-  const getStatusColor = (level: string): string => {
-    switch (level) {
-      case "full":
-        return "text-green-700 bg-green-100 border-green-200";
-      case "temporary":
-        return "text-yellow-700 bg-yellow-100 border-yellow-200";
-      case "limited":
+  const getStatusColor = (status: string): string => {
+    switch (status) {
+      case "expired":
         return "text-red-700 bg-red-100 border-red-200";
+      case "valid":
+        return "text-green-700 bg-green-100 border-green-200";
+      case "soon-expired":
+        return "text-yellow-700 bg-yellow-100 border-yellow-200";
       default:
-        return "text-gray-700 bg-gray-100 border-gray-200";
+        return "text-blue-700 bg-blue-100 border-blue-200";
+    }
+  };
+
+  // Функция для определения статуса сертификата
+  const getCertificateStatus = (expiryDate: Date): string => {
+    const now = new Date();
+    const timeDifference = expiryDate.getTime() - now.getTime();
+    const daysLeft = timeDifference / (1000 * 3600 * 24); // Разница в днях
+
+    if (daysLeft < 0) {
+      return "expired";
+    } else if (daysLeft <= 30) {
+      return "soon-expired";
+    } else {
+      return "valid";
     }
   };
 
@@ -42,9 +58,9 @@ export default async function ShipCardCertification() {
 
       <div className="grid grid-cols-1 gap-6">
         {userShips.map((ship) => {
-          const shipCertifications = certifications.filter(
-            (certification) => certification.shipId === ship.id
-          );
+          const shipCertifications = certifications
+            .filter((certification) => certification.shipId === ship.id)
+            .sort((a, b) => new Date(b.issuedDate).getTime() - new Date(a.issuedDate).getTime()); // Сортировка по дате
 
           return (
             <div
@@ -64,7 +80,7 @@ export default async function ShipCardCertification() {
                         {ship.type}
                       </span>
                       <div className="flex items-center gap-1 text-gray-500">
-                      <Anchor className="w-4 h-4" />
+                        <Anchor className="w-4 h-4" />
                         <span className="text-sm">IMO: {ship.imoNumber}</span>
                       </div>
                     </div>
@@ -83,72 +99,84 @@ export default async function ShipCardCertification() {
                 ) : (
                   <div className="mt-4">
                     <h3 className="text-sm font-semibold text-gray-700 mb-3">
-                      Recent Certifications
+                      Last 10 Certifications
                     </h3>
                     <div className="space-y-2">
-                      {shipCertifications.map((certification) => (
-                        <Link
-                          key={certification.id}
-                          href={`/certifications/${certification.id}`}
-                          className={`block rounded-lg ${getComplianceColor(
-                            certification.complianceLevel
-                          )} border p-4 hover:shadow-sm transition-shadow`}
-                        >
-                          <div className="flex flex-col space-y-2">
-                            <div className="flex justify-between items-center">
-                              <div className="flex items-center gap-2">
-                                <ClipboardCheck className="w-5 h-5 text-gray-500" />
-                                <span className="text-sm font-semibold text-gray-800">
-                                  {certification.type} ({certification.standard})
+                      {shipCertifications.slice(0, 10).map((certification) => {
+                        const status = getCertificateStatus(certification.expiryDate);
+
+                        return (
+                          <Link
+                            key={certification.id}
+                            href={`/certifications/${certification.id}`}
+                            className={`block rounded-lg ${getBorderColor(status)} border p-4 hover:shadow-sm transition-shadow`}
+                          >
+                            <div className="flex flex-col space-y-2">
+                              <div className="flex justify-between items-center">
+                                <div className="flex items-center gap-2">
+                                  <ClipboardCheck className="w-5 h-5 text-gray-500" />
+                                  <span className="text-sm font-semibold text-gray-800">
+                                    {certification.type} ({certification.standard})
+                                  </span>
+                                </div>
+                                <span
+                                  className={`px-2.5 py-1 rounded-full text-xs font-medium border ${getStatusColor(status)}`}
+                                >
+                                  {status === "expired" ? "Expired" : "Valid"}
                                 </span>
                               </div>
-                              <span
-                                className={`px-2.5 py-1 rounded-full text-xs font-medium border ${getStatusColor(
-                                  certification.complianceLevel
-                                )}`}
-                              >
-                                {certification.complianceLevel}
-                              </span>
-                            </div>
 
-                            <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
-                              <div className="flex items-center gap-2">
-                                <Calendar className="w-4 h-4 text-gray-500" />
-                                <span>Issued: {new Date(certification.issuedDate).toLocaleDateString("en-US")}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <Calendar className="w-4 h-4 text-gray-500" />
-                                <span>Expiry: {new Date(certification.expiryDate).toLocaleDateString("en-US")}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <User className="w-4 h-4 text-gray-500" />
-                                <span>Inspector: {certification.inspectorName || "N/A"}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <ShieldCheck className="w-4 h-4 text-gray-500" />
-                                <span>Authority: {certification.issuingAuthority}</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <ClipboardCheck className="w-4 h-4 text-gray-500" />
-                                <span>Certificate No: {certification.certificateNumber}</span>
-                              </div>
-                              {certification.nextInspectionDate && (
+                              <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
                                 <div className="flex items-center gap-2">
                                   <Calendar className="w-4 h-4 text-gray-500" />
-                                  <span>Next Inspection: {new Date(certification.nextInspectionDate).toLocaleDateString("en-US")}</span>
+                                  <span>Issued: {new Date(certification.issuedDate).toLocaleDateString("en-US")}</span>
                                 </div>
+                                <div className="flex items-center gap-2">
+                                  <Calendar className="w-4 h-4 text-gray-500" />
+                                  <span>Expiry: {new Date(certification.expiryDate).toLocaleDateString("en-US")}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <User className="w-4 h-4 text-gray-500" />
+                                  <span>Inspector: {certification.inspectorName || "N/A"}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <ShieldCheck className="w-4 h-4 text-gray-500" />
+                                  <span>Authority: {certification.issuingAuthority}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <ClipboardCheck className="w-4 h-4 text-gray-500" />
+                                  <span>Certificate No: {certification.certificateNumber}</span>
+                                </div>
+                                {certification.nextInspectionDate && (
+                                  <div className="flex items-center gap-2">
+                                    <Calendar className="w-4 h-4 text-gray-500" />
+                                    <span>Next Inspection: {new Date(certification.nextInspectionDate).toLocaleDateString("en-US")}</span>
+                                  </div>
+                                )}
+                              </div>
+
+                              {certification.remarks && (
+                                <p className="text-xs text-gray-500 italic mt-2 border-t pt-2">
+                                  Remarks: {certification.remarks}
+                                </p>
                               )}
                             </div>
-
-                            {certification.remarks && (
-                              <p className="text-xs text-gray-500 italic mt-2 border-t pt-2">
-                                Remarks: {certification.remarks}
-                              </p>
-                            )}
-                          </div>
-                        </Link>
-                      ))}
+                          </Link>
+                        );
+                      })}
                     </div>
+
+                    {shipCertifications.length > 10 && (
+                      <div className="mt-4 flex justify-end">
+                        <Link
+                          href={`/ships/${ship.id}/certifications`}
+                          className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
+                        >
+                          <span>Show all certifications</span>
+                          <ChevronRight className="w-4 h-4" />
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

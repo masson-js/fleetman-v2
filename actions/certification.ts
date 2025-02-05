@@ -119,27 +119,24 @@ export const getCertificationsByShipId = async (shipId: string) => {
   try {
     const user = await prisma.user.findUnique({
       where: { userId: userSesId },
-      include: { ships: true },
+      include: { ships: { include: { certifications: true } } }, // Загружаем привязанные корабли и их сертификаты
     });
 
     if (!user) {
       throw new Error("User not found");
     }
 
+    // Получаем список ID кораблей, к которым у пользователя есть доступ
     const userShipIds = user.ships.map((ship) => ship.id);
 
     if (!userShipIds.includes(shipId)) {
       throw new Error("User does not have access to this ship");
     }
 
-    const certifications = await prisma.certification.findMany({
-      where: {
-        shipId: shipId,
-      },
-      include: {
-        ship: true,
-      },
-    });
+    // Получаем только сертификаты, привязанные к этому кораблю
+    const certifications = user.ships
+      .find((ship) => ship.id === shipId)
+      ?.certifications || [];
 
     return certifications;
   } catch (error) {
@@ -147,5 +144,51 @@ export const getCertificationsByShipId = async (shipId: string) => {
     throw new Error("Error fetching certifications");
   } finally {
     await prisma.$disconnect();
+  }
+};
+
+export const getCertificationById = async (certificationId: string) => {
+  const session = await getSession(); // Get the session to check the user's details
+  const prisma = new PrismaClient();
+  const userSesId = session?.userId; // Get the user ID from the session
+
+  if (!userSesId) {
+    throw new Error("User not authenticated"); // If no user session, throw error
+  }
+
+  try {
+    // Fetch user and their associated ships
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true }, // Include ships associated with the user
+    });
+
+    if (!user) {
+      throw new Error("User not found"); // If the user does not exist
+    }
+
+    // Fetch the certification with the associated ship details
+    const certification = await prisma.certification.findUnique({
+      where: { id: certificationId },
+      include: { ship: true }, // Include the ship associated with this certification
+    });
+
+    if (!certification) {
+      throw new Error("Certification not found"); // If certification is not found
+    }
+
+    // Check if the user has access to the ship associated with the certification
+    const userShipIds = user.ships.map((ship) => ship.id);
+    if (!userShipIds.includes(certification.shipId)) {
+      throw new Error("User does not have access to this ship"); // If the user doesn't have access to the ship
+    }
+
+    return certification; // Return the certification if valid
+
+  } catch (error) {
+    console.error("Error fetching certification:", error);
+    throw new Error("Error fetching certification"); // Handle error
+  } finally {
+    await prisma.$disconnect(); // Always disconnect Prisma client
   }
 };

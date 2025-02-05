@@ -44,7 +44,7 @@ export default async function CertificationData() {
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div 
-                className="bg-green-500 h-2 rounded-full" 
+                className="bg-green-300 h-2 rounded-full" 
                 style={{ width: `${passedPercentage}%` }}
               />
             </div>
@@ -64,7 +64,7 @@ export default async function CertificationData() {
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div 
-                className="bg-red-500 h-2 rounded-full" 
+                className="bg-red-300 h-2 rounded-full" 
                 style={{ width: `${failedPercentage}%` }}
               />
             </div>
@@ -84,7 +84,7 @@ export default async function CertificationData() {
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div 
-                className="bg-yellow-500 h-2 rounded-full" 
+                className="bg-yellow-300 h-2 rounded-full" 
                 style={{ width: `${requiresWorkPercentage}%` }}
               />
             </div>
