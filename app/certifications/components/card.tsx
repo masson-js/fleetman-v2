@@ -53,7 +53,7 @@ export default async function ShipCardCertification() {
     <section className="flex flex-col w-auto justify-start max-w-7xl mx-auto">
       <div className="flex items-center gap-3 mb-6">
         <FileText className="w-8 h-8 text-blue-500" />
-        <h1 className="text-3xl font-bold text-gray-800">Ships & Certifications</h1>
+        <h1 className="text-3xl font-bold text-gray-800">Certifications</h1>
       </div>
 
       <div className="grid grid-cols-1 gap-6">
