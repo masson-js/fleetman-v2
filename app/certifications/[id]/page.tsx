@@ -1,8 +1,14 @@
 import { getCertificationById } from "@/actions/certification";
 import Header from "@/app/components/header";
-import { Anchor, Calendar, ClipboardCheck, ShieldCheck, User } from "lucide-react";
+import {
+  Anchor,
+  Calendar,
+  ClipboardCheck,
+  ShieldCheck,
+  User,
+} from "lucide-react";
 
-// Тип для статуса соответствия
+// Types
 type ComplianceStatus = {
   color: string;
   bg: string;
@@ -10,7 +16,30 @@ type ComplianceStatus = {
   label: string;
 };
 
-// Функция для получения стилей статуса соответствия
+interface CertificationMetadataProps {
+  label: string;
+  value: string | React.ReactNode;
+  icon: React.ElementType;
+  className?: string;
+}
+
+// Components
+const CertificationMetadata = ({
+  label,
+  value,
+  icon: Icon,
+  className = '',
+}: CertificationMetadataProps) => (
+  <div className="flex items-center gap-3 text-gray-600">
+    <Icon className="w-5 h-5" />
+    <div>
+      <p className="text-sm text-gray-500">{label}</p>
+      <p className={`font-medium ${className}`}>{value}</p>
+    </div>
+  </div>
+);
+
+// Utility functions
 const getComplianceStatus = (level: string): ComplianceStatus => {
   const styles = {
     full: {
@@ -35,57 +64,13 @@ const getComplianceStatus = (level: string): ComplianceStatus => {
   return styles[level as keyof typeof styles] || styles.limited;
 };
 
-// Тип для сертификации, соответствующий модели Prisma
-type CertificationType = {
-  id: string;
-  type: string;
-  standard: string;
-  complianceLevel: string;
-  issuedDate: string;
-  expiryDate: string;
-  inspectorName: string;
-  issuingAuthority: string;
-  remarks?: string;
-  certificateNumber: string;
-  nextInspectionDate?: string;
-  verificationDate: string;
-  inspectionRequirements?: string;
-  certificationCompany?: string;
-  ship: {
-    id: string;
-    name: string;
-    type: string;
-    imoNumber: string;
-  };
-};
-
-// Компонент для отображения метаданных сертификации
-const CertificationMetadata = ({
-  label,
-  value,
-  icon: Icon,
-}: {
-  label: string;
-  value: string | React.ReactNode;
-  icon: React.ElementType;
-}) => (
-  <div className="flex items-center gap-3 text-gray-600">
-    <Icon className="w-5 h-5" />
-    <div>
-      <p className="text-sm text-gray-500">{label}</p>
-      <p className="font-medium">{value}</p>
-    </div>
-  </div>
-);
-
+// Main component
 export default async function ShipCertificationPage({
   params,
 }: {
-  params: { id: string }; // params уже доступен как объект
+  params: { id: string };
 }) {
-  // Получаем сертификацию по ID, ожидаем params.id
-  const { id } = await params; // добавляем await
-  const certification = await getCertificationById(id);
+  const certification = await getCertificationById(params.id);
 
   if (!certification) {
     return (
@@ -97,16 +82,14 @@ export default async function ShipCertificationPage({
 
   const status = getComplianceStatus(certification.complianceLevel);
   const isExpired = new Date(certification.expiryDate) < new Date();
-
-  // Определяем цвет фона в зависимости от истечения срока
-  const bgColor = isExpired ? "bg-red-50" : "bg-green-50";
+  const bgColor = isExpired ? "bg-red-50 border-red-400" : "bg-green-50 border-green-400";
 
   return (
     <>
       <Header />
-      <div className={`rounded-xl shadow-sm border border-gray-200 w-full max-w-4xl mx-auto ${bgColor}`}>
+      <div className={`rounded-xl shadow-sm border border-gray-200 w-full max-w-4xl mx-auto mt-8 ${bgColor}`}>
         <div className="p-6">
-          {/* Заголовок с информацией о судне */}
+          {/* Ship Information Header */}
           <div className="flex justify-between items-start mb-6">
             <div className="space-y-2">
               <h2 className="text-2xl font-bold text-gray-900">
@@ -118,26 +101,21 @@ export default async function ShipCertificationPage({
                 </span>
                 <div className="flex items-center gap-2 text-gray-600">
                   <Anchor className="w-4 h-4" />
-                  <span className="text-sm">
-                    IMO: {certification.ship.imoNumber}
-                  </span>
+                  <span className="text-sm">IMO: {certification.ship.imoNumber}</span>
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col items-end gap-2">
-              <span
-                className={`px-3 py-1 rounded-full text-sm font-medium border ${status.bg} ${status.color} ${status.border}`}
-              >
-                {certification.type}
-              </span>
               {isExpired && (
-                <span className="text-red-600 text-sm">Certificate Expired</span>
+                <span className="text-red-600 text-lg font-bold">
+                  Certificate Expired
+                </span>
               )}
             </div>
           </div>
 
-          {/* Детали сертификации */}
+          {/* Certification Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
             <CertificationMetadata
               label="Issue Date"
@@ -170,6 +148,12 @@ export default async function ShipCertificationPage({
               icon={ShieldCheck}
             />
             <CertificationMetadata
+              label="Type"
+              value={certification.type}
+              icon={ClipboardCheck}
+              className="uppercase"
+            />
+            <CertificationMetadata
               label="Verification Date"
               value={new Date(certification.verificationDate).toLocaleDateString()}
               icon={Calendar}
@@ -197,11 +181,12 @@ export default async function ShipCertificationPage({
             )}
           </div>
 
-          {/* Замечания */}
+          {/* Remarks Section */}
           {certification.remarks && (
             <div className="mt-6 pt-4 border-t">
               <p className="text-sm text-gray-600">
-                <span className="font-medium">Remarks:</span> {certification.remarks}
+                <span className="font-medium">Remarks:</span>{" "}
+                {certification.remarks}
               </p>
             </div>
           )}

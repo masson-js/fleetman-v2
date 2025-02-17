@@ -60,7 +60,7 @@ const CertificationStandardsAndTypes: React.FC = async () => {
               className="bg-green-50 p-3 rounded-lg text-center"
             >
               <span className="text-lg font-bold text-green-600">{count}</span>
-              <span className="block text-xs text-gray-600 mt-1 break-words">
+              <span className="block text-xs text-gray-600 mt-1 break-words uppercase">
                 {type}
               </span>
             </div>

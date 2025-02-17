@@ -1,5 +1,3 @@
-export default function ShipLogbooks() {
-  return (
-    <div>Logbooks of this ship:</div>
-  )
+export default function ShipPage({ params }: { params: { shipId: string } }) {
+  return <div>Страница судна с ID: {params.shipId}</div>;
 }

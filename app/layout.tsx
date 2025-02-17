@@ -13,6 +13,8 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+
+
 export const metadata: Metadata = {
   title: "Fleet man v2",
   description: "Fleet man v2",

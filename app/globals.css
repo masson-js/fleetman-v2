@@ -19,3 +19,35 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* styles/globals.css */
+
+@keyframes waveAnimation {
+  0% {
+    transform: translateY(0); /* Начальное положение */
+  }
+  50% {
+    transform: translateY(-10px); /* Среднее положение */
+  }
+  100% {
+    transform: translateY(0); /* Конечное положение */
+  }
+}
+
+/* Анимация для волны 2, 3 и 4 */
+.wave-item {
+  animation: waveAnimation 4s ease-in-out infinite;
+}
+
+/* Задержка анимации для каждой волны */
+.wave-2 {
+  animation-delay: 0.8s;
+}
+
+.wave-4 {
+  animation-delay: 0.8s;
+}
+
+.wave-1 {
+  animation-delay: 0.8s;
+}

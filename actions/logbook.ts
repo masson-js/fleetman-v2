@@ -144,3 +144,41 @@ export const getLastLogbooksForShips = async () => {
     await prisma.$disconnect();
   }
 };
+
+
+
+export const getLogbookById = async (logbookId: string) => {
+  const session = await getSession();
+  const prisma = new PrismaClient();
+
+  const userSesId = session?.userId;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: { ships: true },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const userShipIds = user.ships.map((ship) => ship.id);
+
+    const logbook = await prisma.logbook.findUnique({
+      where: { id: logbookId },
+      include: { ship: true },
+    });
+
+    if (!logbook || !userShipIds.includes(logbook.shipId)) {
+      throw new Error("Logbook not found or access denied");
+    }
+
+    return logbook;
+  } catch (error) {
+    console.error("Error fetching logbook:", error);
+    return null;
+  } finally {
+    await prisma.$disconnect();
+  }
+};

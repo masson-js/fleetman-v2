@@ -76,7 +76,7 @@ export default async function ShipCardCertification() {
                       </h2>
                     </Link>
                     <div className="flex items-center gap-4 mt-2">
-                      <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
+                      <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium uppercase">
                         {ship.type}
                       </span>
                       <div className="flex items-center gap-1 text-gray-500">
@@ -115,7 +115,7 @@ export default async function ShipCardCertification() {
                               <div className="flex justify-between items-center">
                                 <div className="flex items-center gap-2">
                                   <ClipboardCheck className="w-5 h-5 text-gray-500" />
-                                  <span className="text-sm font-semibold text-gray-800">
+                                  <span className="text-sm font-semibold text-gray-800 uppercase">
                                     {certification.type} ({certification.standard})
                                   </span>
                                 </div>
