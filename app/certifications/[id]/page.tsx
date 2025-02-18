@@ -1,5 +1,5 @@
 import { getCertificationById } from "@/actions/certification";
-import Header from "@/app/components/header";
+import Header from "@/app/components/Header";
 import {
   Anchor,
   Calendar,

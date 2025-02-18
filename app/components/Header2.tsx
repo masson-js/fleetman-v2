@@ -6,7 +6,7 @@ import { logout } from "@/actions/logout";
 import Testnav from "./TopNavigation2";
 import { UserCircle, LogOut } from "lucide-react";
 
-export default async function Header() {
+export default async function Header2() {
   const session = await getSession();
 
   return (

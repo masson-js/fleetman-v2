@@ -2,7 +2,7 @@ import { getAllUserShips } from "@/actions/ship";
 import AddLogbookForm from "@/app/components/forms/addlogbook";
 
 
-import Header from "@/app/components/header";
+import Header from "@/app/components/Header";
 import SideNavigation from "@/app/components/sidenavigation";
 
 export default async function LogbookCreating() {

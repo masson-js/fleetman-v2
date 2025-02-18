@@ -2,7 +2,7 @@ import { getAllUserShips } from "@/actions/ship";
 import AddCrewForm from "@/app/components/forms/crew";
 import AddInspectionForm from "@/app/components/forms/inspectionadd";
 
-import Header from "@/app/components/header";
+import Header from "@/app/components/Header";
 import SideNavigation from "@/app/components/sidenavigation";
 
 export default async function FixtureCreating() {

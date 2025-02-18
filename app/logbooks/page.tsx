@@ -1,4 +1,4 @@
-import Header from "../components/header";
+import Header from "../components/Header";
 import LogBoookCards from "./components/cards";
 
 import LogBookData from "./components/data";

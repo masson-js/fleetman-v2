@@ -4,7 +4,7 @@ import { getSession } from "@/actions/session";
 
 import { logout } from "@/actions/logout";
 
-export default async function HomeHeader() {
+export default async function HeaderHome() {
   const session = await getSession();
 
   return (
@@ -23,7 +23,7 @@ export default async function HomeHeader() {
       </Link>
       {session.userId && (
         <Link
-          href="/status"
+          href="/pages/status"
           className="bg-[#57C4FF] text-white px-4 py-1 rounded-lg hover:bg-[#09A9FF] transition-colors duration-300"
         >
           Hi, {session.username}

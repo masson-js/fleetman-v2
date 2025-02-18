@@ -1,4 +1,4 @@
-import Header from "@/app/components/header";
+import Header from "@/app/components/Header";
 import SideNavigation from "@/app/components/sidenavigation";
 
 export default function ExtendedInfoFixture() {

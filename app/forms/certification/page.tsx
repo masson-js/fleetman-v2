@@ -1,7 +1,7 @@
 import { getAllUserShips } from "@/actions/ship";
 import AddCertifcationForm from "@/app/components/forms/certification";
 
-import Header from "@/app/components/header";
+import Header from "@/app/components/Header";
 import SideNavigation from "@/app/components/sidenavigation";
 
 export default async function CertificationCreating() {

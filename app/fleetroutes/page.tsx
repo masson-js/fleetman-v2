@@ -1,4 +1,4 @@
-import Header from "../components/header";
+import Header from "../components/Header";
 import SideNavigation from "../components/sidenavigation";
 
 export default async function FleetRoutes() {

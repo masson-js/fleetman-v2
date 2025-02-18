@@ -1,5 +1,5 @@
 import FixtureList from "@/app/fixtures/components/list";
-import Header from "../components/header";
+import Header from "../components/Header";
 import SideNavigation from "../components/sidenavigation";
 import TestFixtureList from "../components/testlist";
 import ShipCardFixture from "./components/card";

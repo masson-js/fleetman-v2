@@ -1,6 +1,6 @@
 import { getSession } from "@/actions/session";
 import ShipAddForm from "../../components/forms/shipaddform";
-import Header from "@/app/components/header";
+import Header from "@/app/components/Header";
 import SideNavigation from "@/app/components/sidenavigation";
 
 export default async function ShipDataCreating() {

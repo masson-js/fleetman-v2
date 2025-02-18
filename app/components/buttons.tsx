@@ -60,6 +60,14 @@ export function LogOut() {
   );
 }
 
+export function LogOut2() {
+  return (
+    <form action={logout}>
+      <button className="hover:underline">Log out</button>
+    </form>
+  );
+}
+
 export function AddShipButton() {
   return (
     <button className="flex m-2 px-2 justify-start hover:underline">

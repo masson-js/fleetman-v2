@@ -3,7 +3,7 @@ import {
   InspectionEnhancedButton,
   UniversalRouterButton,
 } from "@/app/components/buttons";
-import Header from "@/app/components/header";
+import Header from "@/app/components/Header";
 import SideNavigation from "@/app/components/sidenavigation";
 import WaveIcon from "@/app/components/waveicon";
 

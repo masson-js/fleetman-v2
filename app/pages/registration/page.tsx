@@ -1,13 +1,14 @@
 import Footer from "@/app/components/footer";
 import Waves from "../home/components/waves";
-import LoginForm from "@/app/components/forms/login";
+
+import RegistrationForm from "@/app/components/forms/registration";
 
 
-export default function Login() {
+export default function Registration() {
   return (
     <div className="flex flex-col w-full h-screen justify-between animate-fade-in">
       <div className="flex flex-col flex-wrap w-auto h-auto items-center ">
-        <LoginForm />
+        <RegistrationForm />
       </div>
       <Waves />
       <Footer />
