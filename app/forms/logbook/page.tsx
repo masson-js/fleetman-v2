@@ -3,7 +3,7 @@ import AddLogbookForm from "@/app/components/forms/addlogbook";
 
 
 import Header from "@/app/components/Header";
-import SideNavigation from "@/app/components/sidenavigation";
+
 
 export default async function LogbookCreating() {
   const shipsData = await getAllUserShips();

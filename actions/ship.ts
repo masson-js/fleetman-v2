@@ -123,6 +123,10 @@ export const getShipDetails = async (shipId: string) => {
   }
 };
 
+
+
+
+
 export const getAllUserShips = async () => {
   const session = await getSession();
   const prisma = new PrismaClient();
@@ -152,6 +156,10 @@ export const getAllUserShips = async () => {
     await prisma.$disconnect();
   }
 };
+
+
+
+
 
 export const getShipStatus = async ({ shipID }: { shipID: string }) => {
   const prisma = new PrismaClient();

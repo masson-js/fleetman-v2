@@ -17,7 +17,7 @@ import {
   Route,
 } from "lucide-react";
 
-export default function Testnav() {
+export default function TopNavigation() {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -28,7 +28,7 @@ export default function Testnav() {
   const buttonStyle = "relative flex flex-col items-center cursor-pointer";
 
   const menuItems = [
-    { path: "/status", label: "Status", Icon: BarChart2 },
+    { path: "/pages/status", label: "Status", Icon: BarChart2 },
     { path: "/inspections", label: "Inspections", Icon: ClipboardCheck },
     { path: "/certifications", label: "Certifications", Icon: Award },
     { path: "/logbooks", label: "Logbooks", Icon: BookOpen },

@@ -2,7 +2,7 @@ import { getAllUserShips } from "@/actions/ship";
 import AddFixtureForm from "@/app/components/forms/fixtures";
 
 import Header from "@/app/components/Header";
-import SideNavigation from "@/app/components/sidenavigation";
+
 
 export default async function FixtureCreating() {
   const shipsData = await getAllUserShips();

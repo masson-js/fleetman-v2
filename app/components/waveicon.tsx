@@ -6,9 +6,9 @@ const WaveIcon = () => {
       <div className="icon"></div>
       <style jsx>{`
         .icon {
-          width: 50px;
-          height: 50px;
-          background: url('/transportation.png') no-repeat center/contain;
+          width: 100px;
+          height: 100px;
+          background: url('/logo-loading.png') no-repeat center/contain;
           animation: wave 3s infinite ease-in-out;
           
           transform: translate(-50%, -50%);

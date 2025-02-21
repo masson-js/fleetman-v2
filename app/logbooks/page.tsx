@@ -1,8 +1,8 @@
 import Header from "../components/Header";
-import LogBoookCards from "./components/cards";
+
 
 import LogBookData from "./components/data";
-import SideNavigation from "../components/sidenavigation";
+
 import ShipCardLogbook from "./components/card";
 
 export default async function Logbooks() {

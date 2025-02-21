@@ -135,3 +135,59 @@ export const getInspectionStats = async () => {
     await prisma.$disconnect();
   }
 };
+
+
+export const getAllUserData = async () => {
+  const session = await getSession();
+  const prisma = new PrismaClient();
+
+  const userSesId = session?.userId;
+
+  if (!userSesId) {
+    throw new Error("User not authenticated");
+  }
+
+  try {
+    // Получаем пользователя с его судами и всеми связанными данными
+    const user = await prisma.user.findUnique({
+      where: { userId: userSesId },
+      include: {
+        ships: {
+          include: {
+            certifications: true, // Сертификации
+            crew: true, // Члены экипажа
+            fixtures: true, // Фрахты
+            inspections: true, // Инспекции
+            logbooks: true, // Журналы
+            fuelRecords: true, // Записи о топливе
+            routes: true, // Маршруты
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const totalProfit = user.ships
+    .flatMap((ship) => ship.fixtures)
+    .reduce((sum, fixture) => sum + (fixture.totalCost || 0), 0);
+    // Возвращаем все данные
+    return {
+      ships: user.ships, // Все суда
+      certifications: user.ships.flatMap((ship) => ship.certifications), // Все сертификации
+      crewMembers: user.ships.flatMap((ship) => ship.crew), // Все члены экипажа
+      fixtures: user.ships.flatMap((ship) => ship.fixtures), // Все фрахты
+      inspections: user.ships.flatMap((ship) => ship.inspections), // Все инспекции
+      logbooks: user.ships.flatMap((ship) => ship.logbooks), // Все журналы
+      fuelRecords: user.ships.flatMap((ship) => ship.fuelRecords), // Все записи о топливе
+      routes: user.ships.flatMap((ship) => ship.routes), // Все маршруты
+      totalProfit,
+    };
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw new Error("Error fetching user data");
+  } finally {
+    await prisma.$disconnect();
+  }
+};

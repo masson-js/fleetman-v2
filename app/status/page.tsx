@@ -1,7 +1,7 @@
 import { getSession } from "@/actions/session";
 
 import Header from "../components/Header";
-import SideNavigation from "../components/sidenavigation";
+
 
 import StatusData from "./components/data";
 import StatusList from "./components/list";

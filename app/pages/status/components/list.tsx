@@ -1,23 +1,18 @@
 "use client";
 
 import { getAllUserShips } from "@/actions/ship";
-import WaveIcon from "@/app/components/waveicon";
-import Link from "next/link";
-import { useState, useEffect } from "react";
 import {
   Ship,
-  Anchor,
-  Navigation,
-  Clock,
-  Wrench,
-  HelpCircle,
-  Building2,
+  MapPin,
   Calendar,
+  Anchor,
   Radio,
-  Radar,
-  Factory,
-  ScrollText
+  Building2,
+  Leaf,
 } from "lucide-react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import WaveIcon from "@/app/components/waveicon";
 
 interface ShipData {
   id: string;
@@ -39,7 +34,7 @@ interface ShipData {
 }
 
 export default function StatusList() {
-  const [useData, setData] = useState<ShipData[]>([]);
+  const [ships, setShips] = useState<ShipData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -47,7 +42,7 @@ export default function StatusList() {
     const fetchData = async () => {
       try {
         const data = await getAllUserShips();
-        setData(data);
+        setShips(data);
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -58,135 +53,121 @@ export default function StatusList() {
     fetchData();
   }, []);
 
-  const getStatusIcon = (status: string) => {
+  const getStatusStyle = (status: string) => {
     switch (status) {
       case "in port":
-        return <Anchor className="w-4 h-4" />;
+        return "border-green-400 bg-green-50 hover:bg-green-100";
       case "on the way":
-        return <Navigation className="w-4 h-4" />;
+        return "border-blue-400 bg-blue-50 hover:bg-blue-100";
       case "waiting":
-        return <Clock className="w-4 h-4" />;
+        return "border-yellow-400 bg-yellow-50 hover:bg-yellow-100";
       case "fix":
-        return <Wrench className="w-4 h-4" />;
+        return "border-red-400 bg-red-50 hover:bg-red-100";
       default:
-        return <HelpCircle className="w-4 h-4" />;
+        return "border-gray-400 bg-gray-50 hover:bg-gray-100";
+    }
+  };
+
+  const getStatusBadgeStyle = (status: string) => {
+    switch (status) {
+      case "in port":
+        return "text-green-700 bg-green-100 border-green-200";
+      case "on the way":
+        return "text-blue-700 bg-blue-100 border-blue-200";
+      case "waiting":
+        return "text-yellow-700 bg-yellow-100 border-yellow-200";
+      case "fix":
+        return "text-red-700 bg-red-100 border-red-200";
+      default:
+        return "text-gray-700 bg-gray-100 border-gray-200";
     }
   };
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center w-96 h-60">
-        <WaveIcon />
+      <div className="flex justify-center items-center h-40 m-40">
+       <WaveIcon/>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <span className="text-xl text-red-500">Error: {error}</span>
+      <div className="flex justify-center items-center h-40">
+        <span className="text-sm text-red-500">Error: {error}</span>
       </div>
     );
   }
 
   return (
-    <section className="flex flex-col h-auto w-auto overflow-auto mb-6 px-6">
-      <h1 className="text-3xl mb-6 font-semibold flex items-center gap-2">
-        <Ship className="w-8 h-8 text-blue-500" />
-        Fleet Status
-      </h1>
-
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-gray-50 border-b">
-              <th className="text-sm font-medium text-gray-600 px-4 py-3 text-left">
-                <div className="flex items-center gap-2">
-                  <Ship className="w-4 h-4" />
-                  Ship
-                </div>
-              </th>
-              <th className="text-sm font-medium text-gray-600 px-4 py-3 text-left">
-                <div className="flex items-center gap-2">
-                  <ScrollText className="w-4 h-4" />
-                  Type
-                </div>
-              </th>
-              <th className="text-sm font-medium text-gray-600 px-4 py-3 text-left">
-                <div className="flex items-center gap-2">
-                  <Radio className="w-4 h-4" />
-                  IMO
-                </div>
-              </th>
-              <th className="text-sm font-medium text-gray-600 px-4 py-3 text-left">
-                <div className="flex items-center gap-2">
-                  <Radar className="w-4 h-4" />
-                  MMSI
-                </div>
-              </th>
-              <th className="text-sm font-medium text-gray-600 px-4 py-3 text-left">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  Built
-                </div>
-              </th>
-              <th className="text-sm font-medium text-gray-600 px-4 py-3 text-left">
-                <div className="flex items-center gap-2">
-                  <Building2 className="w-4 h-4" />
-                  Port
-                </div>
-              </th>
-              <th className="text-sm font-medium text-gray-600 px-4 py-3 text-left">
-                <div className="flex items-center gap-2">
-                  <Factory className="w-4 h-4" />
-                  ECO
-                </div>
-              </th>
-              <th className="text-sm font-medium text-gray-600 px-4 py-3 text-left">
-                Status
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            {useData.map((ship) => (
-              <tr
-                key={ship.id}
-                className="hover:bg-gray-50 transition-colors duration-150"
-              >
-                <td className="px-4 py-3">
-                  <Link href={`/status/${ship.id}`} className="text-blue-600 hover:text-blue-800 font-medium">
+    <div className="flex max-w-5xl mx-auto mt-6 p-6 gap-6">
+      <section className="flex-1 bg-[#57c4ff] rounded-md p-4">
+        <div className="space-y-1">
+          {ships.map((ship) => (
+            <Link
+              key={ship.id}
+              href={`/status/${ship.id}`}
+              className={`block rounded-md border ${getStatusStyle(
+                ship.currentStatus
+              )} hover:shadow-sm transition-all duration-200`}
+            >
+              <div className="flex items-center justify-between p-2">
+                <div className="flex items-center gap-4 min-w-0">
+                  <span className="font-medium text-sm text-gray-900 min-w-[160px] truncate">
                     {ship.name}
-                  </Link>
-                </td>
-                <td className="px-4 py-3 text-gray-600">{ship.type}</td>
-                <td className="px-4 py-3 text-gray-600">{ship.imoNumber}</td>
-                <td className="px-4 py-3 text-gray-600">{ship.mmsi}</td>
-                <td className="px-4 py-3 text-gray-600">{ship.yearBuilt}</td>
-                <td className="px-4 py-3 text-gray-600">{ship.portOfRegistry}</td>
-                <td className="px-4 py-3 text-gray-600">{ship.ecoStandard}</td>
-                <td className="px-4 py-3">
-                  <div
-                    className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                      ship.currentStatus === "in port"
-                        ? "bg-green-100 text-green-700"
-                        : ship.currentStatus === "on the way"
-                        ? "bg-blue-100 text-blue-700"
-                        : ship.currentStatus === "waiting"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : ship.currentStatus === "fix"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-gray-100 text-gray-700"
-                    }`}
-                  >
-                    {getStatusIcon(ship.currentStatus)}
-                    {ship.currentStatus}
+                  </span>
+
+                  <div className="flex items-center gap-1 min-w-[100px]">
+                    <Ship className="w-3 h-3 text-gray-500" />
+                    <span className="text-xs text-gray-600">{ship.type}</span>
                   </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
+
+                  <div className="flex items-center gap-1 min-w-[100px]">
+                    <Anchor className="w-3 h-3 text-gray-500" />
+                    <span className="text-xs text-gray-600">
+                      {ship.imoNumber}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-1 min-w-[100px]">
+                    <Radio className="w-3 h-3 text-gray-500" />
+                    <span className="text-xs text-gray-600">{ship.mmsi}</span>
+                  </div>
+
+                  <div className="flex items-center gap-1 min-w-[80px]">
+                    <Calendar className="w-3 h-3 text-gray-500" />
+                    <span className="text-xs text-gray-600">
+                      {ship.yearBuilt}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-1 min-w-[120px]">
+                    <Building2 className="w-3 h-3 text-gray-500" />
+                    <span className="text-xs text-gray-600">
+                      {ship.portOfRegistry}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-1 min-w-[100px]">
+                    <Leaf className="w-3 h-3 text-gray-500" />
+                    <span className="text-xs text-gray-600">
+                      {ship.ecoStandard}
+                    </span>
+                  </div>
+                </div>
+
+                <span
+                  className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium border whitespace-nowrap ${getStatusBadgeStyle(
+                    ship.currentStatus
+                  )}`}
+                >
+                  {ship.currentStatus}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

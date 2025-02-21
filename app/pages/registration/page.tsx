@@ -1,10 +1,17 @@
 import Footer from "@/app/components/footer";
+import { redirect } from "next/navigation";
 import Waves from "../home/components/waves";
-
+import { getSession } from "@/actions/session";
 import RegistrationForm from "@/app/components/forms/registration";
 
 
-export default function Registration() {
+export default async function Registration() {
+
+  const session = await getSession();
+  
+  if (session.userId) {
+    redirect("/pages/status");
+  }
   return (
     <div className="flex flex-col w-full h-screen justify-between animate-fade-in">
       <div className="flex flex-col flex-wrap w-auto h-auto items-center ">

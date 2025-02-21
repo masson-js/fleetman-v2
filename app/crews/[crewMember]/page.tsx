@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { getCrewMember } from "@/actions/crew";
-import SideNavigation from "@/app/components/sidenavigation";
+
 import Link from "next/link";
 import WaveIcon from "@/app/components/waveicon";
 
@@ -54,7 +54,7 @@ export default function CrewDetails() {
         </Link>
       </header>
       <div className="flex w-auto h-auto m-6 flex-row justify-start">
-        <SideNavigation />
+     
         <div className="flex w-auto h-auto justify-start ml-10">
           <div className="flex gap-4 h-auto">
             <div className="flex flex-col items-center h-auto">

@@ -1,7 +1,7 @@
 "use client";
 
 import { getAllUserShips } from "@/actions/ship";
-import WaveIcon from "@/app/components/waveicon";
+import { Ship, MapPin, Calendar, Anchor, Radio, Building2, Leaf } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
@@ -25,7 +25,7 @@ interface ShipData {
 }
 
 export default function StatusList() {
-  const [useData, setData] = useState<ShipData[]>([]);
+  const [ships, setShips] = useState<ShipData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,7 +33,7 @@ export default function StatusList() {
     const fetchData = async () => {
       try {
         const data = await getAllUserShips();
-        setData(data);
+        setShips(data);
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -44,105 +44,121 @@ export default function StatusList() {
     fetchData();
   }, []);
 
+  const getStatusStyle = (status: string) => {
+    switch (status) {
+      case "in port":
+        return "border-green-400 bg-green-50 hover:bg-green-100";
+      case "on the way":
+        return "border-blue-400 bg-blue-50 hover:bg-blue-100";
+      case "waiting":
+        return "border-yellow-400 bg-yellow-50 hover:bg-yellow-100";
+      case "fix":
+        return "border-red-400 bg-red-50 hover:bg-red-100";
+      default:
+        return "border-gray-400 bg-gray-50 hover:bg-gray-100";
+    }
+  };
+
+  const getStatusBadgeStyle = (status: string) => {
+    switch (status) {
+      case "in port":
+        return "text-green-700 bg-green-100 border-green-200";
+      case "on the way":
+        return "text-blue-700 bg-blue-100 border-blue-200";
+      case "waiting":
+        return "text-yellow-700 bg-yellow-100 border-yellow-200";
+      case "fix":
+        return "text-red-700 bg-red-100 border-red-200";
+      default:
+        return "text-gray-700 bg-gray-100 border-gray-200";
+    }
+  };
+
   if (loading) {
     return (
-      <div className="flex justify-center items-center w-96 h-60">
-        <WaveIcon />
+      <div className="flex justify-center items-center h-60">
+        <div className="animate-pulse text-blue-500">Loading...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-60">
         <span className="text-xl text-red-500">Error: {error}</span>
       </div>
     );
   }
 
   return (
-    <section className="flex flex-col h-auto w-auto overflow-auto mb-6">
-      <h1 className="text-3xl mb-4 italic border-l-4 border-blue-400 pl-2">
-        Status
-      </h1>
+    <section className="flex flex-col w-auto justify-start max-w-7xl mx-auto">
+      <div className="flex items-center gap-3 mb-6">
+        <Ship className="w-8 h-8 text-blue-500" />
+        <h1 className="text-3xl font-bold text-gray-800">Fleet Status</h1>
+      </div>
 
-      <table className="table-auto rounded-lg overflow-hidden w-full bg-white">
-        <thead>
-          <tr className="items-center">
-            <th className="text-sm px-4 py-1 bg-gray-300 text-center rounded-tl-lg w-36">
-              Ship
-            </th>
-            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
-              Type
-            </th>
-            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
-              IMO
-            </th>
-            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
-              MMSI
-            </th>
-            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
-              Built
-            </th>
-            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-28">
-              Port
-            </th>
-            <th className="text-sm px-4 py-1 bg-gray-300 text-center w-56">
-              ECO
-            </th>
-            <th className="text-sm px-4 py-1 bg-gray-300 text-center rounded-tr-lg w-28">
-              Status
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {useData.map((ship) => (
-            <tr
-              className="text-center hover:bg-slate-600 hover:text-white"
-              key={ship.id}
-            >
-              <td className="px-4 py-2 text-ls">
-                <Link href={`/status/${ship.id}`}>{ship.name}</Link>
-              </td>
-              <td className="px-4 py-2 text-ls">
-                <Link href={`/status/${ship.id}`}>{ship.type}</Link>
-              </td>
-              <td className="px-4 py-2 text-ls">
-                <Link href={`/status/${ship.id}`}>{ship.imoNumber}</Link>
-              </td>
-              <td className="px-4 py-2 text-ls">
-                <Link href={`/status/${ship.id}`}>{ship.mmsi}</Link>
-              </td>
-              <td className="px-4 py-2 text-ls">
-                <Link href={`/status/${ship.id}`}>{ship.yearBuilt}</Link>
-              </td>
-              <td className="px-4 py-2 text-ls">
-                <Link href={`/status/${ship.id}`}>{ship.portOfRegistry}</Link>
-              </td>
-              <td className="px-4 py-2 text-ls">
-                <Link href={`/status/${ship.id}`}>{ship.ecoStandard}</Link>
-              </td>
-              <td
-                className={`text-sm font-bold ${
-                  ship.currentStatus === "in port"
-                    ? "bg-green-500 text-white"
-                    : ship.currentStatus === "on the way"
-                    ? "bg-blue-500 text-white"
-                    : ship.currentStatus === "waiting"
-                    ? "bg-yellow-500 text-white"
-                    : ship.currentStatus === "fix"
-                    ? "bg-red-500 text-white"
-                    : ship.currentStatus === "other"
-                    ? "bg-gray-500 text-white"
-                    : "bg-gray-300 text-black"
-                }`}
-              >
-                <Link href={`/status/${ship.id}`}>{ship.currentStatus}</Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="grid grid-cols-1 gap-6">
+        {ships.map((ship) => (
+          <Link
+            key={ship.id}
+            href={`/status/${ship.id}`}
+            className={`block rounded-xl border ${getStatusStyle(
+              ship.currentStatus
+            )} transition-all duration-200 hover:shadow-md`}
+          >
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
+                    {ship.name}
+                  </h2>
+                  <div className="flex items-center gap-4 mt-2">
+                    <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
+                      {ship.type}
+                    </span>
+                    <div className="flex items-center gap-1 text-gray-500">
+                      <Anchor className="w-4 h-4" />
+                      <span className="text-sm">IMO: {ship.imoNumber}</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-gray-500">
+                      <Radio className="w-4 h-4" />
+                      <span className="text-sm">MMSI: {ship.mmsi}</span>
+                    </div>
+                  </div>
+                </div>
+                <span
+                  className={`px-3 py-1 rounded-full text-sm font-medium border ${getStatusBadgeStyle(
+                    ship.currentStatus
+                  )}`}
+                >
+                  {ship.currentStatus}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-3 gap-6 mt-4">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-gray-500" />
+                  <span className="text-sm text-gray-600">
+                    Built: {ship.yearBuilt}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Building2 className="w-4 h-4 text-gray-500" />
+                  <span className="text-sm text-gray-600">
+                    Port: {ship.portOfRegistry}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Leaf className="w-4 h-4 text-gray-500" />
+                  <span className="text-sm text-gray-600">
+                    ECO: {ship.ecoStandard}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
     </section>
   );
 }

@@ -2,7 +2,7 @@ import CrewData from "./components/data";
 import ExtendedData from "./components/extended";
 import CrewList from "./components/list";
 import Header from "../components/Header";
-import SideNavigation from "../components/sidenavigation";
+
 
 export default async function Crews() {
   return (

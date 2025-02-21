@@ -1,8 +1,7 @@
 import { getSession } from "@/actions/session";
 import Header from "../components/Header";
-import SideNavigation from "../components/sidenavigation";
 import InspectionData from "./components/data";
-import InspectionsDataViz from "../components/dataviz/inspections/inspections-dataviz";
+
 import ShipCardInspection from "./components/card";
 
 export default async function Inspections() {

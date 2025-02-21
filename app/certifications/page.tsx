@@ -1,6 +1,6 @@
 import { getSession } from "@/actions/session";
 import Header from "../components/Header";
-import SideNavigation from "../components/sidenavigation";
+
 
 
 
