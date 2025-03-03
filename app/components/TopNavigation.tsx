@@ -64,7 +64,7 @@ export default function TopNavigation() {
             <item.Icon className="w-6 h-6" />
           </div>
           <span
-            className={`absolute -bottom-8 transition-opacity duration-300 ${
+            className={`absolute  -bottom-8 transition-opacity duration-300 ${
               hoveredButton === item.path ? "opacity-100" : "opacity-0"
             } text-black p-1 rounded-md bg-white border border-gray-200 shadow-md text-sm whitespace-nowrap`}
           >
