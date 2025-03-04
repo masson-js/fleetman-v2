@@ -31,39 +31,39 @@ export default function InspectionsStatus({ inspections }: InspectionsProps) {
   const uniqueShips = new Set(inspections.map((insp) => insp.shipId)).size;
 
   return (
-    <div className="p-6 ">
+    <div className="">
       {/* Summary Container */}
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl hover:bg-[#57C4FF] text-black hover:text-white hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
         <h2 className="text-sm font-semibold mb-4">Inspections</h2>
         <div className="space-y-3">
           {/* Total Inspections */}
           <div className="flex items-center justify-between p-2 bg-blue-100 rounded-md text-xs gap-4">
-            <span className="text-blue-600">Total Inspections</span>
+            <span className="text-blue-600">Total</span>
             <span className="font-semibold text-blue-800">{totalInspections}</span>
           </div>
           {/* Passed Inspections */}
-          <div className="flex items-center justify-between p-2 bg-green-100 rounded-md text-xs">
+          <div className="flex items-center justify-between p-2 bg-green-100 rounded-md text-xs gap-4">
             <span className="text-green-600">Passed</span>
             <span className="font-semibold text-green-800">{passedCount}</span>
           </div>
           {/* Failed Inspections */}
-          <div className="flex items-center justify-between p-2 bg-red-100 rounded-md text-xs">
+          <div className="flex items-center justify-between p-2 bg-red-100 rounded-md text-xs gap-4">
             <span className="text-red-600">Failed</span>
             <span className="font-semibold text-red-800">{failedCount}</span>
           </div>
           {/* Requires Work Inspections */}
-          <div className="flex items-center justify-between p-2 bg-yellow-100 rounded-md text-xs">
+          <div className="flex items-center justify-between p-2 bg-yellow-100 rounded-md text-xs gap-4">
             <span className="text-yellow-600">Requires Work</span>
             <span className="font-semibold text-yellow-800">{requiresWorkCount}</span>
           </div>
           {/* EU Compliant Inspections */}
-          <div className="flex items-center justify-between p-2 bg-purple-100 rounded-md text-xs">
+          <div className="flex items-center justify-between p-2 bg-purple-100 rounded-md text-xs gap-4">
             <span className="text-purple-600">EU Compliant</span>
             <span className="font-semibold text-purple-800">{euComplianceCount}</span>
           </div>
           {/* Unique Ships Inspected */}
-          <div className="flex items-center justify-between p-2 bg-gray-100 rounded-md text-xs">
-            <span className="text-gray-600">Ships Inspected</span>
+          <div className="flex items-center justify-between p-2 bg-gray-100 rounded-md text-xs gap-4">
+            <span className="text-gray-600">Inspected</span>
             <span className="font-semibold text-gray-800">{uniqueShips}</span>
           </div>
         </div>

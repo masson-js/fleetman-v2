@@ -41,7 +41,7 @@ export default function GlobalStatus({
   const formattedProfit = formatNumber(totalProfit);
 
   return (
-    <div className="flex flex-row justify-left flex-wrap gap-4 mt-16 p-4 bg-blue-50 rounded-lg">
+    <div className="flex flex-row justify-between flex-wrap gap-4 mt-24 bg-blue-50 rounded-lg">
       <div className="flex flex-col justify-center p-4 w-auto h-auto bg-gradient-to-b from-[#57C4FF] to-[#09A9FF] rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
         <div className="flex flex-wrap gap-2 justify-center">
           <h2 className="text-sm font-extralight text-white">Total Profit</h2>

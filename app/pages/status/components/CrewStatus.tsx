@@ -32,32 +32,32 @@ export default function CrewStatus({ crewMembers }: CrewStatusProps) {
       : "No records";
 
   return (
-    <div className="p-6 ">
+    <div className="">
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl hover:bg-[#57C4FF] text-black hover:text-white hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
         <h2 className="text-sm font-semibold mb-4">Crew</h2>
         <div className="space-y-3">
           <div className="flex items-center justify-between p-2 bg-blue-100 rounded-md text-xs">
-            <span className="text-blue-600">Total Crew Members</span>
+            <span className="text-blue-600">Total</span>
             <span className="font-semibold text-blue-800 ml-2">{totalCrew}</span>
           </div>
 
           <div className="flex items-center justify-between p-2 bg-green-100 rounded-md text-xs">
-            <span className="text-green-600">Active Crew Members</span>
+            <span className="text-green-600">Active</span>
             <span className="font-semibold text-green-800 ml-2">{activeCrew}</span>
           </div>
 
           <div className="flex items-center justify-between p-2 bg-yellow-100 rounded-md text-xs">
-            <span className="text-yellow-600">Crew on Leave</span>
+            <span className="text-yellow-600">On Leave</span>
             <span className="font-semibold text-yellow-800 ml-2">{onLeaveCrew}</span>
           </div>
 
           <div className="flex items-center justify-between p-2 bg-gray-100 rounded-md text-xs">
-            <span className="text-gray-600">Crew with Contracts</span>
+            <span className="text-gray-600">Contracts</span>
             <span className="font-semibold text-gray-800 ml-2">{crewWithContracts}</span>
           </div>
 
           <div className="flex items-center justify-between p-2 bg-purple-100 rounded-md text-xs">
-            <span className="text-purple-600">Last Join Date</span>
+            <span className="text-purple-600">Last Join</span>
             <span className="font-semibold text-purple-800 ml-2">{lastJoinDate}</span>
           </div>
         </div>

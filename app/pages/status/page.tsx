@@ -59,9 +59,9 @@ export default async function StatusPage() {
   const crewMembers = allData.crewMembers;
 
   return (
-    <div className="bg-blue-50 ">
+    <div className="bg-blue-50 flex flex-col w-full">
       <Header />
-      <div className="flex flex-col animate-fade-in bg-blue-50 items-center w-4/5 mx-auto">
+      <div className="flex flex-col animate-fade-in bg-blue-50 w-4/6 mx-auto">
         <GlobalStatus
           shipCount={shipCount}
           inspectionsCount={inspectionsCount}
@@ -72,16 +72,17 @@ export default async function StatusPage() {
           totalFuelRecords={totalFuelRecords}
           totalRoutes={totalRoutes}
         />
+  
         <ShipList ships={formattedShips} />
       </div>
-      <div className="flex flex-row flex-wrap w-4/5 mx-auto bg-blue-50 justify-between">
-        <InspectionsStatus inspections={inspections} />
-        <CertificatesStatus certificates={certifications} />
-        <FixturesStatus fixtures={fixtures} />
-        <LogbooksStatus logbooks={logbooks} />
+      <div className="flex flex-row flex-wrap bg-blue-50 w-4/6 mx-auto justify-between">
+        <InspectionsStatus inspections={inspections}/>
+        <CertificatesStatus certificates={certifications}  />
+        <FixturesStatus fixtures={fixtures}/>
+        <LogbooksStatus logbooks={logbooks}/>
         <CrewStatus crewMembers={crewMembers} />
       </div>
-      <div className="flex bg-blue-50 w-4/5 mx-auto justify-center">
+      <div className="flex bg-blue-50 w-4/6 mx-auto justify-center">
         <DataViz fixtures={fixtures} ships={formattedShips} />
       </div>
     </div>
