@@ -23,7 +23,7 @@ export default async function HomeHeader() {
       </Link>
       {session.userId && (
         <Link
-          href="/status"
+          href="/client/status"
           className="bg-[#57C4FF] text-white px-4 py-1 rounded-lg hover:bg-[#09A9FF] transition-colors duration-300"
         >
           Hi, {session.username}
@@ -33,7 +33,7 @@ export default async function HomeHeader() {
       {!session.username && (
         <Link
           className="bg-[#57C4FF] text-white px-4 py-1 rounded-lg hover:bg-[#09A9FF] transition-colors duration-300"
-          href="/pages/login"
+          href="/client/login"
         >
           Login
         </Link>
@@ -41,7 +41,7 @@ export default async function HomeHeader() {
       {!session.username && (
         <Link
           className="bg-[#ff5795] hover:bg-[#cd396f] text-white px-4 py-1 rounded-lg  transition-colors duration-300"
-          href="/pages/registration"
+          href="/client/registration"
         >
           Registration
         </Link>

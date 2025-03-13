@@ -24,7 +24,7 @@ export default function ShipList({ ships }: StatusListProps) {
     <div className="py-6 bg-blue-50 w-full ">
       <div className="overflow-x-auto shadow-lg rounded-lg">
         <table className="min-w-full table-auto bg-white rounded-t-lg">
-          <thead className="bg-[#09A9FF] text-white text-xs">
+          <thead className="bg-white text-black text-xs border-b-4 border-[#57c4ff5b]">
             <tr>
               <th className="p-3 text-left">Name</th>
               <th className="p-3 text-left">Type</th>
@@ -41,7 +41,7 @@ export default function ShipList({ ships }: StatusListProps) {
             {ships.map((ship, index) => (
               <tr
                 key={ship.id}
-                onClick={() => router.push(`/ship/${ship.id}`)}
+                onClick={() => router.push(`/client/ship/${ship.id}`)}
                 className={`cursor-pointer transition-colors duration-300 hover:bg-[#57C4FF] hover:text-white ${
                   index === ships.length - 1 ? "rounded-b-lg" : ""
                 }`}

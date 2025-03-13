@@ -12,7 +12,6 @@ import {
   Users,
   Map,
   Ship,
-  FilePlus,
   Plus,
   Route,
 } from "lucide-react";
@@ -28,7 +27,7 @@ export default function TopNavigation() {
   const buttonStyle = "relative flex flex-col items-center cursor-pointer";
 
   const menuItems = [
-    { path: "/pages/status", label: "Status", Icon: BarChart2 },
+    { path: "/client/status", label: "Status", Icon: BarChart2 },
     { path: "/inspections", label: "Inspections", Icon: ClipboardCheck },
     { path: "/certifications", label: "Certifications", Icon: Award },
     { path: "/logbooks", label: "Logbooks", Icon: BookOpen },

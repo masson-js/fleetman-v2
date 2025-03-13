@@ -51,10 +51,7 @@ export default function FixturesStatus({ fixtures }: FixturesProps) {
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-4xl hover:bg-[#57C4FF] text-black hover:text-white hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
         <h2 className="text-sm font-semibold mb-4">Fixtures</h2>
         <div className="space-y-3">
-          <div className="flex items-center justify-between p-2 bg-blue-100 rounded-md text-xs">
-            <span className="text-blue-600">Total</span>
-            <span className="font-semibold text-blue-800">{totalFixtures}</span>
-          </div>
+         
 
           <div className="flex items-center justify-between p-2 bg-green-100 rounded-md text-xs">
             <span className="text-green-600">Completed</span>

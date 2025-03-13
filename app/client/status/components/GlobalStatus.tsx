@@ -42,7 +42,7 @@ export default function GlobalStatus({
 
   return (
     <div className="flex flex-row justify-between flex-wrap gap-4 mt-24 bg-blue-50 rounded-lg">
-      <div className="flex flex-col justify-center p-4 w-auto h-auto bg-gradient-to-b from-[#57C4FF] to-[#09A9FF] rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
+      <div className="flex flex-col justify-center p-4 w-auto h-auto bg-gradient-to-b from-[#57C4FF] to-[#57C4FF] rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
         <div className="flex flex-wrap gap-2 justify-center">
           <h2 className="text-sm font-extralight text-white">Total Profit</h2>
         </div>
@@ -56,49 +56,49 @@ export default function GlobalStatus({
         </div>
       </div>
 
-      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#09A9FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
+      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#57C4FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
         <div className="flex items-center gap-2">
           <h2 className="text-sm font-light text-center">Ships</h2>
         </div>
         <span className="text-2xl font-thin text-center">{shipCount}</span>
       </div>
 
-      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#09A9FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
+      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#57C4FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
         <div className="flex items-center flex-wrap gap-2">
           <h2 className="text-sm font-thin text-center">Inspections</h2>
         </div>
         <span className="text-2xl font-thin text-center">{inspectionsCount}</span>
       </div>
 
-      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#09A9FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
+      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#57C4FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
         <div className="flex justify-center w-full">
           <h2 className="text-sm font-thin text-center">Certifications</h2>
         </div>
         <span className="text-2xl font-thin text-center">{certificationCount}</span>
       </div>
 
-      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#09A9FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
+      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#57C4FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
         <div className="flex items-center flex-wrap gap-2">
           <h2 className="text-sm font-thin text-center">Fixtures</h2>
         </div>
         <span className="text-2xl font-thin text-center">{fixturesCount}</span>
       </div>
 
-      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#09A9FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
+      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#57C4FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
         <div className="flex items-center flex-wrap gap-2">
           <h2 className="text-sm text-center">Logbooks</h2>
         </div>
         <span className="text-2xl font-thin text-center">{totalLogbooks}</span>
       </div>
 
-      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#09A9FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
+      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#57C4FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
         <div className="flex items-center flex-wrap gap-2">
           <h2 className="text-sm font-thin text-center">Fuel Records</h2>
         </div>
         <span className="text-2xl font-thin text-center">{totalFuelRecords}</span>
       </div>
 
-      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#09A9FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
+      <div className="flex flex-col justify-between p-4 w-auto h-auto bg-gradient-to-b bg-white hover:bg-[#57C4FF] text-black hover:text-white shadow-lg rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:cursor-pointer">
         <div className="flex items-center flex-wrap gap-2">
           <h2 className="text-sm font-thin text-center">Routes</h2>
         </div>

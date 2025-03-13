@@ -17,7 +17,7 @@ export default async function Header() {
       <div className="flex justify-end gap-2 py-1 font-mono text-xs text-center">
         {session.userId && (
           <Link
-            href="/pages/status"
+            href="/client/status"
             className="bg-[#57C4FF] hover:bg-[#09A9FF] text-white w-auto px-2 text-center items-center gap-2 h-8 rounded-lg flex transition-colors duration-300"
           >
             <UserCircle className="w-6 h-6" /> <span>{session.username} </span>
