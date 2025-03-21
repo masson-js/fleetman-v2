@@ -48,40 +48,40 @@ export default function FixturesStatus({ fixtures }: FixturesProps) {
 
   return (
     <div className="">
-      <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-4xl hover:bg-[#57C4FF] text-black hover:text-white hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
+      <div className="bg-white shadow-md rounded-lg h-full p-6 w-full max-w-4xl border-2 border-solid border-white hover:border-[#57C4FF] hover:border-2 hover:border-solid text-black hover:cursor-pointer transform transition-all duration-300">
         <h2 className="text-sm font-semibold mb-4">Fixtures</h2>
-        <div className="space-y-3">
+        <div className="space-y-3 ">
          
 
-          <div className="flex items-center justify-between p-2 bg-green-100 rounded-md text-xs">
-            <span className="text-green-600">Completed</span>
-            <span className="font-semibold text-green-800">
+          <div className="flex items-center justify-between p-2 text-xs border-b-4 border-green-400 ">
+            <span className="">Completed</span>
+            <span className="font-semibold">
               {completedCount}
             </span>
           </div>
 
-          <div className="flex items-center justify-between p-2 bg-yellow-100 rounded-md text-xs gap-4">
-            <span className="text-yellow-600">In Progress</span>
-            <span className="font-semibold text-yellow-800">
+          <div className="flex items-center justify-between p-2  text-xs gap-4 border-b-4 border-yellow-400 ">
+            <span className="">In Progress</span>
+            <span className="font-semibold ">
               {inProgressCount}
             </span>
           </div>
 
-          <div className="flex items-center justify-between p-2 bg-gray-100 rounded-md text-xs gap-4">
-            <span className="text-gray-600">Ships Involved</span>
-            <span className="font-semibold text-gray-800">{uniqueShips}</span>
+          <div className="flex items-center justify-between p-2  text-xs gap-4">
+            <span className="">Ships Involved</span>
+            <span className="font-semibold ">{uniqueShips}</span>
           </div>
 
-          <div className="flex items-center justify-between p-2 bg-purple-100 rounded-md text-xs gap-4">
-            <span className="text-purple-600">Last Date</span>
-            <span className="font-semibold text-purple-800">
+          <div className="flex items-center justify-between p-2 text-xs gap-4">
+            <span className="">Last Date</span>
+            <span className="font-semibold ">
               {lastFixture ? formatDate(lastFixture.endDate) : 'N/A'}
             </span>
           </div>
 
-          <div className="flex items-center justify-between p-2 bg-red-100 rounded-md text-xs gap-4">
-            <span className="text-red-600">Last Location</span>
-            <span className="font-semibold text-red-800">
+          <div className="flex items-center justify-between p-2  text-xs gap-4">
+            <span className="">Last Location</span>
+            <span className="font-semibold ">
               {lastFixture?.deliveryLocation || 'N/A'}
             </span>
           </div>

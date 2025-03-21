@@ -1,53 +1,60 @@
-'use client';
+"use client";
 
-interface Route {
+import React from "react";
+
+interface FuelRecord {
   id: string;
   shipId: string;
   date: Date;
-  start: string;
-  destination: string;
-  arrivalDate: Date;
+  refuelDate?: Date | null;
+  fuelType: string;
+  amount: number;
+  price: number;
+  totalCost: number;
 }
 
-interface ShipRoutesProps {
-  routes: Route[];
+interface FuelRecordsTableProps {
+  fuelRecords: FuelRecord[];
 }
 
-export default function ShipRoutes({ routes }: ShipRoutesProps) {
+export default function ShipFuelRecords({
+  fuelRecords,
+}: FuelRecordsTableProps) {
   return (
     <div className="flex animate-fade-in flex-col bg-white w-4/6 mx-auto mt-6 p-6 rounded-lg shadow-md text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
       <div className="flex items-center mb-4">
-        <h2 className="text-sm font-bold text-gray-800">Recent Routes</h2>
+        <h2 className="text-sm font-bold text-gray-800">Fuel Records</h2>
       </div>
-
-      {routes && routes.length > 0 ? (
+      {fuelRecords && fuelRecords.length > 0 ? (
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto bg-white">
             <thead className="bg-white text-black text-xs border-b-4 border-[#57c4ff5b]">
               <tr>
-                <th className="p-3 text-left">Route</th>
-                <th className="p-3 text-left">Departure Date</th>
-                <th className="p-3 text-left">Arrival Date</th>
+                <th className="p-3 text-left">Date</th>
+                <th className="p-3 text-left">Fuel Type</th>
+                <th className="p-3 text-left">Amount (tons)</th>
+                <th className="p-3 text-left">Total Cost (USD)</th>
               </tr>
             </thead>
             <tbody>
-              {routes.map((route, index) => (
+              {fuelRecords.map((record, index) => (
                 <tr
-                  key={route.id}
+                  key={record.id}
                   className={`cursor-pointer transition-colors duration-300 hover:bg-[#57C4FF] hover:text-white ${
-                    index === routes.length - 1 ? 'rounded-b-lg' : ''
+                    index === fuelRecords.length - 1 ? "rounded-b-lg" : ""
                   }`}
                 >
                   <td className="p-3 text-xs whitespace-nowrap">
-                    <div className="font-medium">
-                      {route.start} → {route.destination}
-                    </div>
+                    {new Date(record.date).toLocaleDateString("en-GB")}
                   </td>
                   <td className="p-3 text-xs whitespace-nowrap">
-                    {new Date(route.date).toLocaleDateString('en-US')}
+                    {record.fuelType}
                   </td>
                   <td className="p-3 text-xs whitespace-nowrap">
-                    {new Date(route.arrivalDate).toLocaleDateString('en-US')}
+                    {record.amount}
+                  </td>
+                  <td className="p-3 text-xs whitespace-nowrap">
+                    {record.totalCost.toLocaleString()} USD
                   </td>
                 </tr>
               ))}
@@ -56,7 +63,7 @@ export default function ShipRoutes({ routes }: ShipRoutesProps) {
         </div>
       ) : (
         <div className="text-center py-4 text-gray-500">
-          <p className="text-xs">No routes available.</p>
+          <p className="text-xs">No fuel records available.</p>
         </div>
       )}
     </div>

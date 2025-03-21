@@ -21,7 +21,7 @@ export default function ShipList({ ships }: StatusListProps) {
   const router = useRouter();
 
   return (
-    <div className="py-6 bg-blue-50 w-full ">
+    <div className="py-6  w-ful mt-4 ">
       <div className="overflow-x-auto shadow-lg rounded-lg">
         <table className="min-w-full table-auto bg-white rounded-t-lg">
           <thead className="bg-white text-black text-xs border-b-4 border-[#57c4ff5b]">

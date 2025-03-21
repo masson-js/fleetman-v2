@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { UniversalRouterButton } from "@/app/components/buttons";
 
@@ -23,32 +23,66 @@ interface ShipCrewProps {
 
 export default function ShipCrew({ crew }: ShipCrewProps) {
   return (
-    <div className="col-span-1 bg-white border-[#57c4ff5f] border-2 border-solid rounded-lg p-4 text-black ">
-      <div className="flex items-center mb-2">
+    <div className="flex animate-fade-in flex-col bg-white w-4/6 mx-auto mt-6 p-6 rounded-lg shadow-md text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
+      <div className="flex items-center mb-4">
         <h2 className="text-sm font-bold text-gray-800">Crew Members</h2>
       </div>
 
       {crew && crew.length > 0 ? (
-        <div className="space-y-1">
-          {crew.map((member) => (
-            <UniversalRouterButton
-              pathRoute="crews"
-              pathSlug={member.id}
-              key={member.id}
-            >
-              <div className="flex justify-between items-center p-1 hover:bg-[#57C4FF] rounded-md transition-colors duration-300">
-                <div>
-                  <p className="font-thin text-xs">{member.name}</p>
-                  <p className="text-xs text-gray-500 group-hover:text-white">
-                    {member.role}
-                  </p>
-                </div>
-                <div className="text-xs text-black group-hover:text-white">
-                  {member.nationality && <span>{member.nationality}</span>}
-                </div>
-              </div>
-            </UniversalRouterButton>
-          ))}
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto bg-white">
+            <thead className="bg-white text-black text-xs border-b-4 border-[#57c4ff5b]">
+              <tr>
+                <th className="p-3 text-left">Name</th>
+                <th className="p-3 text-left">Role</th>
+                <th className="p-3 text-left">Rank</th>
+                <th className="p-3 text-left">Status</th>
+                <th className="p-3 text-left">Nationality</th>
+                <th className="p-3 text-left">Join Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {crew.map((member, index) => (
+                <tr
+                  key={member.id}
+                  className={`cursor-pointer transition-colors duration-300 hover:bg-[#57C4FF] hover:text-white ${
+                    index === crew.length - 1 ? 'rounded-b-lg' : ''
+                  }`}
+                >
+                  <td className="p-3 text-xs whitespace-nowrap">
+                    <UniversalRouterButton pathRoute="crews" pathSlug={member.id}>
+                      {member.name}
+                    </UniversalRouterButton>
+                  </td>
+                  <td className="p-3 text-xs whitespace-nowrap">
+                    <UniversalRouterButton pathRoute="crews" pathSlug={member.id}>
+                      {member.role}
+                    </UniversalRouterButton>
+                  </td>
+                  <td className="p-3 text-xs whitespace-nowrap">
+                    <UniversalRouterButton pathRoute="crews" pathSlug={member.id}>
+                      {member.rank || 'N/A'}
+                    </UniversalRouterButton>
+                  </td>
+                  <td className="p-3 text-xs whitespace-nowrap">
+                    <UniversalRouterButton pathRoute="crews" pathSlug={member.id}>
+                      {member.status}
+                    </UniversalRouterButton>
+                  </td>
+                  <td className="p-3 text-xs whitespace-nowrap">
+                    <UniversalRouterButton pathRoute="crews" pathSlug={member.id}>
+                      {member.nationality || 'N/A'}
+                    </UniversalRouterButton>
+                  </td>
+                  <td className="p-3 text-xs whitespace-nowrap">
+                    <UniversalRouterButton pathRoute="crews" pathSlug={member.id}>
+                      {new Date(member.joinDate).toLocaleDateString('en-US')}
+                    </UniversalRouterButton>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       ) : (
         <div className="text-center py-4 text-gray-500">

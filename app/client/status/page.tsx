@@ -62,7 +62,7 @@ export default async function StatusPage() {
     return (
       <div className="bg-blue-50 flex flex-col w-full">
         <Header />
-        <div className="flex flex-col animate-fade-in bg-blue-50 w-4/6 mx-auto">
+        <div className="flex flex-col animate-fade-in  w-4/6 mx-auto">
           <GlobalStatus
             shipCount={shipCount}
             inspectionsCount={inspectionsCount}
@@ -74,9 +74,11 @@ export default async function StatusPage() {
             totalRoutes={totalRoutes}
           />
 
+        </div>
+        <div className="w-4/6 mx-auto">
           <ShipList ships={formattedShips} />
         </div>
-        <div className="flex flex-row flex-wrap bg-blue-50 w-4/6 mx-auto justify-between">
+        <div className="flex flex-row flex-wrap  w-4/6 mx-auto justify-between gap-2 mt-4">
           <InspectionsStatus inspections={inspections} />
           <CertificatesStatus certificates={certifications} />
           <FixturesStatus fixtures={fixtures} />

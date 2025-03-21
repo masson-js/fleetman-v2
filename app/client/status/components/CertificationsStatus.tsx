@@ -42,29 +42,29 @@ export default function CertificatesStatus({ certificates = [] }: CertificatesPr
 
   return (
     <div className="">
-      <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-4xl hover:bg-[#57C4FF] text-black hover:text-white hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
+      <div className="bg-white shadow-md rounded-lg h-full p-6 w-full max-w-4xl border-2 border-solid border-white hover:border-[#57C4FF] hover:border-2 hover:border-solid text-black  hover:cursor-pointer transform transition-all duration-300">
         <h2 className="text-sm font-semibold mb-4">Certificates</h2>
-        <div className="space-y-3">
+        <div className="space-y-3    ">
           
 
           {Object.keys(standardsCount).map((standard) => (
-            <div key={standard} className="flex items-center justify-between p-2  rounded-md text-xs gap-6 bg-gray-100">
-              <span className="text-black">{standard}</span>
-              <span className="font-semibold text-black">{standardsCount[standard]}</span>
+            <div key={standard} className="flex items-center justify-between p-2  rounded-md text-xs gap-6">
+              <span className="">{standard}</span>
+              <span className="font-semibold ">{standardsCount[standard]}</span>
             </div>
           ))}
 
           <div className="flex items-center justify-between p-2  rounded-md text-xs gap-6">
-            <span className="text-black">Crt-{currentYear}</span>
-            <span className="font-semibold text-black">
+            <span className="">Crt-{currentYear}</span>
+            <span className="font-semibold ">
               {currentYearCertificates.length}
             </span>
           </div>
 
           {lastYearCertificates.length > 0 && (
             <div className="flex items-center justify-between p-2  rounded-md text-xs gap-6">
-              <span className="text-black">Crt-{lastYear}</span>
-              <span className="font-semibold text-black">
+              <span className="">Crt-{lastYear}</span>
+              <span className="font-semibold ">
                 {lastYearCertificates.length}
               </span>
             </div>
