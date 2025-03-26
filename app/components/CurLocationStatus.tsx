@@ -9,6 +9,14 @@ const pathStatusMap = {
   "/pages/ship": "ship",
   "/profile": "User Profile",
   "/settings": "Settings",
+  "/client/forms/ship" : " ",
+  "/client/forms/inspection" : " ",
+  "/client/forms/fuel" : " ",
+  "/client/forms/certification" : " ",
+  "/client/forms/fixture" : " ",
+  "/client/forms/crew" : " ",
+  "/client/forms/route" : " ",
+  "/client/forms/logbook" : " "
 };
 
 export default function CurLocationStatus() {

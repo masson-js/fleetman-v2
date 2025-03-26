@@ -17,7 +17,7 @@ export default function ShipRoutes({ routes }: ShipRoutesProps) {
   return (
     <div className="flex animate-fade-in flex-col bg-white w-4/6 mx-auto mt-6 p-6 rounded-lg shadow-md text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
       <div className="flex items-center mb-4">
-        <h2 className="text-sm font-bold text-gray-800">Recent Routes</h2>
+        <h2 className="text-sm font-bold text-gray-800 border-b-2 border-[#4400ff]">Recent Routes</h2>
       </div>
 
       {routes && routes.length > 0 ? (

@@ -24,7 +24,7 @@ export default function ShipList({ ships }: StatusListProps) {
     <div className="py-6  w-ful mt-4 ">
       <div className="overflow-x-auto shadow-lg rounded-lg">
         <table className="min-w-full table-auto bg-white rounded-t-lg">
-          <thead className="bg-white text-black text-xs border-b-4 border-[#57c4ff5b]">
+          <thead className="bg-white text-black  font-thin text-xs border-b-4 border-[#57c4ff5b]">
             <tr>
               <th className="p-3 text-left">Name</th>
               <th className="p-3 text-left">Type</th>
@@ -42,19 +42,19 @@ export default function ShipList({ ships }: StatusListProps) {
               <tr
                 key={ship.id}
                 onClick={() => router.push(`/client/ship/${ship.id}`)}
-                className={`cursor-pointer transition-colors duration-300 hover:bg-[#57C4FF] hover:text-white ${
+                className={`cursor-pointer transition-colors duration-300 hover:bg-[#57C4FF] hover:text-white font-thin text-xs ${
                   index === ships.length - 1 ? "rounded-b-lg" : ""
                 }`}
               >
-                <td className="p-3 text-xs whitespace-nowrap">{ship.name}</td>
-                <td className="p-3 text-xs whitespace-nowrap">{ship.type}</td>
-                <td className="p-3 text-xs whitespace-nowrap">{ship.flag}</td>
-                <td className="p-3 text-xs whitespace-nowrap">{ship.imoNumber}</td>
-                <td className="p-3 text-xs whitespace-nowrap">{ship.mmsi}</td>
-                <td className="p-3 text-xs whitespace-nowrap">{ship.callsign}</td>
-                <td className="p-3 text-xs whitespace-nowrap ">{ship.portOfRegistry}</td>
-                <td className="p-3 text-xs whitespace-nowrap">{ship.ecoStandard}</td>
-                <td className="p-3 text-xs whitespace-nowrap">{ship.yearBuilt}</td>
+                <td className="p-3  whitespace-nowrap">{ship.name}</td>
+                <td className="p-3 whitespace-nowrap">{ship.type}</td>
+                <td className="p-3  whitespace-nowrap">{ship.flag}</td>
+                <td className="p-3  whitespace-nowrap">{ship.imoNumber}</td>
+                <td className="p-3  whitespace-nowrap">{ship.mmsi}</td>
+                <td className="p-3  whitespace-nowrap">{ship.callsign}</td>
+                <td className="p-3  whitespace-nowrap ">{ship.portOfRegistry}</td>
+                <td className="p-3  whitespace-nowrap">{ship.ecoStandard}</td>
+                <td className="p-3  whitespace-nowrap">{ship.yearBuilt}</td>
               </tr>
             ))}
           </tbody>

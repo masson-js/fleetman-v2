@@ -3,7 +3,30 @@
 import { Leaf } from "lucide-react";
 
 interface ShipProps {
-  ship: any;
+  ship: {
+    id: string;
+    name: string;
+    type: string;
+    flag: string;
+    imoNumber: string;
+    mmsi: string;
+    callsign: string;
+    deadweight: number;
+    length: number;
+    beam: number;
+    width: number;
+    yearBuilt: number;
+    currentStatus: string;
+    portOfRegistry: string;
+    ecoStandard: string;
+    fuelRecords: any[];
+    routes: any[];
+    certifications: any[];
+    inspections: any[];
+    fixtures: any[];
+    crew: any[];
+    logbooks: any[];
+  };
 }
 
 type ShipStatus = "in port" | "on the way" | "waiting" | "fix" | "other";
@@ -26,7 +49,7 @@ export default function ShipDetailsTop({ ship }: ShipProps) {
   return (
     <div className="flex flex-col animate-fade-in bg-blue-50 w-4/6 mx-auto">
       {/* Ship Title Section */}
-      <div className="flex mt-24 p-4 shadow-sm bg-white text-black text-xs border-b-4 border-[#57c4ff5b] rounded-t-lg">
+      <div className="flex mt-24 p-4  bg-white text-black text-xs rounded-t-lg ">
         <div className="flex flex-col md:flex-row items-center gap-4 w-full">
           <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-white shadow-lg">
             <img
@@ -105,10 +128,74 @@ export default function ShipDetailsTop({ ship }: ShipProps) {
         <div className=" flex flex-row flex-wrap">
           <div>
             <div className="grid grid-cols-2 gap-y-2">
-              <span className="flex flex-row  gap-1 text-xs text-gray-500"><Leaf size={14} className="text-green-500" />ECO Standard:</span>
+              <span className="flex flex-row  gap-1 text-xs text-gray-500">
+                <Leaf size={14} className="text-green-500" />
+                ECO Standard:
+              </span>
               <span className="text-xs font-medium">{ship.ecoStandard}</span>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Bottom panel */}
+
+      <div className="flex justify-between shadow-sm flex-wrap  bg-white text-black rounded-b-lg text-xs">
+        <div className="flex flex-col justify-between p-4 w-auto h-auto">
+          <div className="flex items-center gap-2">
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#e81416]">Fixtures</h2>
+          </div>
+          <span className="text-xl font-thin text-center">
+            {ship.fixtures.length}
+          </span>
+        </div>
+        <div className="flex flex-col justify-between p-4 w-auto h-auto ">
+          <div className="flex items-center gap-2">
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#ffa500]">Inspections</h2>
+          </div>
+          <span className="text-xl font-thin text-center">
+            {ship.inspections.length}
+          </span>
+        </div>
+        <div className="flex flex-col justify-between p-4 w-auto h-auto ">
+          <div className="flex items-center gap-2">
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#79c314]">Certificates</h2>
+          </div>
+          <span className="text-xl font-thin text-center">
+            {ship.certifications.length}
+          </span>
+        </div>
+        <div className="flex flex-col justify-between p-4 w-auto h-auto">
+          <div className="flex items-center gap-2">
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#4b369d]">Fuel Rec</h2>
+          </div>
+          <span className="text-xl font-thin text-center">
+            {ship.fuelRecords.length}
+          </span>
+        </div>
+        <div className="flex flex-col justify-between p-4 w-auto h-auto ">
+          <div className="flex items-center gap-2">
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#4400ff]">Routes</h2>
+          </div>
+          <span className="text-xl font-thin text-center">
+            {ship.routes.length}
+          </span>
+        </div>
+        <div className="flex flex-col justify-between p-4 w-auto h-auto ">
+          <div className="flex items-center gap-2">
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#70369d]">Crew</h2>
+          </div>
+          <span className="text-xl font-thin text-center">
+            {ship.crew.length}
+          </span>
+        </div>
+        <div className="flex flex-col justify-between p-4 w-auto h-auto ">
+          <div className="flex items-center gap-2">
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#2a0e0e]">Logbooks</h2>
+          </div>
+          <span className="text-xl font-thin text-center">
+            {ship.logbooks.length}
+          </span>
         </div>
       </div>
     </div>

@@ -28,22 +28,23 @@ export default function TopNavigation() {
 
   const menuItems = [
     { path: "/client/status", label: "Status", Icon: BarChart2 },
-    { path: "/inspections", label: "Inspections", Icon: ClipboardCheck },
-    { path: "/certifications", label: "Certifications", Icon: Award },
-    { path: "/logbooks", label: "Logbooks", Icon: BookOpen },
-    { path: "/fixtures", label: "Fixtures", Icon: Handshake },
-    { path: "/crews", label: "Crews", Icon: Users },
-    { path: "/fleetroutes", label: "Routes", Icon: Map },
+    { path: "/client/inspections", label: "Inspections", Icon: ClipboardCheck },
+    { path: "/client/certifications", label: "Certifications", Icon: Award },
+    { path: "/client/logbooks", label: "Logbooks", Icon: BookOpen },
+    { path: "/client/fixtures", label: "Fixtures", Icon: Handshake },
+    { path: "/client/crews", label: "Crews", Icon: Users },
+    { path: "/client/routes", label: "Routes", Icon: Map },
   ];
 
   const addMenuItems = [
-    { path: "/forms/ship", label: "Ship", Icon: Ship },
-    { path: "/forms/inspection", label: "Inspection", Icon: ClipboardCheck },
-    { path: "/forms/certification", label: "Certification", Icon: Award },
-    { path: "/forms/logbook", label: "Logbook", Icon: BookOpen },
-    { path: "/forms/fixture", label: "Fixture", Icon: Handshake },
-    { path: "/forms/crew", label: "Crew", Icon: Users },
-    { path: "/forms/route", label: "Route", Icon: Route },
+    { path: "/client/forms/ship", label: "Ship", Icon: Ship },
+    { path: "/client/forms/inspection", label: "Inspection", Icon: ClipboardCheck },
+    { path: "/client/forms/certification", label: "Certification", Icon: Award },
+    { path: "/client/forms/logbook", label: "Logbook", Icon: BookOpen },
+    { path: "/client/forms/fixture", label: "Fixture", Icon: Handshake },
+    { path: "/client/forms/crew", label: "Crew", Icon: Users },
+    { path: "/client/forms/route", label: "Route", Icon: Route },
+    { path: "/client/forms/fuel", label: "Fuel Record", Icon: Route },
   ];
 
   const renderMenuItems = (

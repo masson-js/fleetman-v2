@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface StatusListProps {
   shipCount: number;
   inspectionsCount: number;
@@ -41,9 +43,9 @@ export default function GlobalStatus({
   const formattedProfit = formatNumber(totalProfit);
 
   return (
-    <div className="flex flex-row justify-between flex-wrap gap-4 mt-24 bg-white rounded-lg shadow-lg">
-      <div className="flex flex-col justify-center p-4 w-auto h-auto bg-gradient-to-b from-[#57C4FF] to-[#57C4FF] rounded-s-lg transform transition-all">
-        <div className="flex flex-wrap gap-2 justify-center">
+    <div className="flex flex-row justify-between flex-wrap mt-24 bg-white rounded-lg shadow-lg ">
+      <div className="flex flex-col justify-center p-2 w-auto h-auto bg-gradient-to-b from-[#57C4FF] to-[#57C4FF] rounded-s-lg transform transition-all">
+        <div className="flex flex-wrap gap-2 justify-center w-auto">
           <h2 className="text-sm font-extralight text-white">Total Profit</h2>
         </div>
         <div className="flex gap-1">
@@ -55,55 +57,87 @@ export default function GlobalStatus({
           </span>
         </div>
       </div>
-
-      <div className="flex flex-col justify-between p-4 w-auto h-auto">
-        <div className="flex items-center gap-2">
-          <h2 className="font-light text-center text-sm">Ships</h2>
+      <Link href="/client/ships">
+        <div className="flex flex-col justify-between p-4 w-auto h-auto cursor-pointer hover:bg-gray-100 transform transition-all duration-300">
+          <div className="flex items-center gap-2">
+            <h2 className="font-thin text-center text-xs border-b-2 w-20 border-[#57C4FF] ">
+              Ships
+            </h2>
+          </div>
+          <span className="text-xl font-thin text-center">{shipCount}</span>
         </div>
-        <span className="text-xl font-thin text-center">{shipCount}</span>
-      </div>
+      </Link>
 
-      <div className="flex flex-col justify-between p-4 w-auto h-auto">
-        <div className="flex items-center flex-wrap gap-2">
-          <h2 className="text-sm font-thin text-center">Inspections</h2>
+      <Link href="/client/fixtures">
+        <div className="flex flex-col justify-between p-4 w-auto h-auto cursor-pointer hover:bg-gray-100 transform transition-all duration-300">
+          <div className="flex items-center flex-wrap gap-2">
+            <h2 className="text-xs font-thin text-center border-b-2 w-20 border-[#e81416]">
+              Fixtures
+            </h2>
+          </div>
+          <span className="text-xl font-thin text-center">{fixturesCount}</span>
         </div>
-        <span className="text-xl font-thin text-center">{inspectionsCount}</span>
-      </div>
+      </Link>
 
-      <div className="flex flex-col justify-between p-4 w-auto h-auto">
-        <div className="flex justify-center w-full">
-          <h2 className="text-sm font-thin text-center">Certifications</h2>
+      <Link href="/client/inspections">
+        <div className="flex flex-col justify-between p-4 w-auto h-auto cursor-pointer hover:bg-gray-100 transform transition-all duration-300">
+          <div className="flex items-center flex-wrap gap-2">
+            <h2 className="text-xs font-thin text-center border-b-2 w-20 border-[#ffa500]">
+              Inspections
+            </h2>
+          </div>
+          <span className="text-xl font-thin text-center">
+            {inspectionsCount}
+          </span>
         </div>
-        <span className="text-xl font-thin text-center">{certificationCount}</span>
-      </div>
+      </Link>
 
-      <div className="flex flex-col justify-between p-4 w-auto h-auto">
-        <div className="flex items-center flex-wrap gap-2">
-          <h2 className="text-sm font-thin text-center">Fixtures</h2>
+      <Link href="/client/certifications">
+        <div className="flex flex-col justify-between p-4 w-auto h-auto cursor-pointer hover:bg-gray-100 transform transition-all duration-300">
+          <div className="flex justify-center w-full">
+            <h2 className="text-xs font-thin text-center border-b-2 w-20 border-[#79c314]">
+              Certifications
+            </h2>
+          </div>
+          <span className="text-xl font-thin text-center">
+            {certificationCount}
+          </span>
         </div>
-        <span className="text-xl font-thin text-center">{fixturesCount}</span>
-      </div>
+      </Link>
 
-      <div className="flex flex-col justify-between p-4 w-auto h-auto">
-        <div className="flex items-center flex-wrap gap-2">
-          <h2 className="text-sm text-center">Logbooks</h2>
+      <Link href="/client/fuelrecords">
+        <div className="flex flex-col justify-between p-4 w-auto h-auto cursor-pointer hover:bg-gray-100 transform transition-all duration-300">
+          <div className="flex items-center flex-wrap gap-2">
+            <h2 className="text-xs font-mono text-center border-b-2 w-20 border-[#4b369d]">
+              Fuel Rec.
+            </h2>
+          </div>
+          <span className="text-xl font-thin text-center">
+            {totalFuelRecords}
+          </span>
         </div>
-        <span className="text-xl font-thin text-center">{totalLogbooks}</span>
-      </div>
+      </Link>
 
-      <div className="flex flex-col justify-between p-4 w-auto h-auto">
-        <div className="flex items-center flex-wrap gap-2">
-          <h2 className="text-sm font-thin text-center">Fuel Records</h2>
+      <Link href="/client/routes">
+        <div className="flex flex-col justify-between p-4 w-auto h-auto cursor-pointer hover:bg-gray-100 transform transition-all duration-300">
+          <div className="flex items-center flex-wrap gap-2">
+            <h2 className="text-xs font-thin text-center border-b-2 w-20 border-[#4400ff]">
+              Routes
+            </h2>
+          </div>
+          <span className="text-xl font-thin text-center">{totalRoutes}</span>
         </div>
-        <span className="text-xl font-thin text-center">{totalFuelRecords}</span>
-      </div>
-
-      <div className="flex flex-col justify-between p-4 w-auto h-auto">
-        <div className="flex items-center flex-wrap gap-2">
-          <h2 className="text-sm font-thin text-center">Routes</h2>
+      </Link>
+      <Link href="/client/logbooks">
+        <div className="flex flex-col justify-between p-4 w-auto h-auto cursor-pointer hover:bg-gray-100 transform transition-all duration-300">
+          <div className="flex items-center flex-wrap gap-2">
+            <h2 className="text-xs font-thin text-center border-b-2 w-20 border-[#2a0e0e]">
+              Logbooks
+            </h2>
+          </div>
+          <span className="text-xl font-thin text-center">{totalLogbooks}</span>
         </div>
-        <span className="text-xl font-thin text-center">{totalRoutes}</span>
-      </div>
+      </Link>
     </div>
   );
 }

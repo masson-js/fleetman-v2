@@ -24,7 +24,7 @@ export default function Fixtures({ fixtures }: FixturesProps) {
   return (
     <div className="flex animate-fade-in flex-col bg-white w-4/6 mx-auto mt-6 p-6 rounded-lg shadow-md text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
       <div className="flex items-center mb-4">
-        <h2 className="text-sm font-bold text-gray-800">Fixtures & Charters</h2>
+        <h2 className="text-sm font-bold text-gray-800 border-b-2 border-[#e81416]">Fixtures & Charters</h2>
       </div>
 
       {fixtures && fixtures.length > 0 ? (

@@ -21,7 +21,7 @@ export default function ShipLogbooks({ logbooks }: LogbookProps) {
   return (
     <div className="flex animate-fade-in flex-col bg-white w-4/6 mx-auto mt-6 p-6 rounded-lg shadow-md text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
       <div className="flex items-center mb-4">
-        <h2 className="text-sm font-bold text-gray-800">Recent Logbook Entries</h2>
+        <h2 className="text-sm font-bold text-gray-800 border-b-2 border-[#2a0e0e]">Recent Logbook Entries</h2>
       </div>
 
       {logbooks && logbooks.length > 0 ? (

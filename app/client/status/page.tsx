@@ -78,7 +78,7 @@ export default async function StatusPage() {
         <div className="w-4/6 mx-auto">
           <ShipList ships={formattedShips} />
         </div>
-        <div className="flex flex-row flex-wrap  w-4/6 mx-auto justify-between gap-2 mt-4">
+        <div className="flex flex-row flex-wrap  w-4/6 mx-auto h-auto justify-between gap-2 mt-4">
           <InspectionsStatus inspections={inspections} />
           <CertificatesStatus certificates={certifications} />
           <FixturesStatus fixtures={fixtures} />

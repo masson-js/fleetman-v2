@@ -28,7 +28,7 @@ export default function ShipCertifications({ certifications }: ShipCertification
   return (
     <div className="flex animate-fade-in flex-col bg-white w-4/6 mx-auto mt-6 p-6 rounded-lg shadow-md text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
       <div className="flex items-center mb-4">
-        <h2 className="text-sm font-bold text-gray-800">Certifications</h2>
+        <h2 className="text-sm font-bold text-gray-800 border-b-2 border-[#79c314]">Certifications</h2>
       </div>
       {certifications && certifications.length > 0 ? (
         <div className="overflow-x-auto">

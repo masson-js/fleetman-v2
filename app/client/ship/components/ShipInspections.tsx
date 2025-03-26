@@ -30,7 +30,7 @@ export default function ShipInspections({ inspections }: ShipInspectionsProps) {
   return (
     <div className="flex animate-fade-in flex-col bg-white w-4/6 mx-auto mt-6 p-6 rounded-lg shadow-md text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
       <div className="flex items-center mb-4">
-        <h2 className="text-sm font-bold text-gray-800">Inspections & Compliance</h2>
+        <h2 className="text-sm font-bold text-gray-800  border-b-2 border-[#ffa500]">Inspections</h2>
       </div>
 
       {inspections && inspections.length > 0 ? (
