@@ -1,7 +1,8 @@
 "use client";
 import { createShip } from "@/actions/ship";
-import { useActionState } from "react";
 import { useRouter } from "next/navigation";
+import { useActionState } from "react";
+import { useEffect } from "react";
 
 export default function ShipAddForm() {
   const [state, formAction] = useActionState<any, FormData>(
@@ -9,10 +10,13 @@ export default function ShipAddForm() {
     undefined
   );
   const router = useRouter();
-  console.log(state);
-  function navHandler() {
-    router.push("/status");
-  }
+
+  useEffect(() => {
+    // Проверяем, если экшен завершен и вернул успех
+    if (state?.success) {
+      router.push("/client/status");
+    }
+  }, [state, router]);
   return (
     <form
       action={formAction}
@@ -203,7 +207,7 @@ export default function ShipAddForm() {
       </div>
       <div>
         <button
-          onClick={() => navHandler()}
+          
           type="submit"
           className="w-40 bg-gray-400 text-white py-2 rounded-md hover:bg-black transition duration-150"
         >

@@ -1,0 +1,14 @@
+{
+  "shipTypes": [
+    "Container ship",
+    "Tanker",
+    "Bulk carrier",
+    "Ro-Ro",
+    "General cargo ship",
+    "Passenger ship",
+    "Feeder ship",
+    "Heavy lift ship",
+    "Livestock carrier",
+    "Other"
+  ]
+}

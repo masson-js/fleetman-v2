@@ -1,0 +1,9 @@
+{
+  "statuses": [
+    "In Port",
+    "On the Way",
+    "Waiting",
+    "Fix",
+    "Other"
+  ]
+}

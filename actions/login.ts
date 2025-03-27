@@ -28,5 +28,5 @@ export const login = async (
   session.isLoggedIn = true;
 
   await session.save();
-  redirect("/status");
+  redirect("/client/status");
 };

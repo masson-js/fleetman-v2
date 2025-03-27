@@ -1,7 +1,10 @@
 import { getSession } from "@/actions/session";
 
+
 import Header from "@/app/components/Header";
-import ShipAddForm from "../templates/Ship";
+import NewShipAddForm from "../templates/Ship";
+// import ShipAddForm from "../templates/Ship";
+
 
 
 export default async function ShipDataCreating() {
@@ -12,7 +15,8 @@ export default async function ShipDataCreating() {
     <div className="bg-blue-50 flex flex-col w-full">
       <Header />
       <div className="flex flex-row flex-wrap  w-4/6 mx-auto h-auto justify-center mt-4 mb-12 ">
-        <ShipAddForm />
+        {/* <ShipAddForm /> */}
+        <NewShipAddForm/>
       </div>
     </div>
   );

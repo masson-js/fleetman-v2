@@ -1,6 +1,9 @@
 "use client";
 
 import { Leaf } from "lucide-react";
+import { deleteShip } from "@/actions/ship";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface ShipProps {
   ship: {
@@ -32,6 +35,37 @@ interface ShipProps {
 type ShipStatus = "in port" | "on the way" | "waiting" | "fix" | "other";
 
 export default function ShipDetailsTop({ ship }: ShipProps) {
+  const [isDeleting, setIsDeleting] = useState(false);
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this ship? This action cannot be undone."
+    );
+
+    if (!confirmDelete) return;
+
+    setIsDeleting(true);
+
+    const formData = new FormData();
+    formData.append("shipId", ship.id);
+
+    try {
+      const result = await deleteShip({}, formData);
+
+      if (result.success) {
+        router.push("/client/status");
+      } else {
+        alert(result.error || "Failed to delete ship");
+      }
+    } catch (error) {
+      console.error("Delete ship error:", error);
+      alert("An error occurred while deleting the ship");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   const getStatusClass = (status: string): string => {
     const statusMap: Record<ShipStatus, string> = {
       "in port": "bg-green-500 text-white",
@@ -134,6 +168,18 @@ export default function ShipDetailsTop({ ship }: ShipProps) {
               </span>
               <span className="text-xs font-medium">{ship.ecoStandard}</span>
             </div>
+            <div className="flex flex-row flex-wrap gap-2 justify-end m-2 p-2 text-xs text-white">
+              <button className=" rounded-lg w-16 h-auto p-2 bg-[#ffa500] hover:bg-[rgb(255,123,0)]">
+                edit
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="rounded-lg w-16 h-auto p-2 bg-[#e81416] hover:bg-[#a22628] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isDeleting ? "Deleting..." : "Delete"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -143,7 +189,9 @@ export default function ShipDetailsTop({ ship }: ShipProps) {
       <div className="flex justify-between shadow-sm flex-wrap  bg-white text-black rounded-b-lg text-xs">
         <div className="flex flex-col justify-between p-4 w-auto h-auto">
           <div className="flex items-center gap-2">
-            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#e81416]">Fixtures</h2>
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#e81416]">
+              Fixtures
+            </h2>
           </div>
           <span className="text-xl font-thin text-center">
             {ship.fixtures.length}
@@ -151,7 +199,9 @@ export default function ShipDetailsTop({ ship }: ShipProps) {
         </div>
         <div className="flex flex-col justify-between p-4 w-auto h-auto ">
           <div className="flex items-center gap-2">
-            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#ffa500]">Inspections</h2>
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#ffa500]">
+              Inspections
+            </h2>
           </div>
           <span className="text-xl font-thin text-center">
             {ship.inspections.length}
@@ -159,7 +209,9 @@ export default function ShipDetailsTop({ ship }: ShipProps) {
         </div>
         <div className="flex flex-col justify-between p-4 w-auto h-auto ">
           <div className="flex items-center gap-2">
-            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#79c314]">Certificates</h2>
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#79c314]">
+              Certificates
+            </h2>
           </div>
           <span className="text-xl font-thin text-center">
             {ship.certifications.length}
@@ -167,7 +219,9 @@ export default function ShipDetailsTop({ ship }: ShipProps) {
         </div>
         <div className="flex flex-col justify-between p-4 w-auto h-auto">
           <div className="flex items-center gap-2">
-            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#4b369d]">Fuel Rec</h2>
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#4b369d]">
+              Fuel Rec
+            </h2>
           </div>
           <span className="text-xl font-thin text-center">
             {ship.fuelRecords.length}
@@ -175,7 +229,9 @@ export default function ShipDetailsTop({ ship }: ShipProps) {
         </div>
         <div className="flex flex-col justify-between p-4 w-auto h-auto ">
           <div className="flex items-center gap-2">
-            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#4400ff]">Routes</h2>
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#4400ff]">
+              Routes
+            </h2>
           </div>
           <span className="text-xl font-thin text-center">
             {ship.routes.length}
@@ -183,7 +239,9 @@ export default function ShipDetailsTop({ ship }: ShipProps) {
         </div>
         <div className="flex flex-col justify-between p-4 w-auto h-auto ">
           <div className="flex items-center gap-2">
-            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#70369d]">Crew</h2>
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#70369d]">
+              Crew
+            </h2>
           </div>
           <span className="text-xl font-thin text-center">
             {ship.crew.length}
@@ -191,7 +249,9 @@ export default function ShipDetailsTop({ ship }: ShipProps) {
         </div>
         <div className="flex flex-col justify-between p-4 w-auto h-auto ">
           <div className="flex items-center gap-2">
-            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#2a0e0e]">Logbooks</h2>
+            <h2 className="font-light text-center text-sm border-b-2 w-24 border-[#2a0e0e]">
+              Logbooks
+            </h2>
           </div>
           <span className="text-xl font-thin text-center">
             {ship.logbooks.length}

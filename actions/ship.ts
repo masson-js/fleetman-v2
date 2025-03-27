@@ -5,72 +5,168 @@ import { getSession } from "@/actions/session";
 import { redirect } from "next/navigation";
 
 export const createShip = async (
-  prevState: { error: undefined | string },
+  prevState: { error?: string },
   formData: FormData
 ) => {
   const session = await getSession();
   const prisma = new PrismaClient();
 
-  const userSesId = session.userId;
-
-  let shipName = formData.get("shipname") as string;
-  let shipType = formData.get("type") as string;
-  let shipFlag = formData.get("flag") as string;
-  let shipIMO = formData.get("imoNumber") as string;
-  let shipMMSI = formData.get("mmsi") as string;
-  let shipCallsign = formData.get("callsign") as string;
-  let shipdeadWeight = parseInt(formData.get("deadweight") as string, 10);
-  let shipLength = parseFloat(formData.get("length") as string);
-  let shipBeam = parseFloat(formData.get("beam") as string);
-  let shipWidth = parseFloat(formData.get("width") as string);
-  let shipYearBuild = parseInt(formData.get("yearBuilt") as string, 10);
-  let shipCurrentStatus = formData.get("currentStatus") as string;
-  let shipPortRegistry = formData.get("portOfRegistry") as string;
-  let shipEco = formData.get("ecoStandard") as string;
-
   try {
-    if (!userSesId) {
-      throw new Error("User not authenticated");
+    if (!session?.userId) {
+      return { error: "User not authenticated" };
+    }
+    type ShipData = {
+      name: string;
+      type: string;
+      flag: string;
+      imoNumber: string;
+      mmsi: string;
+      callsign: string;
+      deadweight: number;
+      length: number;
+      beam: number;
+      width: number;
+      yearBuilt: number;
+      currentStatus: string;
+      portOfRegistry: string;
+      ecoStandard: string;
+      userId: string;
+    };
+
+    const shipData: ShipData = {
+      name: formData.get("shipname") as string,
+      type: formData.get("type") as string,
+      flag: formData.get("flag") as string,
+      imoNumber: formData.get("imoNumber") as string,
+      mmsi: formData.get("mmsi") as string,
+      callsign: formData.get("callsign") as string,
+      deadweight: parseInt(formData.get("deadweight") as string, 10),
+      length: parseFloat(formData.get("length") as string),
+      beam: parseFloat(formData.get("beam") as string),
+      width: parseFloat(formData.get("width") as string),
+      yearBuilt: parseInt(formData.get("yearBuilt") as string, 10),
+      currentStatus: formData.get("currentStatus") as string,
+      portOfRegistry: formData.get("portOfRegistry") as string,
+      ecoStandard: formData.get("ecoStandard") as string,
+      userId: session.userId,
+    };
+
+    const requiredFields = Object.keys(shipData) as (keyof ShipData)[];
+
+    for (const field of requiredFields) {
+      if (!shipData[field]) {
+        return { error: `Missing required field: ${field}` };
+      }
     }
 
     const user = await prisma.user.findUnique({
-      where: { userId: userSesId },
+      where: { userId: session.userId },
     });
 
     if (!user) {
-      throw new Error("User not found");
+      return { error: "User not found" };
     }
 
     const newShip = await prisma.ship.create({
-      data: {
-        name: shipName,
-        type: shipType,
-        flag: shipFlag,
-        imoNumber: shipIMO,
-        mmsi: shipMMSI,
-        callsign: shipCallsign,
-        deadweight: shipdeadWeight,
-        length: shipLength,
-        beam: shipBeam,
-        width: shipWidth,
-        yearBuilt: shipYearBuild,
-        currentStatus: shipCurrentStatus,
-        portOfRegistry: shipPortRegistry,
-        ecoStandard: shipEco,
-        userId: userSesId,
-      },
+      data: shipData,
     });
 
-    return { success: true, newShip };
+    return {
+      success: true,
+      redirect: "/client/status",
+    };
   } catch (error) {
     console.error("Error creating ship:", error);
+    return {
+      error:
+        error instanceof Error ? error.message : "An unknown error occurred",
+    };
   } finally {
     await prisma.$disconnect();
   }
-
-  redirect("/status");
 };
 
+export const deleteShip = async (
+  prevState: { error?: string },
+  formData: FormData
+) => {
+  const session = await getSession();
+  const prisma = new PrismaClient();
+
+  try {
+    // Check if user is authenticated
+    if (!session?.userId) {
+      return { error: "User not authenticated" };
+    }
+
+    // Get the ship ID to delete
+    const shipId = formData.get("shipId") as string;
+
+    if (!shipId) {
+      return { error: "Ship ID is required" };
+    }
+
+    // Verify the ship belongs to the current user
+    const ship = await prisma.ship.findUnique({
+      where: { 
+        id: shipId,
+        userId: session.userId 
+      }
+    });
+
+    if (!ship) {
+      return { error: "Ship not found or you do not have permission to delete" };
+    }
+
+    // Perform cascading deletion
+    await prisma.$transaction([
+      // Delete associated fuel records
+      prisma.shipFuel.deleteMany({
+        where: { shipId: shipId }
+      }),
+      // Delete associated routes
+      prisma.shipRoute.deleteMany({
+        where: { shipId: shipId }
+      }),
+      // Delete associated certifications
+      prisma.certification.deleteMany({
+        where: { shipId: shipId }
+      }),
+      // Delete associated inspections
+      prisma.inspection.deleteMany({
+        where: { shipId: shipId }
+      }),
+      // Delete associated fixtures
+      prisma.fixture.deleteMany({
+        where: { shipId: shipId }
+      }),
+      // Delete associated logbooks
+      prisma.logbook.deleteMany({
+        where: { shipId: shipId }
+      }),
+      // Delete associated crew members
+      prisma.crew.deleteMany({
+        where: { shipId: shipId }
+      }),
+      // Finally, delete the ship itself
+      prisma.ship.delete({
+        where: { id: shipId }
+      })
+    ]);
+
+    return {
+      success: true,
+      redirect: "/client/status"
+    };
+  } catch (error) {
+    console.error("Error deleting ship:", error);
+    return {
+      error: error instanceof Error ? error.message : "An unknown error occurred"
+    };
+  } finally {
+    await prisma.$disconnect();
+  }
+};
 
 
 export const getShipDetails = async (shipId: string) => {
@@ -123,10 +219,6 @@ export const getShipDetails = async (shipId: string) => {
   }
 };
 
-
-
-
-
 export const getAllUserShips = async () => {
   const session = await getSession();
   const prisma = new PrismaClient();
@@ -157,13 +249,9 @@ export const getAllUserShips = async () => {
   }
 };
 
-
-
-
-
 export const getShipStatus = async ({ shipID }: { shipID: string }) => {
   const prisma = new PrismaClient();
-  console.log(shipID)
+
   try {
     const shipStatus = await prisma.ship.findFirst({
       where: {

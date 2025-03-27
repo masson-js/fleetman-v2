@@ -12,7 +12,7 @@ export default function AddFixtureForm({ shipsNames }: ShipsGetProps) {
     createFixture,
     undefined
   );
-  console.log(state);
+ 
 
   return (
     <form

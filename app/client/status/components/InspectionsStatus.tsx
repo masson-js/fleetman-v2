@@ -43,18 +43,14 @@ export default function InspectionsStatus({ inspections }: InspectionsProps) {
   return (
     <Link href="/client/inspections">
       <div className="">
-        {/* Summary Container */}
         <div className="bg-white shadow-md rounded-lg h-80 p-6 w-full max-w-4xl border-2  border-solid border-white hover:border-[#57C4FF] hover:border-2 hover:border-solid text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
-          <h2 className="text-sm font-semibold mb-4">Inspections</h2>
+          <h2 className="text-sm font-semibold mb-4 border-b-2 border-[#ffa500]">
+            Inspections
+          </h2>
           <div className="space-y-3">
-            {/* Total Inspections */}
-
-            {/* Passed Inspections */}
             <div className="flex items-center justify-between p-2 border-l-4 border-green-400  text-xs gap-4">
               <span className="">Passed</span>
-              <span className="font-semibold ">
-                {passedCount}
-              </span>
+              <span className="font-semibold ">{passedCount}</span>
             </div>
             {/* Failed Inspections */}
             <div className="flex items-center justify-between p-2 border-l-4 border-red-400  text-xs gap-4">
@@ -64,16 +60,12 @@ export default function InspectionsStatus({ inspections }: InspectionsProps) {
             {/* Requires Work Inspections */}
             <div className="flex items-center justify-between p-2 border-l-4 border-yellow-400  text-xs gap-4">
               <span className="">Requires Work</span>
-              <span className="font-semibold ">
-                {requiresWorkCount}
-              </span>
+              <span className="font-semibold ">{requiresWorkCount}</span>
             </div>
             {/* EU Compliant Inspections */}
             <div className="flex items-center justify-between p-2  rounded-md text-xs gap-4">
               <span className="">EU Compliant</span>
-              <span className="font-semibold ">
-                {euComplianceCount}
-              </span>
+              <span className="font-semibold ">{euComplianceCount}</span>
             </div>
             {/* Unique Ships Inspected */}
             <div className="flex items-center justify-between p-2 rounded-md text-xs gap-4">
@@ -86,5 +78,3 @@ export default function InspectionsStatus({ inspections }: InspectionsProps) {
     </Link>
   );
 }
-
-
