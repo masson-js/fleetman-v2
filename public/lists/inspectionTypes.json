@@ -1,0 +1,8 @@
+{
+  "types": [
+    "regular",
+   "unscheduled",
+   "follow-up",
+   "other"
+  ]
+}

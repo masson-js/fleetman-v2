@@ -43,7 +43,7 @@ export default function InspectionsStatus({ inspections }: InspectionsProps) {
   return (
     <Link href="/client/inspections">
       <div className="">
-        <div className="bg-white shadow-md rounded-lg h-80 p-6 w-full max-w-4xl border-2  border-solid border-white hover:border-[#57C4FF] hover:border-2 hover:border-solid text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
+        <div className="bg-white shadow-md rounded-lg h-80 p-4 w-full max-w-4xl border-2  border-solid border-white hover:border-[#57C4FF] hover:border-2 hover:border-solid text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
           <h2 className="text-sm font-semibold mb-4 border-b-2 border-[#ffa500]">
             Inspections
           </h2>

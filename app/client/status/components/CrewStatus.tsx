@@ -46,7 +46,7 @@ export default function CrewStatus({ crewMembers }: CrewStatusProps) {
   return (
     <Link href="/client/inspections">
       <div className="">
-        <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-4xl border-2 border-solid h-80 border-white hover:border-[#57C4FF] hover:border-2 hover:border-solid text-black hover:cursor-pointer transform transition-all duration-300">
+        <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-4xl border-2 border-solid h-80 border-white hover:border-[#57C4FF] hover:border-2 hover:border-solid text-black hover:cursor-pointer transform transition-all duration-300">
           <h2 className="text-sm font-semibold mb-4 border-b-2 border-[#4400ff]">Crew</h2>
           <div className="space-y-3">
             <div className="flex items-center justify-between p-2 border-l-4 border-green-400  text-xs">

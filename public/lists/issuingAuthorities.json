@@ -1,0 +1,23 @@
+{
+  "issues": [
+    "Select issuing authority",
+    "United Kingdom Maritime and Coastguard Agency (MCA)",
+    "Germany: Bundesamt für Seeschifffahrt und Hydrographie (BSH)",
+    "France: Direction des Affaires Maritimes (DAM)",
+    "Netherlands: Inspectie Leefomgeving en Transport (ILT)",
+    "Spain: Dirección General de la Marina Mercante (DGMM)",
+    "Italy: Ministero delle Infrastrutture e dei Trasporti",
+    "DNV (Det Norske Veritas)",
+    "Lloyd's Register (LR)",
+    "Bureau Veritas (BV)",
+    "RINA (Registro Italiano Navale)",
+    "Germanischer Lloyd (GL)",
+    "ABS (American Bureau of Shipping)",
+    "ClassNK (Nippon Kaiji Kyokai)",
+    "European Maritime Safety Agency (EMSA)",
+    "Port State Control (PSC)",
+    "Malta Ship Registry",
+    "Cyprus Ship Registry",
+    "Other"
+  ]
+}

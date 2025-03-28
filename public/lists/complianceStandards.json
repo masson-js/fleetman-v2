@@ -1,0 +1,15 @@
+{
+  "complianceStandards": [
+    "MARPOL",
+    "SOLAS",
+    "ISO",
+    "AFS",
+    "SEEMP",
+    "EEDI",
+    "ISM",
+    "MLC 2006",
+    "STCW",
+    "IMDG",
+    "other"
+  ]
+}

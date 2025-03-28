@@ -2,7 +2,12 @@
 
 import { PrismaClient } from "@prisma/client";
 import { getSession } from "@/actions/session";
-import { redirect } from "next/navigation";
+
+
+
+
+
+
 
 export const createShip = async (
   prevState: { error?: string },
@@ -86,6 +91,13 @@ export const createShip = async (
   }
 };
 
+
+
+
+
+
+
+
 export const deleteShip = async (
   prevState: { error?: string },
   formData: FormData
@@ -94,23 +106,18 @@ export const deleteShip = async (
   const prisma = new PrismaClient();
 
   try {
-    // Check if user is authenticated
     if (!session?.userId) {
       return { error: "User not authenticated" };
     }
-
-    // Get the ship ID to delete
     const shipId = formData.get("shipId") as string;
 
     if (!shipId) {
       return { error: "Ship ID is required" };
     }
-
-    // Verify the ship belongs to the current user
     const ship = await prisma.ship.findUnique({
-      where: { 
+      where: {
         id: shipId,
-        userId: session.userId 
+        userId: session.userId
       }
     });
 
@@ -118,37 +125,28 @@ export const deleteShip = async (
       return { error: "Ship not found or you do not have permission to delete" };
     }
 
-    // Perform cascading deletion
     await prisma.$transaction([
-      // Delete associated fuel records
       prisma.shipFuel.deleteMany({
         where: { shipId: shipId }
       }),
-      // Delete associated routes
       prisma.shipRoute.deleteMany({
         where: { shipId: shipId }
       }),
-      // Delete associated certifications
       prisma.certification.deleteMany({
         where: { shipId: shipId }
       }),
-      // Delete associated inspections
       prisma.inspection.deleteMany({
         where: { shipId: shipId }
       }),
-      // Delete associated fixtures
       prisma.fixture.deleteMany({
         where: { shipId: shipId }
       }),
-      // Delete associated logbooks
       prisma.logbook.deleteMany({
         where: { shipId: shipId }
       }),
-      // Delete associated crew members
       prisma.crew.deleteMany({
         where: { shipId: shipId }
       }),
-      // Finally, delete the ship itself
       prisma.ship.delete({
         where: { id: shipId }
       })
@@ -167,6 +165,7 @@ export const deleteShip = async (
     await prisma.$disconnect();
   }
 };
+
 
 
 export const getShipDetails = async (shipId: string) => {

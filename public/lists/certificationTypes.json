@@ -1,0 +1,29 @@
+{
+  "types": [
+    "International Tonnage Certificate (ITC)",
+    "International Load Line Certificate (ILLC)",
+    "International Oil Pollution Prevention Certificate (IOPP)",
+    "International Air Pollution Prevention Certificate (IAPP)",
+    "International Sewage Pollution Prevention Certificate (ISPPC)",
+    "International Ballast Water Management Certificate (IBWMC)",
+    "International Safety Management Certificate (ISM)",
+    "International Ship Security Certificate (ISSC)",
+    "Document of Compliance (DOC)",
+    "Safety Management Certificate (SMC)",
+    "Energy Efficiency Certificate (EEDI/EEXI)",
+    "Polar Ship Certificate",
+    "Class Certificate",
+    "Machinery Certificate",
+    "Hull Certificate",
+    "EU Monitoring, Reporting, and Verification (MRV) Certificate",
+    "Green Passport (Inventory of Hazardous Materials)",
+    "EU Sulfur Cap Compliance Certificate",
+    "NOx Compliance Certificate",
+    "Maritime Labour Certificate (MLC)",
+    "Passenger Ship Safety Certificate",
+    "Crew Certificate of Competency",
+    "LNG Fuel Certificate",
+    "Cargo Ship Safety Equipment Certificate",
+    "Dangerous Goods Certificate"
+  ]
+}

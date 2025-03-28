@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/actions/session";
 
 export const createInspection = async (
-  prevState: { error: undefined | string },
+  prevState: { error?: string },
   formData: FormData
 ) => {
   const prisma = new PrismaClient();
@@ -14,7 +14,7 @@ export const createInspection = async (
   const inspectionDate = new Date(formData.get("inspectionDate") as string);
   const inspectorName = formData.get("inspectorName") as string;
   const inspectionType = formData.get("inspectionType") as string;
-  const results = "N/A"
+  const results = "N/A";
   const recommendations = (formData.get("recommendations") as string) || null;
   const nextInspectionDate = formData.get("nextInspectionDate")
     ? new Date(formData.get("nextInspectionDate") as string)
@@ -57,20 +57,32 @@ export const createInspection = async (
       },
     });
 
-    return { success: true, newInspection };
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Error creating inspection:", error.message);
-      return { success: false, error: error.message };
-    } else {
-      console.error("Unknown error:", error);
-      return { success: false, error: "Inspection creation failed" };
-    }
+    return {
+      success: true,
+      redirect: "/client/status",
+    };
+  } catch (error) {
+    console.error("Error creating ship:", error);
+    return {
+      error:
+        error instanceof Error ? error.message : "An unknown error occurred",
+    };
   } finally {
     await prisma.$disconnect();
-    redirect("/inspections");
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
 
 export const getAllInspections = async () => {
   const session = await getSession();
@@ -154,7 +166,6 @@ export const getInspectionsByShipId = async (shipId: string) => {
     await prisma.$disconnect();
   }
 };
-
 
 export const getInspectionById = async (inspectionId: string) => {
   const session = await getSession();
