@@ -100,7 +100,7 @@ export default function NewShipAddForm() {
   return (
     <form
       action={handleSubmit}
-      className="flex flex-col bg-white mt-24 mb-24 pb-20 rounded-lg shadow-md text-black w-4/6 gap-4 items-center border-2 border-solid border-white hover:border-[#59c5ff87] hover:border-2 hover:border-solid hover:shadow-xl transform transition-all duration-300"
+      className="flex flex-col bg-white mt-24 mb-24 pb-20 rounded-lg shadow-md text-black w-4/6 gap-4 items-center border-2 border-solid border-white hover:border-[#59c5ff87] hover:border-2 hover:border-solid hover:shadow-xl transform transition-all duration-300 animate-fade-in"
     >
       <h2 className="flex justify-center font-bold mt-6 mb-2  border-b-2 border-[#3fbcff] ">
         Add New Ship

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 interface StatusListProps {
@@ -21,16 +23,27 @@ export default function GlobalStatus({
   totalFuelRecords,
   totalRoutes,
 }: StatusListProps) {
+  const isLoading = [
+    shipCount,
+    inspectionsCount,
+    certificationCount,
+    fixturesCount,
+    totalProfit,
+    totalLogbooks,
+    totalFuelRecords,
+    totalRoutes,
+  ].some((value) => value === undefined);
+
   const formatNumber = (totalProfit: number) => {
     if (totalProfit >= 1_000_000) {
       return {
-        value: (totalProfit / 1_000_000).toFixed(2), // Число (например, 1.23)
-        suffix: "M", // Суффикс (например, M)
+        value: (totalProfit / 1_000_000).toFixed(2),
+        suffix: "M",
       };
     } else if (totalProfit >= 1000) {
       return {
-        value: (totalProfit / 1000).toFixed(0), // Число (например, 786)
-        suffix: "K", // Суффикс (например, K)
+        value: (totalProfit / 1000).toFixed(0),
+        suffix: "K",
       };
     } else {
       return {
@@ -40,7 +53,19 @@ export default function GlobalStatus({
     }
   };
 
-  const formattedProfit = formatNumber(totalProfit);
+  const formattedProfit = formatNumber(totalProfit || 0);
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-row justify-between flex-wrap mt-24 bg-white rounded-lg shadow-lg">
+        <div className="flex flex-col justify-center p-2 w-auto h-auto bg-gradient-to-b from-[#57C4FF] to-[#57C4FF] rounded-s-lg transform transition-all">
+          <div className="flex flex-wrap gap-2 justify-center w-auto">
+            <span className="text-xl font-mono text-white">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-row justify-between flex-wrap mt-24 bg-white rounded-lg shadow-lg ">

@@ -62,7 +62,7 @@ export const createInspection = async (
       redirect: "/client/status",
     };
   } catch (error) {
-    console.error("Error creating ship:", error);
+    console.error("Error creating inspection:", error);
     return {
       error:
         error instanceof Error ? error.message : "An unknown error occurred",

@@ -1,0 +1,9 @@
+{
+  "engineStatuses": [
+    "Running",
+    "Stopped",
+    "Idling",
+    "Under Maintenance",
+    "Faulty"
+  ]
+}

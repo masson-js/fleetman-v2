@@ -1,6 +1,6 @@
 import Header from "@/app/components/Header";
 import { getAllUserShips } from "@/actions/ship";
-import NewAddInspectionForm from "../templates/Inspetion";
+import NewAddInspectionForm from "../templates/Inspeсtion";
 
 export default async function InspectionCreating() {
   const shipsData = await getAllUserShips();

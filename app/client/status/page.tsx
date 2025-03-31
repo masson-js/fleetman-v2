@@ -5,14 +5,50 @@ import ShipList from "./components/ShipList";
 import InspectionsStatus from "./components/InspectionsStatus";
 import CertificatesStatus from "./components/CertificationsStatus";
 import FixturesStatus from "./components/FixturesStatus";
-import FleetAnalyticsD3 from "./components/analitics";
 import LogbooksStatus from "./components/LogbooksStatus";
 import CrewStatus from "./components/CrewStatus";
 import DataViz from "./components/DataViz";
 
+import {
+  Ship,
+  Inspection,
+  Certification,
+  Fixture,
+  Logbook,
+  Crew,
+  InspectionVerificationStatus,
+  ShipFuel,
+  ShipRoute,
+} from "@/types";
+
+interface UserData {
+  ships: Ship[];
+  inspections: Inspection[];
+  certifications: Certification[];
+  fixtures: Fixture[];
+  logbooks: Logbook[];
+  crewMembers: Crew[];
+  fuelRecords: ShipFuel[];
+  routes: ShipRoute[];
+  totalProfit: number;
+}
+
+interface FormattedShip {
+  id: string;
+  name: string;
+  type: string;
+  flag: string;
+  imoNumber: string;
+  mmsi: string;
+  callsign: string;
+  portOfRegistry: string;
+  ecoStandard: string;
+  yearBuilt: string;
+}
+
 export default async function StatusPage() {
   try {
-    const allData = await getAllUserData();
+    const allData = (await getAllUserData()) as UserData;
 
     const shipCount = allData.ships.length;
     const inspectionsCount = allData.inspections.length;
@@ -23,19 +59,28 @@ export default async function StatusPage() {
     const totalFuelRecords = allData.fuelRecords.length;
     const totalRoutes = allData.routes.length;
 
-    const inspections = allData.inspections.map((insp) => ({
-      ...insp,
-      inspectionDate: new Date(insp.inspectionDate),
-      nextInspectionDate: insp.nextInspectionDate
-        ? new Date(insp.nextInspectionDate)
-        : null,
-      verificationStatus: insp.verificationStatus as
-        | "passed"
-        | "failed"
-        | "requires-work",
-    }));
+    const inspections = allData.inspections.map((insp: Inspection) => {
+      const statusMapping: Record<
+        string,
+        "passed" | "failed" | "requires-work"
+      > = {
+        [InspectionVerificationStatus.PASSED]: "passed",
+        [InspectionVerificationStatus.FAILED]: "failed",
+        [InspectionVerificationStatus.REQUIRES_WORK]: "requires-work",
+      };
 
-    const fixtures = allData.fixtures.map((fixture) => ({
+      return {
+        ...insp,
+        inspectionDate: new Date(insp.inspectionDate),
+        nextInspectionDate: insp.nextInspectionDate
+          ? new Date(insp.nextInspectionDate)
+          : null,
+        verificationStatus:
+          statusMapping[insp.verificationStatus] || "requires-work",
+      };
+    });
+
+    const fixtures = allData.fixtures.map((fixture: Fixture) => ({
       ...fixture,
       startDate: new Date(fixture.startDate).toISOString(),
       endDate: new Date(fixture.endDate).toISOString(),
@@ -43,7 +88,7 @@ export default async function StatusPage() {
     }));
 
     const certifications = allData.certifications;
-    const formattedShips = allData.ships.map((ship) => ({
+    const formattedShips: FormattedShip[] = allData.ships.map((ship: Ship) => ({
       id: ship.id,
       name: ship.name,
       type: ship.type,
@@ -73,19 +118,18 @@ export default async function StatusPage() {
             totalFuelRecords={totalFuelRecords}
             totalRoutes={totalRoutes}
           />
-
         </div>
-        <div className="w-4/6 mx-auto">
+        <div className="w-4/6 mx-auto animate-fade-in ">
           <ShipList ships={formattedShips} />
         </div>
-        <div className="flex flex-row flex-wrap w-4/6 mx-auto h-auto justify-between mt-4">
+        <div className="flex flex-row flex-wrap w-4/6 mx-auto h-auto justify-between mt-4 animate-fade-in">
           <InspectionsStatus inspections={inspections} />
           <CertificatesStatus certificates={certifications} />
           <FixturesStatus fixtures={fixtures} />
           <LogbooksStatus logbooks={logbooks} />
           <CrewStatus crewMembers={crewMembers} />
         </div>
-        <div className="flex bg-blue-50 w-4/6 mx-auto justify-center">
+        <div className="flex bg-blue-50 w-4/6 mx-auto justify-center ">
           <DataViz fixtures={fixtures} ships={formattedShips} />
         </div>
       </div>

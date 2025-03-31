@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/actions/session";
 
 export const createCertification = async (
-  prevState: { error: undefined | string },
+  prevState: { error?: string },
   formData: FormData
 ) => {
   const prisma = new PrismaClient();
@@ -57,18 +57,18 @@ export const createCertification = async (
       },
     });
 
-    return { success: true, newCertification };
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Error creating certification:", error.message);
-      return { success: false, error: error.message };
-    } else {
-      console.error("Unknown error:", error);
-      return { success: false, error: "Certification creation failed" };
-    }
+    return {
+      success: true,
+      redirect: "/client/status",
+    };
+  } catch (error) {
+    console.error("Error creating certificate:", error);
+    return {
+      error:
+        error instanceof Error ? error.message : "An unknown error occurred",
+    };
   } finally {
     await prisma.$disconnect();
-    redirect("/certifications");
   }
 };
 

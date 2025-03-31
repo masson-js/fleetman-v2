@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/actions/session";
 
 export const createLogbook = async (
-  prevState: { error: undefined | string },
+  prevState: { error?: string },
   formData: FormData
 ) => {
   const prisma = new PrismaClient();
@@ -55,19 +55,18 @@ export const createLogbook = async (
       },
     });
 
-    return { success: true, newLogbookEntry };
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Error creating logbook entry:", error.message);
-      return { success: false, error: error.message };
-    } else {
-      console.error("Unknown error:", error);
-      return { success: false, error: "Logbook entry creation failed" };
-    }
+    return {
+      success: true,
+      redirect: "/client/status",
+    };
+  } catch (error) {
+    console.error("Error creating Logbook:", error);
+    return {
+      error:
+        error instanceof Error ? error.message : "An unknown error occurred",
+    };
   } finally {
     await prisma.$disconnect();
-
-    redirect("/logbooks");
   }
 };
 

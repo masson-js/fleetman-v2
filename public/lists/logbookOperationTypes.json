@@ -1,0 +1,10 @@
+{
+  "operationTypes": [
+    "Port Entry",
+    "Port Exit",
+    "Cargo Loading",
+    "Cargo Unloading",
+    "Maintenance",
+    "Other"
+  ]
+}

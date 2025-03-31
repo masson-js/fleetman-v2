@@ -1,0 +1,9 @@
+{
+  "weatherConditions": [
+    "Clear",
+    "Cloudy",
+    "Stormy",
+    "Foggy",
+    "Other"
+  ]
+}
