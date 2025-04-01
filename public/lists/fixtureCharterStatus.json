@@ -1,0 +1,12 @@
+{
+  "statuses": [
+    "in Progress",
+    "completed",
+    "oending",
+    "cancelled",
+    "on Hold",
+    "terminated",
+    "draft",
+    "other"
+  ]
+}

@@ -1,9 +1,10 @@
+import { Suspense } from "react";
 import Header from "@/app/components/Header";
 import { getAllUserShips } from "@/actions/ship";
 import NewAddCertifcationForm from "../templates/Certificate";
+import { LoadingPlaceholder } from "@/app/components/PageLoading";
 
-
-export default async function CertificationCreating() {
+async function CertificationCreating() {
   const shipsData = await getAllUserShips();
   const shipsNames = shipsData.map((ship) => ship.name);
 
@@ -14,5 +15,13 @@ export default async function CertificationCreating() {
         <NewAddCertifcationForm shipsNames={shipsNames} />
       </div>
     </div>
+  );
+}
+
+export default async function ShipCertificateCreating() {
+  return (
+    <Suspense fallback={<LoadingPlaceholder />}>
+      <CertificationCreating />
+    </Suspense>
   );
 }

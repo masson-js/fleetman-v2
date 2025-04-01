@@ -25,7 +25,9 @@ export default function NewAddInspectionForm({ shipsNames }: ShipsGetProps) {
     Promise.all([
       fetch("/lists/inspectionTypes.json").then((res) => res.json()),
       fetch("/lists/complianceStandards.json").then((res) => res.json()),
-      fetch("/lists/verificationStatus.json").then((res) => res.json()),
+      fetch("/lists/inspectionVerificationStatus.json").then((res) =>
+        res.json()
+      ),
     ])
       .then(([inspectionData, complianceData, statusData]) => {
         setInspectionTypes(inspectionData.types || []);
@@ -41,17 +43,11 @@ export default function NewAddInspectionForm({ shipsNames }: ShipsGetProps) {
 
   useEffect(() => {
     if (state?.success && state?.redirect) {
-      router.push(state.redirect);
-    }
-  }, [state, router]);
-
-  useEffect(() => {
-    if (state?.success && state?.redirect) {
       setIsCreating(false);
       setIsCreated(true);
 
       const timer = setTimeout(() => {
-        router.push("/client/status");
+        router.push(state.redirect || "/client/status");
       }, 2000);
 
       return () => clearTimeout(timer);

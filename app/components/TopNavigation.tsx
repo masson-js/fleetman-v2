@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   BarChart2,
   ClipboardCheck,
@@ -19,8 +19,23 @@ import {
 export default function TopNavigation() {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
+
+  // Закрытие меню при клике вне его области
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const baseButtonStyle =
     "bg-[#57C4FF] text-white w-8 h-8 rounded-lg hover:bg-[#09A9FF] transition-colors duration-300 flex items-center justify-center";
@@ -81,7 +96,7 @@ export default function TopNavigation() {
           {renderMenuItems(menuItems)}
         </ul>
       </section>
-      <div className="relative">
+      <div className="relative" ref={menuRef}>
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className={baseButtonStyle}

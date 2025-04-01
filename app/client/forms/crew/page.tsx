@@ -1,21 +1,27 @@
 import { getAllUserShips } from "@/actions/ship";
-import AddCrewForm from "@/app/components/forms/crew";
-import AddInspectionForm from "@/app/components/forms/inspectionadd";
-
+import { Suspense } from "react";
 import Header from "@/app/components/Header";
+import NewAddCrewForm from "../templates/CrewMember";
+import { LoadingPlaceholder } from "@/app/components/PageLoading";
 
-
-export default async function FixtureCreating() {
+async function CrewCreating() {
   const shipsData = await getAllUserShips();
   const shipsNames = shipsData.map((ship) => ship.name);
 
   return (
-    <div className="flex flex-col w-full h-auto">
+    <div className="bg-blue-50 flex flex-col w-full">
       <Header />
-      <div className="flex m-6 justify-center">
-    
-        <AddCrewForm shipsNames={shipsNames} />
+      <div className="flex flex-row flex-wrap  w-4/6 mx-auto h-auto justify-center mt-4 mb-12 ">
+        <NewAddCrewForm shipsNames={shipsNames} />
       </div>
     </div>
+  );
+}
+
+export default async function ShipCrewCreating() {
+  return (
+    <Suspense fallback={<LoadingPlaceholder />}>
+      <CrewCreating />
+    </Suspense>
   );
 }

@@ -1,10 +1,10 @@
+import { Suspense } from "react";
 import { getAllUserShips } from "@/actions/ship";
-
-
 import Header from "@/app/components/Header";
 import NewAddFixtureForm from "../templates/Fixture";
+import { LoadingPlaceholder } from "@/app/components/PageLoading";
 
-export default async function FixtureCreating() {
+async function FixtureCreating() {
   const shipsData = await getAllUserShips();
   const shipsNames = shipsData.map((ship) => ship.name);
 
@@ -15,5 +15,13 @@ export default async function FixtureCreating() {
         <NewAddFixtureForm shipsNames={shipsNames} />
       </div>
     </div>
+  );
+}
+
+export default async function ShipFixtureCreating() {
+  return (
+    <Suspense fallback={<LoadingPlaceholder />}>
+      <FixtureCreating />
+    </Suspense>
   );
 }

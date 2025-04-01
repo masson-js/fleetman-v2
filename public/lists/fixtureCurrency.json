@@ -1,0 +1,10 @@
+{
+  "currencies": [
+    "USD - US Dollar",
+    "GBP - British Pound",
+    "EUR - Euro",
+    "SEK - Swedish Krona",
+    "NOK - Norwegian Krone",
+    "DKK - Danish Krone"
+  ]
+}

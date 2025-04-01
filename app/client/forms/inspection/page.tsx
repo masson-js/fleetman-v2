@@ -1,8 +1,10 @@
+import { Suspense } from "react";
 import Header from "@/app/components/Header";
 import { getAllUserShips } from "@/actions/ship";
 import NewAddInspectionForm from "../templates/Inspeсtion";
+import { LoadingPlaceholder } from "@/app/components/PageLoading";
 
-export default async function InspectionCreating() {
+ async function InspectionCreating() {
   const shipsData = await getAllUserShips();
   const shipsNames = shipsData.map((ship) => ship.name);
 
@@ -13,5 +15,13 @@ export default async function InspectionCreating() {
         <NewAddInspectionForm shipsNames={shipsNames} />
       </div>
     </div>
+  );
+}
+
+export default async function ShipInspectionreating() {
+  return (
+    <Suspense fallback={<LoadingPlaceholder />}>
+      <InspectionCreating />
+    </Suspense>
   );
 }

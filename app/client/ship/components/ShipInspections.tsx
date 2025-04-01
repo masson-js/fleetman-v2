@@ -1,8 +1,6 @@
-'use client';
+"use client";
 
 import { InspectionEnhancedButton } from "@/app/components/buttons";
-
-
 
 interface Inspection {
   id: string;
@@ -30,7 +28,9 @@ export default function ShipInspections({ inspections }: ShipInspectionsProps) {
   return (
     <div className="flex animate-fade-in flex-col bg-white w-4/6 mx-auto mt-6 p-6 rounded-lg shadow-md text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
       <div className="flex items-center mb-4">
-        <h2 className="text-sm font-bold text-gray-800  border-b-2 border-[#ffa500]">Inspections</h2>
+        <h2 className="text-sm font-bold text-gray-800  border-b-2 border-[#ffa500]">
+          Inspections
+        </h2>
       </div>
 
       {inspections && inspections.length > 0 ? (
@@ -51,12 +51,14 @@ export default function ShipInspections({ inspections }: ShipInspectionsProps) {
                 <tr
                   key={inspection.id}
                   className={`cursor-pointer transition-colors duration-300 hover:bg-[#57C4FF] hover:text-white ${
-                    index === inspections.length - 1 ? 'rounded-b-lg' : ''
+                    index === inspections.length - 1 ? "rounded-b-lg" : ""
                   }`}
                 >
                   <td className="p-3 text-xs whitespace-nowrap">
                     <InspectionEnhancedButton inspectionId={inspection.id}>
-                      {new Date(inspection.inspectionDate).toLocaleDateString('en-US')}
+                      {new Date(inspection.inspectionDate).toLocaleDateString(
+                        "en-US"
+                      )}
                     </InspectionEnhancedButton>
                   </td>
                   <td className="p-3 text-xs whitespace-nowrap">
@@ -68,10 +70,13 @@ export default function ShipInspections({ inspections }: ShipInspectionsProps) {
                     <InspectionEnhancedButton inspectionId={inspection.id}>
                       <span
                         className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                          inspection.inspectionType === 'regular' ? 'bg-blue-100 text-blue-800' :
-                          inspection.inspectionType === 'unscheduled' ? 'bg-orange-100 text-orange-800' :
-                          inspection.inspectionType === 'follow-up' ? 'bg-purple-100 text-purple-800' :
-                          'bg-gray-100 text-gray-800'
+                          inspection.inspectionType === "regular"
+                            ? "bg-blue-100 text-blue-800"
+                            : inspection.inspectionType === "unscheduled"
+                            ? "bg-orange-100 text-orange-800"
+                            : inspection.inspectionType === "follow-up"
+                            ? "bg-purple-100 text-purple-800"
+                            : "bg-gray-100 text-gray-800"
                         }`}
                       >
                         {inspection.inspectionType}
@@ -87,19 +92,22 @@ export default function ShipInspections({ inspections }: ShipInspectionsProps) {
                     <InspectionEnhancedButton inspectionId={inspection.id}>
                       <span
                         className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          inspection.results === 'passed' ? 'bg-green-100 text-green-800' :
-                          inspection.results === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                          inspection.results === 'failed' ? 'bg-red-100 text-red-800' :
-                          'bg-gray-100 text-gray-800'
+                          inspection.verificationStatus === "passed"
+                            ? "bg-green-100 text-green-800"
+                            : inspection.verificationStatus === "pending"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : inspection.verificationStatus === "failed"
+                            ? "bg-red-100 text-red-800"
+                            : "bg-gray-100 text-gray-800"
                         }`}
                       >
-                        {inspection.results}
+                        {inspection.verificationStatus}
                       </span>
                     </InspectionEnhancedButton>
                   </td>
                   <td className="p-3 text-xs whitespace-nowrap">
                     <InspectionEnhancedButton inspectionId={inspection.id}>
-                      {inspection.isEUCompliance ? 'Yes' : 'No'}
+                      {inspection.isEUCompliance ? "Yes" : "No"}
                     </InspectionEnhancedButton>
                   </td>
                 </tr>

@@ -1,9 +1,10 @@
-import { getAllUserShips } from "@/actions/ship";
-
+import { Suspense } from "react";
 import Header from "@/app/components/Header";
-import NewAddLogbookForm from "../templates/Logbook";
+import { getAllUserShips } from "@/actions/ship";
+import NewAddLogbookForm from "../templates/Logbook"
+import { LoadingPlaceholder } from "@/app/components/PageLoading";
 
-export default async function LogbookCreating() {
+async function LogbookCreating() {
   const shipsData = await getAllUserShips();
   const shipsNames = shipsData.map((ship) => ship.name);
 
@@ -14,5 +15,13 @@ export default async function LogbookCreating() {
         <NewAddLogbookForm shipsNames={shipsNames} />
       </div>
     </div>
+  );
+}
+
+export default async function ShipLogbookCreating() {
+  return (
+    <Suspense fallback={<LoadingPlaceholder />}>
+      <LogbookCreating />
+    </Suspense>
   );
 }

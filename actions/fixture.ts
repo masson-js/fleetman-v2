@@ -1,11 +1,10 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
-import { redirect } from "next/navigation";
 import { getSession } from "@/actions/session";
 
 export const createFixture = async (
-  prevState: { error: undefined | string },
+  prevState: { error?: string },
   formData: FormData
 ) => {
   const prisma = new PrismaClient();
@@ -56,19 +55,18 @@ export const createFixture = async (
       },
     });
 
-    return { success: true, newFixture };
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Error creating fixture:", error.message);
-      return { success: false, error: error.message };
-    } else {
-      console.error("Unknown error:", error);
-      return { success: false, error: "Fixture creation failed" };
-    }
+    return {
+      success: true,
+      redirect: "/client/status",
+    };
+  } catch (error) {
+    console.error("Error creating Logbook:", error);
+    return {
+      error:
+        error instanceof Error ? error.message : "An unknown error occurred",
+    };
   } finally {
     await prisma.$disconnect();
-
-    redirect("/fixtures");
   }
 };
 

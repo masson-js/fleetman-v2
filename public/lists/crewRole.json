@@ -1,0 +1,20 @@
+{
+  "roles": [
+    "Captain",
+    "Chief Officer",
+    "Second Officer",
+    "Third Officer",
+    "Engineer",
+    "Chief Engineer",
+    "Deckhand",
+    "Cook",
+    "Bosun",
+    "Steward",
+    "Able Seaman",
+    "Deck Officer",
+    "Motorman",
+    "Welder",
+    "Electrician",
+    "Chief Steward"
+  ]
+}

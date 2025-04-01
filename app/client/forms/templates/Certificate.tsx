@@ -48,17 +48,11 @@ export default function NewAddCertifcationForm({ shipsNames }: ShipsGetProps) {
 
   useEffect(() => {
     if (state?.success && state?.redirect) {
-      router.push(state.redirect);
-    }
-  }, [state, router]);
-
-  useEffect(() => {
-    if (state?.success && state?.redirect) {
       setIsCreating(false);
       setIsCreated(true);
 
       const timer = setTimeout(() => {
-        router.push("/client/status");
+        router.push(state.redirect || "/client/status");
       }, 2000);
 
       return () => clearTimeout(timer);
@@ -96,6 +90,9 @@ export default function NewAddCertifcationForm({ shipsNames }: ShipsGetProps) {
           defaultValue=""
           className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
         >
+          <option value="" disabled>
+            Select the Ship
+          </option>
           {shipsNames.map((shipName) => (
             <option value={shipName} key={shipName}>
               {shipName}
@@ -111,7 +108,6 @@ export default function NewAddCertifcationForm({ shipsNames }: ShipsGetProps) {
           placeholder="Inspector"
           maxLength={50}
           minLength={3}
-          pattern="^[A-Za-z\s]+$"
           className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
           onInput={(e) => {
             const target = e.target as HTMLInputElement;
@@ -186,8 +182,8 @@ export default function NewAddCertifcationForm({ shipsNames }: ShipsGetProps) {
           <option value="" disabled>
             Standard
           </option>
-          {complianceStandards.map((standard, index) => (
-            <option key={index} value={standard}>
+          {complianceStandards.map((standard) => (
+            <option key={standard} value={standard}>
               {standard}
             </option>
           ))}

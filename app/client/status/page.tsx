@@ -1,4 +1,5 @@
 import Header from "@/app/components/Header";
+import { Suspense } from "react";
 import GlobalStatus from "./components/GlobalStatus";
 import { getAllUserData } from "@/actions/counts";
 import ShipList from "./components/ShipList";
@@ -8,6 +9,7 @@ import FixturesStatus from "./components/FixturesStatus";
 import LogbooksStatus from "./components/LogbooksStatus";
 import CrewStatus from "./components/CrewStatus";
 import DataViz from "./components/DataViz";
+
 
 import {
   Ship,
@@ -20,6 +22,8 @@ import {
   ShipFuel,
   ShipRoute,
 } from "@/types";
+import Waves from "../home/components/waves";
+import { LoadingPlaceholder } from "@/app/components/PageLoading";
 
 interface UserData {
   ships: Ship[];
@@ -46,7 +50,9 @@ interface FormattedShip {
   yearBuilt: string;
 }
 
-export default async function StatusPage() {
+
+
+async function StatusContent() {
   try {
     const allData = (await getAllUserData()) as UserData;
 
@@ -138,4 +144,12 @@ export default async function StatusPage() {
     console.error("Failed to render StatusPage:", error);
     return <div>Error loading page. Please try again later.</div>;
   }
+}
+
+export default function StatusPage() {
+  return (
+    <Suspense fallback={<LoadingPlaceholder />}>
+      <StatusContent />
+    </Suspense>
+  );
 }

@@ -18,6 +18,25 @@ export default function NewShipAddForm() {
   const [isCreating, setIsCreating] = useState(false);
   const [isCreated, setIsCreated] = useState(false);
 
+  const [displayValue, setDisplayValue] = useState("");
+  const [realValue, setRealValue] = useState("");
+
+  const formatNumberWithSpaces = (value: string) => {
+    return Number(value).toLocaleString("fr-FR");
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value.replace(/\D/g, "");
+
+    if (inputValue) {
+      setRealValue(inputValue);
+      setDisplayValue(formatNumberWithSpaces(inputValue));
+    } else {
+      setRealValue("");
+      setDisplayValue("");
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -64,17 +83,11 @@ export default function NewShipAddForm() {
 
   useEffect(() => {
     if (state?.success && state?.redirect) {
-      router.push(state.redirect);
-    }
-  }, [state, router]);
-
-  useEffect(() => {
-    if (state?.success && state?.redirect) {
       setIsCreating(false);
       setIsCreated(true);
 
       const timer = setTimeout(() => {
-        router.push("/client/status");
+        router.push(state.redirect || "/client/status");
       }, 2000);
 
       return () => clearTimeout(timer);
@@ -88,7 +101,7 @@ export default function NewShipAddForm() {
 
   if (isCreated) {
     return (
-      <div className="flex flex-col h-60 w-60 items-center bg-white justify-center mt-24 mb-24 rounded-full shadow-md p-10">
+      <div className="flex flex-col h-60 w-60 items-center bg-white  justify-center mt-24 mb-24  p-10">
         <Check color="green" size={64} className="mb-4" />
         <h2 className="text-xl font-bold text-green-600 text-center justify-center items-center ">
           Ship created successfully
@@ -261,15 +274,17 @@ export default function NewShipAddForm() {
       {/* Deadweight */}
       <div className="flex flex-wrap items-center">
         <input
-          type="number"
-          name="deadweight"
+          type="text"
+          value={displayValue}
+          onChange={handleChange}
+          inputMode="numeric"
           required
           placeholder="Deadweight: (DWT)"
-          step="100"
           min="0"
           pattern="\\d*"
           className="font-extralight text-xs w-80 border-2  border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2  rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
-        />
+        />{" "}
+        <input type="hidden" name="deadweight" value={realValue} />
       </div>
 
       {/* Beam */}

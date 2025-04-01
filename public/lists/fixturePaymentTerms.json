@@ -1,0 +1,12 @@
+{
+  "paymentTerms": [
+    "Advance Payment",
+    "50% Advance, 50% on Completion",
+    "Payment on Completion",
+    "Net 30 Days",
+    "Net 60 Days",
+    "Milestone-Based Payments",
+    "Installments",
+    "Other"
+  ]
+}

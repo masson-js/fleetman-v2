@@ -14,42 +14,55 @@ export default function NewAddFixtureForm({ shipsNames }: ShipsGetProps) {
     createFixture,
     undefined
   );
+  const router = useRouter();
 
   const [displayValue, setDisplayValue] = useState("");
   const [realValue, setRealValue] = useState("");
-
-  console.log(realValue);
-
-  const formatNumberWithSpaces = (value: string) => {
-    const num = Number(value);
-    return num.toLocaleString("fr-FR");
-  };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value.replace(/\D/g, "");
-
-    setRealValue(inputValue);
-
-    setDisplayValue(formatNumberWithSpaces(inputValue));
-  };
-
-  useEffect(() => {
-    if (realValue) {
-      setDisplayValue(formatNumberWithSpaces(realValue));
-    } else {
-      setDisplayValue("");
-    }
-  }, [realValue]);
-
-  const router = useRouter();
-
+  const [fixtureCurrency, setFixtureCurrency] = useState<string[]>([]);
+  const [paymentTerms, setPaymentTerms] = useState<string[]>([]);
+  const [charterTypes, setChartTypes] = useState<string[]>([]);
+  const [charterStatus, setChartStatus] = useState<string[]>([]);
   const [isCreating, setIsCreating] = useState(false);
   const [isCreated, setIsCreated] = useState(false);
 
   useEffect(() => {
-    if (state?.success && state?.redirect) {
-      router.push(state.redirect);
+    Promise.all([
+      fetch("/lists/fixtureCurrency.json").then((res) => res.json()),
+      fetch("/lists/fixturePaymentTerms.json").then((res) => res.json()),
+      fetch("/lists/fixtureCharterTypes.json").then((res) => res.json()),
+      fetch("/lists/fixtureCharterStatus.json").then((res) => res.json()),
+    ])
+      .then(
+        ([
+          cureencyData,
+          paymentTermsData,
+          CharterTypesData,
+          CharterStatusData,
+        ]) => {
+          setFixtureCurrency(cureencyData.currencies || []);
+          setPaymentTerms(paymentTermsData.paymentTerms || []);
+          setChartTypes(CharterTypesData.charterTypes || []);
+          setChartStatus(CharterStatusData.statuses || []);
+        }
+      )
+      .catch((error) => console.error("Error loading data:", error));
+  }, []);
+
+  const formatNumberWithSpaces = (value: string) => {
+    return Number(value).toLocaleString("fr-FR");
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value.replace(/\D/g, "");
+
+    if (inputValue) {
+      setRealValue(inputValue);
+      setDisplayValue(formatNumberWithSpaces(inputValue));
+    } else {
+      setRealValue("");
+      setDisplayValue("");
     }
-  }, [state, router]);
+  };
 
   useEffect(() => {
     if (state?.success && state?.redirect) {
@@ -57,7 +70,7 @@ export default function NewAddFixtureForm({ shipsNames }: ShipsGetProps) {
       setIsCreated(true);
 
       const timer = setTimeout(() => {
-        router.push("/client/status");
+        router.push(state.redirect || "/client/status");
       }, 2000);
 
       return () => clearTimeout(timer);
@@ -83,9 +96,9 @@ export default function NewAddFixtureForm({ shipsNames }: ShipsGetProps) {
   return (
     <form
       action={handleSubmit}
-      className="flex flex-col bg-white mt-24 mb-24 pb-20 rounded-lg shadow-md text-black w-4/6 gap-4 items-center border-2 border-solid border-white hover:border-[#59c5ff87] hover:shadow-xl transition-opacity duration-500 opacity-0 animate-fade-in"
+      className="flex flex-col bg-white mt-24 mb-24 pb-20 rounded-lg shadow-md text-black w-4/6 gap-4 items-center border-2 border-solid border-white hover:border-[#59c5ff87] hover:shadow-xl transition-opacity duration-500 opacity-0 animate-fade-in "
     >
-      <h2 className="flex justify-center font-bold mt-6 mb-2  border-b-2 border-[#79c314]">
+      <h2 className="flex justify-center font-bold mt-6 mb-2  border-b-2 border-[#e81416]">
         Add Fixture to the Ship
       </h2>
 
@@ -97,6 +110,9 @@ export default function NewAddFixtureForm({ shipsNames }: ShipsGetProps) {
           defaultValue=""
           className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
         >
+          <option value="" disabled>
+            Select the Ship
+          </option>
           {shipsNames.map((ship) => (
             <option value={ship} key={ship}>
               {ship}
@@ -148,8 +164,7 @@ export default function NewAddFixtureForm({ shipsNames }: ShipsGetProps) {
           type="date"
           name="endDate"
           required
-          min="2000-01-01"
-          max={new Date().toISOString().slice(0, 10)}
+          min={new Date().toISOString().slice(0, 10)}
           className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
           onFocus={(e) => e.target.showPicker()}
         />
@@ -170,168 +185,134 @@ export default function NewAddFixtureForm({ shipsNames }: ShipsGetProps) {
 
       {/* Currency */}
       <div className="flex flex-wrap items-center">
-        <label className="font-sans w-40 m-2">Currency:</label>
         <select
           name="currency"
           required
-          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
           defaultValue=""
         >
           <option value="" disabled>
-            Select currency
+            Select Currency
           </option>
-          <option value="USD">USD - US Dollar</option>
-          <option value="GBP">GBP - British Pound</option>
-          <option value="EUR">EUR - Euro</option>
-          <option value="SEK">SEK - Swedish Krona</option>
-          <option value="NOK">NOK - Norwegian Krone</option>
-          <option value="DKK">DKK - Danish Krone</option>
+          {fixtureCurrency.map((currency) => (
+            <option key={currency} value={currency}>
+              {currency}
+            </option>
+          ))}
         </select>
       </div>
 
       <div className="flex flex-wrap items-center">
-        <label className="font-sans w-40 m-2">Payment Terms:</label>
         <select
           name="paymentTerms"
           required
-          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
           defaultValue=""
         >
           <option value="" disabled>
             Select payment terms
           </option>
-          <option value="advance">Advance Payment</option>
-          <option value="half-advance-half-on-completion">
-            50% Advance, 50% on Completion
+          {paymentTerms.map((terms) => (
+            <option key={terms} value={terms}>
+              {terms}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="flex flex-wrap items-center">
+        <select
+          name="fixtureType"
+          required
+          className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
+          defaultValue=""
+        >
+          <option value="" disabled>
+            Charter Type
           </option>
-          <option value="on-completion">Payment on Completion</option>
-          <option value="net-30">Net 30 Days</option>
-          <option value="net-60">Net 60 Days</option>
-          <option value="milestone-based">Milestone-Based Payments</option>
-          <option value="installments">Installments</option>
-          <option value="other">Other</option>
+          {charterTypes.map((types) => (
+            <option key={types} value={types}>
+              {types}
+            </option>
+          ))}
         </select>
       </div>
 
-      {/* Cargo Description */}
       <div className="flex flex-wrap items-center">
-        <label className="font-sans w-40 m-2">Cargo Description:</label>
-        <textarea
-          name="cargoDescription"
-          rows={3}
-          placeholder="Enter cargo description (if applicable)"
-          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-        />
+        <select
+          name="status"
+          required
+          className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
+          defaultValue=""
+        >
+          <option value="" disabled>
+            Charter Status
+          </option>
+          {charterStatus.map((status) => (
+            <option key={status} value={status}>
+              {status}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Delivery Location */}
       <div className="flex flex-wrap items-center">
-        <label className="font-sans w-40 m-2">Delivery Location:</label>
         <input
           type="text"
           name="deliveryLocation"
-          placeholder="Enter delivery location"
-          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="Delivery Location ex.- Country/City"
+          className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
         />
       </div>
-
       <div className="flex flex-wrap items-center">
-        <label className="font-sans w-40 m-2">Fixture Type:</label>
-        <select
-          name="fixtureType"
-          required
-          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Select fixture type
-          </option>
-          <option value="time-charter">Time Charter</option>
-          <option value="voyage-charter">Voyage Charter</option>
-          <option value="bareboat-charter">Bareboat Charter</option>
-          <option value="contract-of-affreightment">
-            Contract of Affreightment (COA)
-          </option>
-          <option value="spot-charter">Spot Charter</option>
-          <option value="demise-charter">Demise Charter</option>
-          <option value="lump-sum-freight">Lump Sum Freight</option>
-          <option value="consecutive-voyage">Consecutive Voyage Charter</option>
-          <option value="trip-charter">Trip Charter</option>
-          <option value="freight-on-demand">Freight on Demand</option>
-          <option value="other">Other</option>
-        </select>
+        <textarea
+          name="cargoDescription"
+          rows={2}
+          placeholder="Cargo Description (if applicable)"
+          className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
+        />
       </div>
 
       {/* Broker Name */}
       <div className="flex flex-wrap items-center">
-        <label className="font-sans w-40 m-2">Broker Name:</label>
         <input
           type="text"
           name="brokerName"
-          placeholder="Enter broker name (if applicable)"
-          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="Broker Name (if applicable)"
+          className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
         />
-      </div>
-
-      <div className="flex flex-wrap items-center">
-        <label className="font-sans w-40 m-2">Status:</label>
-        <select
-          name="status"
-          required
-          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Select status
-          </option>
-          <option value="in-progress">In Progress</option>
-          <option value="completed">Completed</option>
-          <option value="pending">Pending</option>
-          <option value="cancelled">Cancelled</option>
-          <option value="on-hold">On Hold</option>
-          <option value="terminated">Terminated</option>
-          <option value="draft">Draft</option>
-          <option value="other">Other</option>
-        </select>
       </div>
 
       {/* Cancellation Terms */}
       <div className="flex flex-wrap items-center">
-        <label className="font-sans w-40 m-2">Cancellation Terms:</label>
         <textarea
           name="cancellationTerms"
           rows={3}
-          placeholder="Enter cancellation terms (if applicable)"
-          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="Cancellation Terms (if applicable)"
+          className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
         />
       </div>
 
       {/* Notes */}
       <div className="flex flex-wrap items-center">
-        <label className="font-sans w-40 m-2">Notes:</label>
         <textarea
           name="notes"
           rows={3}
-          placeholder="Enter any additional notes"
-          className="w-80 border m-2 p-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="Any Additional Notes"
+          className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
         />
       </div>
 
-      {/* Is Completed */}
-      <div className="flex flex-wrap items-center">
-        <label className="font-sans w-40 m-2">Is Completed:</label>
-        <input type="checkbox" name="isCompleted" className="m-2" />
+      <div>
+        <button
+          type="submit"
+          disabled={isCreating}
+          className="w-40 mt-4 bg-[#3fbcff] text-white py-2 rounded-md hover:bg-[#1b69aa] transition duration-150"
+        >
+          {isCreating ? "Creating..." : "Submit"}
+        </button>
       </div>
-
-      {/* Submit Button */}
-      <button
-        type="submit"
-        className="w-40 m-6 bg-gray-400 text-white py-2 rounded-md hover:bg-black transition duration-150"
-      >
-        Submit
-      </button>
-
-      {state?.error && <p>{state.error}</p>}
+      {state?.error && <p className="text-red-500">{state.error}</p>}
     </form>
   );
 }

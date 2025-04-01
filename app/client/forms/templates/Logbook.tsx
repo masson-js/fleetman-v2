@@ -53,17 +53,11 @@ export default function NewAddLogbookForm({ shipsNames }: ShipsGetProps) {
 
   useEffect(() => {
     if (state?.success && state?.redirect) {
-      router.push(state.redirect);
-    }
-  }, [state, router]);
-
-  useEffect(() => {
-    if (state?.success && state?.redirect) {
       setIsCreating(false);
       setIsCreated(true);
 
       const timer = setTimeout(() => {
-        router.push("/client/status");
+        router.push(state.redirect || "/client/status");
       }, 2000);
 
       return () => clearTimeout(timer);
@@ -91,7 +85,7 @@ export default function NewAddLogbookForm({ shipsNames }: ShipsGetProps) {
       action={handleSubmit}
       className="flex flex-col bg-white mt-24 mb-24 pb-20 rounded-lg shadow-md text-black w-4/6 gap-4 items-center border-2 border-solid border-white hover:border-[#59c5ff87] hover:shadow-xl transition-opacity duration-500 opacity-0 animate-fade-in"
     >
-      <h2 className="flex justify-center font-bold mt-6 mb-2  border-b-2 border-[#ffa500]">
+      <h2 className="flex justify-center font-bold mt-6 mb-2  border-b-2 border-[#2a0e0e]">
         Add Logbook for the Ship
       </h2>
       <div className="flex flex-wrap items-center">
@@ -101,6 +95,9 @@ export default function NewAddLogbookForm({ shipsNames }: ShipsGetProps) {
           className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
           defaultValue=""
         >
+          <option value="" disabled>
+            Select the Ship
+          </option>
           {shipsNames.map((shipName) => (
             <option value={shipName} key={shipName}>
               {shipName}
@@ -266,12 +263,14 @@ export default function NewAddLogbookForm({ shipsNames }: ShipsGetProps) {
         />
       </div>
       <div className="flex flex-wrap items-center">
-        <label className="font-extralight text-xs w-40 m-2">Inspection Check:</label>
+        <label className="font-extralight text-xs w-40 m-2">
+          Inspection Check:
+        </label>
         <label className="inline-flex items-center m-2 cursor-pointer">
           <input
             type="checkbox"
             name="inspectionCheck"
-            className="sr-only peer" 
+            className="sr-only peer"
           />
           <div
             className="
@@ -285,7 +284,6 @@ export default function NewAddLogbookForm({ shipsNames }: ShipsGetProps) {
       transition-all duration-300
     "
           >
-          
             <svg
               className="w-full h-full text-white opacity-0 peer-checked:opacity-100"
               viewBox="0 0 24 24"

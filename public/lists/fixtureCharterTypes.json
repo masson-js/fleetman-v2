@@ -1,0 +1,15 @@
+{
+  "charterTypes": [
+    "Time Charter",
+    "Voyage Charter",
+    "Bareboat Charter",
+    "Contract of Affreightment (COA)",
+    "Spot Charter",
+    "Demise Charter",
+    "Lump Sum Freight",
+    "Consecutive Voyage Charter",
+    "Trip Charter",
+    "Freight on Demand",
+    "Other"
+  ]
+}
