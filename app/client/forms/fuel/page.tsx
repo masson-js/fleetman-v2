@@ -1,21 +1,29 @@
 import { getAllUserShips } from "@/actions/ship";
-import AddInspectionForm from "@/app/components/forms/inspectionadd";
+import { Suspense } from "react";
+import { LoadingPlaceholder } from "@/app/components/PageLoading";
+
 
 import Header from "@/app/components/Header";
+import NewFuelRecordForm from "../templates/FuelRecord";
 
-
-export default async function FuelCreating() {
+async function FuelRecord() {
   const shipsData = await getAllUserShips();
   const shipsNames = shipsData.map((ship) => ship.name);
 
   return (
-    <div className="flex flex-col w-full h-auto">
+    <div className="bg-blue-50 flex flex-col w-full">
       <Header />
-      <div className="flex m-6">
-      
-        <AddInspectionForm shipsNames={shipsNames} />
-       
+      <div className="flex flex-row flex-wrap  w-4/6 mx-auto h-auto justify-center mt-4 mb-12 ">
+        <NewFuelRecordForm shipsNames={shipsNames} />
       </div>
     </div>
+  );
+}
+
+export default async function FuelRecordCreating() {
+  return (
+    <Suspense fallback={<LoadingPlaceholder />}>
+      <FuelRecord />
+    </Suspense>
   );
 }

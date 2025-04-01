@@ -1,6 +1,5 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
-import { getSession } from "@/actions/session";
 
 export const createRoute = async (
   prevState: { error?: string },
@@ -22,8 +21,7 @@ export const createRoute = async (
     if (!ship) {
       return { success: false, error: "Ship not found" };
     }
-
-    // Создаем новый маршрут
+    
     const newRoute = await prisma.shipRoute.create({
       data: {
         shipId: ship.id,

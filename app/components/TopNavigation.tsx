@@ -14,6 +14,7 @@ import {
   Ship,
   Plus,
   Route,
+  Fuel
 } from "lucide-react";
 
 export default function TopNavigation() {
@@ -59,7 +60,7 @@ export default function TopNavigation() {
     { path: "/client/forms/fixture", label: "Fixture", Icon: Handshake },
     { path: "/client/forms/crew", label: "Crew", Icon: Users },
     { path: "/client/forms/route", label: "Route", Icon: Route },
-    { path: "/client/forms/fuel", label: "Fuel Record", Icon: Route },
+    { path: "/client/forms/fuel", label: "Fuel Record", Icon: Fuel },
   ];
 
   const renderMenuItems = (

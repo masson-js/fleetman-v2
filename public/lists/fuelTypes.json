@@ -1,0 +1,11 @@
+{
+  "fuelTypes": [
+    "IFO (Intermediate Fuel Oil)",
+    "MGO (Marine Gas Oil)",
+    "HFO (Heavy Fuel Oil)",
+    "LNG (Liquefied Natural Gas)",
+    "MDO (Marine Diesel Oil)",
+    "Biofuels",
+    "LPG (Liquefied Petroleum Gas)"
+  ]
+}
