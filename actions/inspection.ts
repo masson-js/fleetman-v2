@@ -72,17 +72,7 @@ export const createInspection = async (
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
+// Get all users inspections
 
 export const getAllInspections = async () => {
   const session = await getSession();
@@ -123,6 +113,8 @@ export const getAllInspections = async () => {
     await prisma.$disconnect();
   }
 };
+
+
 
 export const getInspectionsByShipId = async (shipId: string) => {
   const session = await getSession();

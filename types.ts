@@ -30,15 +30,16 @@ export interface Ship {
   currentStatus: string;
   portOfRegistry: string;
   ecoStandard: string;
-  fuelRecords: ShipFuel[];
-  routes: ShipRoute[];
-  certifications: Certification[];
-  inspections: Inspection[];
-  fixtures: Fixture[];
-  crew: Crew[];
-  logbooks: Logbook[];
+  // Делаем связанные массивы необязательными, добавляя ?
+  fuelRecords?: ShipFuel[];
+  routes?: ShipRoute[];
+  certifications?: Certification[];
+  inspections?: Inspection[];
+  fixtures?: Fixture[];
+  crew?: Crew[];
+  logbooks?: Logbook[];
   userId: string | null;
-  user: User | null;
+  user?: User | null; // Также делаем user необязательным
 }
 
 /**
@@ -110,7 +111,7 @@ export interface Inspection {
   verificationStatus: string;
   duration: number | null;
   isEUCompliance: boolean;
-  ship: Ship;
+  ship: Partial<Ship>;
 }
 
 /**
@@ -180,31 +181,42 @@ export interface Crew {
 /**
  * Types without relations for API requests and responses
  */
-export type UserCreateInput = Omit<User, 'id' | 'ships'>;
+export type UserCreateInput = Omit<User, "id" | "ships">;
 export type UserUpdateInput = Partial<UserCreateInput>;
 
-export type ShipCreateInput = Omit<Ship, 'id' | 'fuelRecords' | 'routes' | 'certifications' | 'inspections' | 'fixtures' | 'crew' | 'logbooks' | 'user'>;
+export type ShipCreateInput = Omit<
+  Ship,
+  | "id"
+  | "fuelRecords"
+  | "routes"
+  | "certifications"
+  | "inspections"
+  | "fixtures"
+  | "crew"
+  | "logbooks"
+  | "user"
+>;
 export type ShipUpdateInput = Partial<ShipCreateInput>;
 
-export type ShipFuelCreateInput = Omit<ShipFuel, 'id' | 'ship'>;
+export type ShipFuelCreateInput = Omit<ShipFuel, "id" | "ship">;
 export type ShipFuelUpdateInput = Partial<ShipFuelCreateInput>;
 
-export type ShipRouteCreateInput = Omit<ShipRoute, 'id' | 'ship'>;
+export type ShipRouteCreateInput = Omit<ShipRoute, "id" | "ship">;
 export type ShipRouteUpdateInput = Partial<ShipRouteCreateInput>;
 
-export type CertificationCreateInput = Omit<Certification, 'id' | 'ship'>;
+export type CertificationCreateInput = Omit<Certification, "id" | "ship">;
 export type CertificationUpdateInput = Partial<CertificationCreateInput>;
 
-export type InspectionCreateInput = Omit<Inspection, 'id' | 'ship'>;
+export type InspectionCreateInput = Omit<Inspection, "id" | "ship">;
 export type InspectionUpdateInput = Partial<InspectionCreateInput>;
 
-export type FixtureCreateInput = Omit<Fixture, 'id' | 'ship'>;
+export type FixtureCreateInput = Omit<Fixture, "id" | "ship">;
 export type FixtureUpdateInput = Partial<FixtureCreateInput>;
 
-export type LogbookCreateInput = Omit<Logbook, 'id' | 'ship'>;
+export type LogbookCreateInput = Omit<Logbook, "id" | "ship">;
 export type LogbookUpdateInput = Partial<LogbookCreateInput>;
 
-export type CrewCreateInput = Omit<Crew, 'id' | 'ship'>;
+export type CrewCreateInput = Omit<Crew, "id" | "ship">;
 export type CrewUpdateInput = Partial<CrewCreateInput>;
 
 /**
@@ -221,32 +233,32 @@ export interface PaginatedResponse<T> {
  * Enum types for select fields
  */
 export enum ShipStatus {
-  ACTIVE = 'ACTIVE',
-  MAINTENANCE = 'MAINTENANCE',
-  DOCKED = 'DOCKED',
-  TRANSIT = 'TRANSIT',
-  OUT_OF_SERVICE = 'OUT_OF_SERVICE'
+  ACTIVE = "ACTIVE",
+  MAINTENANCE = "MAINTENANCE",
+  DOCKED = "DOCKED",
+  TRANSIT = "TRANSIT",
+  OUT_OF_SERVICE = "OUT_OF_SERVICE",
 }
 
 export enum InspectionVerificationStatus {
-  PASSED = 'passed',
-  FAILED = 'failed',
-  REQUIRES_WORK = 'requires-work',
-  PENDING = 'pending'
+  PASSED = "passed",
+  FAILED = "failed",
+  REQUIRES_WORK = "requires-work",
+  PENDING = "pending",
 }
 
 export enum FixtureStatus {
-  ACTIVE = 'ACTIVE',
-  COMPLETED = 'COMPLETED',
-  CANCELLED = 'CANCELLED',
-  PENDING = 'PENDING'
+  ACTIVE = "ACTIVE",
+  COMPLETED = "COMPLETED",
+  CANCELLED = "CANCELLED",
+  PENDING = "PENDING",
 }
 
 export enum CrewStatus {
-  ACTIVE = 'ACTIVE',
-  ON_LEAVE = 'ON_LEAVE',
-  TERMINATED = 'TERMINATED',
-  SUSPENDED = 'SUSPENDED'
+  ACTIVE = "ACTIVE",
+  ON_LEAVE = "ON_LEAVE",
+  TERMINATED = "TERMINATED",
+  SUSPENDED = "SUSPENDED",
 }
 
 /**
@@ -254,13 +266,22 @@ export enum CrewStatus {
  */
 export interface FilterOptions {
   field: string;
-  operator: 'eq' | 'neq' | 'gt' | 'gte' | 'lt' | 'lte' | 'contains' | 'startsWith' | 'endsWith';
+  operator:
+    | "eq"
+    | "neq"
+    | "gt"
+    | "gte"
+    | "lt"
+    | "lte"
+    | "contains"
+    | "startsWith"
+    | "endsWith";
   value: string | number | boolean | Date;
 }
 
 export interface SortOptions {
   field: string;
-  direction: 'asc' | 'desc';
+  direction: "asc" | "desc";
 }
 
 export interface QueryOptions {

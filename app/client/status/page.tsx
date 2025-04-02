@@ -1,14 +1,17 @@
-import Header from "@/app/components/Header";
 import { Suspense } from "react";
-import GlobalStatus from "./components/GlobalStatus";
-import { getAllUserData } from "@/actions/counts";
+
+import DataViz from "./components/DataViz";
 import ShipList from "./components/ShipList";
-import InspectionsStatus from "./components/InspectionsStatus";
-import CertificatesStatus from "./components/CertificationsStatus";
+import CrewStatus from "./components/CrewStatus";
+import GlobalStatus from "./components/GlobalStatus";
 import FixturesStatus from "./components/FixturesStatus";
 import LogbooksStatus from "./components/LogbooksStatus";
-import CrewStatus from "./components/CrewStatus";
-import DataViz from "./components/DataViz";
+import InspectionsStatus from "./components/InspectionsStatus";
+import CertificatesStatus from "./components/CertificationsStatus";
+
+import Header from "@/app/components/Header";
+import { getAllUserData } from "@/actions/counts";
+import { LoadingPlaceholder } from "@/app/components/PageLoading";
 
 
 import {
@@ -22,8 +25,7 @@ import {
   ShipFuel,
   ShipRoute,
 } from "@/types";
-import Waves from "../home/components/waves";
-import { LoadingPlaceholder } from "@/app/components/PageLoading";
+
 
 interface UserData {
   ships: Ship[];
