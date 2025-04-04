@@ -87,7 +87,7 @@ export default function NewAddFixtureForm({ shipsNames }: ShipsGetProps) {
       <div className="flex flex-col h-60 w-60 items-center bg-white  justify-center mt-24 mb-24  p-10">
         <Check color="green" size={64} className="mb-4" />
         <h2 className="text-xl font-bold text-green-600 text-center justify-center items-center ">
-          Fixture created successfully
+          Fixed successfully
         </h2>
       </div>
     );
@@ -99,7 +99,7 @@ export default function NewAddFixtureForm({ shipsNames }: ShipsGetProps) {
       className="flex flex-col bg-white mt-24 mb-24 pb-20 rounded-lg shadow-md text-black w-4/6 gap-4 items-center border-2 border-solid border-white hover:border-[#59c5ff87] hover:shadow-xl transition-opacity duration-500 opacity-0 animate-fade-in "
     >
       <h2 className="flex justify-center font-bold mt-6 mb-2  border-b-2 border-[#e81416]">
-        Add Fixture to the Ship
+        Add Charter to the Ship
       </h2>
 
       {/* Ship Selection */}
@@ -260,7 +260,7 @@ export default function NewAddFixtureForm({ shipsNames }: ShipsGetProps) {
         <input
           type="text"
           name="deliveryLocation"
-          placeholder="Delivery Location ex.- Country/City"
+          placeholder="Delivery Location ex.- Country/City (if applicable)"
           className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
         />
       </div>
@@ -298,7 +298,7 @@ export default function NewAddFixtureForm({ shipsNames }: ShipsGetProps) {
         <textarea
           name="notes"
           rows={3}
-          placeholder="Any Additional Notes"
+          placeholder="Any Additional Notes (if applicable)"
           className="font-extralight text-xs w-80 border-2 border-solid border-[#3fbcff61] hover:border-[#3fbcff] m-2 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3fbcff] focus:border-white transform transition-all duration-300"
         />
       </div>

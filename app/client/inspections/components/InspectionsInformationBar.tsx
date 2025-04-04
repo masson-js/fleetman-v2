@@ -84,35 +84,37 @@ export default function InformationBar({
         </div>
       </div>
       <div className="flex flex-col justify-center p-2 w-auto h-auto gap-1 ">
-        <div className="flex  bg-green-300 p-1  rounded-lg justify-between border-green-300 border">
-          <span className="text-xs ">Passed:</span>
-          <span className="text-xs ">{statusCount.passed}</span>
+        <div className="flex justify-between border-b-2 border-green-300 pb-1 gap-2">
+          <span className="text-xs">Passed:</span>
+          <span className="text-xs">{statusCount.passed}</span>
         </div>
-        <div className="flex  bg-yellow-300 p-1 rounded-lg justify-between gap-2 border-yellow-300 border">
-          <span className="text-xs "> Requires work:</span>
-          <span className="text-xs  ">{statusCount["requires-work"]}</span>
+        <div className="flex justify-between border-b-2 border-yellow-300 pb-1 gap-2">
+          <span className="text-xs">Requires work:</span>
+          <span className="text-xs">{statusCount["requires-work"]}</span>
         </div>
-        <div className="flex justify-between bg-red-300 p-1 rounded-lg border-red-300 border">
-          <span className="text-xs "> Failed:</span>
-          <span className="text-xs  ">{statusCount.failed}</span>
+        <div className="flex justify-between border-b-2 border-red-300 pb-1 gap-2">
+          <span className="text-xs">Failed:</span>
+          <span className="text-xs">{statusCount.failed}</span>
         </div>
       </div>
+
       <div className="flex flex-col justify-center p-2 w-auto h-auto gap-1">
-        <div className="flex  p-1  rounded-lg justify-between border border-blue-300 gap-2">
-          <span className="text-xs ">Scheduled:</span>
-          <span className="text-xs ">{typeCount.scheduled}</span>
+        <div className="flex justify-between border-b-2 border-blue-300 pb-1 gap-2">
+          <span className="text-xs">Scheduled:</span>
+          <span className="text-xs">{typeCount.scheduled}</span>
         </div>
-        <div className="flex  p-1  rounded-lg  border-blue-300 border justify-between gap-2 ">
-          <span className="text-xs "> Follow-up:</span>
-          <span className="text-xs  ">{typeCount["follow-up"]}</span>
+        <div className="flex justify-between border-b-2 border-blue-300 pb-1 gap-2">
+          <span className="text-xs">Follow-up:</span>
+          <span className="text-xs">{typeCount["follow-up"]}</span>
         </div>
-        <div className="flex justify-between rounded-lg border   p-1 border-blue-300  gap-2">
-          <span className="text-xs "> Unscheduled:</span>
-          <span className="text-xs  ">{typeCount.unscheduled}</span>
+        <div className="flex justify-between border-b-2 border-blue-300 pb-1 gap-2">
+          <span className="text-xs">Unscheduled:</span>
+          <span className="text-xs">{typeCount.unscheduled}</span>
         </div>
       </div>
+
       <div className="flex flex-col justify-start p-2 w-auto h-auto gap-1">
-        <div className="flex p-1 rounded-lg justify-between border border-blue-300 gap-2">
+        <div className="flex p-1 justify-between border-b-2 border-blue-300 pb-1 gap-2">
           <span className="text-xs">🇪🇺 EU Standard Compliance:</span>
           <span className="text-xs">{euComplianceCounts.EU}</span>
         </div>

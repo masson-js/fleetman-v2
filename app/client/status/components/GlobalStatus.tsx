@@ -97,7 +97,7 @@ export default function GlobalStatus({
         <div className="flex flex-col justify-between p-4 w-auto h-auto cursor-pointer hover:bg-gray-100 transform transition-all duration-300">
           <div className="flex items-center flex-wrap gap-2">
             <h2 className="text-xs font-thin text-center border-b-2 w-20 border-[#e81416]">
-              Fixtures
+              Charters
             </h2>
           </div>
           <span className="text-xl font-thin text-center">{fixturesCount}</span>

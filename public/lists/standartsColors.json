@@ -1,0 +1,15 @@
+{
+  "complianceStandards": {
+    "MARPOL": "#FF0000",
+    "SOLAS": "#FF7F00",
+    "ISO": "#FFFF24",
+    "AFS": "#00FF00",
+    "SEEMP": "#0000FF",
+    "EEDI": "#4B0082",
+    "ISM": "#9400D3",
+    "MLC 2006": "#FF1493",
+    "STCW": "#00FFFF",
+    "IMDG": "#FF00FF",
+    "other": "#1E90FF"
+  }
+}

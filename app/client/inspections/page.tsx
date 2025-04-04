@@ -21,7 +21,7 @@ async function InspectionPage() {
         <Header />
         <div className="flex flex-col animate-fade-in  w-4/6 mx-auto">
           <InformationBar inspectionsData={inspectionsData} />
-          <CompilianceBar inspectionsData={inspectionsData} />
+          {/* <CompilianceBar inspectionsData={inspectionsData} /> */}
           <TilesShips userShips={userShips} inspectionsData={inspectionsData}/>
         </div>
       </div>

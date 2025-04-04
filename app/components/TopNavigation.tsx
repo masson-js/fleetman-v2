@@ -47,7 +47,7 @@ export default function TopNavigation() {
     { path: "/client/inspections", label: "Inspections", Icon: ClipboardCheck },
     { path: "/client/certifications", label: "Certifications", Icon: Award },
     { path: "/client/logbooks", label: "Logbooks", Icon: BookOpen },
-    { path: "/client/fixtures", label: "Fixtures", Icon: Handshake },
+    { path: "/client/fixtures", label: "Charters", Icon: Handshake },
     { path: "/client/crews", label: "Crews", Icon: Users },
     { path: "/client/routes", label: "Routes", Icon: Map },
   ];
@@ -57,7 +57,7 @@ export default function TopNavigation() {
     { path: "/client/forms/inspection", label: "Inspection", Icon: ClipboardCheck },
     { path: "/client/forms/certification", label: "Certification", Icon: Award },
     { path: "/client/forms/logbook", label: "Logbook", Icon: BookOpen },
-    { path: "/client/forms/fixture", label: "Fixture", Icon: Handshake },
+    { path: "/client/forms/fixture", label: "Charter", Icon: Handshake },
     { path: "/client/forms/crew", label: "Crew", Icon: Users },
     { path: "/client/forms/route", label: "Route", Icon: Route },
     { path: "/client/forms/fuel", label: "Fuel Record", Icon: Fuel },
