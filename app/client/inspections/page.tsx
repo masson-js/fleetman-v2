@@ -1,19 +1,23 @@
-import Header from "@/app/components/Header";
-import { LoadingPlaceholder } from "@/app/components/PageLoading";
 import { Suspense } from "react";
 
-import { getAllInspections } from "@/actions/inspection";
-import { getAllUserShips } from "@/actions/ship";
+import Header from "@/app/components/Header";
+import { LoadingPlaceholder } from "@/app/components/PageLoading";
 
-import InformationBar from "./components/InspectionsInformationBar";
-import CompilianceBar from "./components/CompilianceBar";
+import { getAllUserShips } from "@/actions/ship";
+import { getAllInspections } from "@/actions/inspection";
+
 import TilesShips from "./components/TilesShips";
+import InformationBar from "./components/InspectionsInformationBar";
+import { Inspection } from "@/types";
+import Analitics from "./components/analytics";
+import AnalyticsDashboard from "./components/analytics";
+
 
 // Inspections page
 
 async function InspectionPage() {
   try {
-    const inspectionsData = (await getAllInspections()) || [];
+    const inspectionsData: Inspection[] = (await getAllInspections()) || [];
     const userShips = (await getAllUserShips()) || [];
 
     return (
@@ -21,8 +25,8 @@ async function InspectionPage() {
         <Header />
         <div className="flex flex-col animate-fade-in  w-4/6 mx-auto">
           <InformationBar inspectionsData={inspectionsData} />
-          {/* <CompilianceBar inspectionsData={inspectionsData} /> */}
-          <TilesShips userShips={userShips} inspectionsData={inspectionsData}/>
+          <TilesShips userShips={userShips} inspectionsData={inspectionsData} />
+          <AnalyticsDashboard inspectionsData={inspectionsData} />
         </div>
       </div>
     );

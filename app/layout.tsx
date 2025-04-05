@@ -16,8 +16,12 @@ const geistMono = localFont({
 
 
 export const metadata: Metadata = {
-  title: "Fleet man v2",
-  description: "Fleet man v2",
+  title: "Aouvé - efficient vessels management",
+  description: "Aouvé - efficient vessels management",
+  icons: {
+    icon: "/logo/barIcon.png",
+    apple: "/logo/barIcon.png",
+  },
 };
 
 export default function RootLayout({
