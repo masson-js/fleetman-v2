@@ -1,5 +1,5 @@
 import Footer from "@/app/components/footer";
-import Waves from "../home/components/waves";
+import Waves from "../../components/waves";
 import { getSession } from "@/actions/session";
 import PasswordRocoverForm from "@/app/components/forms/passwordrecover";
 import { redirect } from "next/navigation";

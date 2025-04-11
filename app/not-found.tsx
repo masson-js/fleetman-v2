@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Waves from "./client/home/components/waves";
+import Waves from "./components/waves";
 
 export default function NotFound() {
   return (

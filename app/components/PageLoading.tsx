@@ -1,5 +1,5 @@
 import { Loader2 } from "lucide-react";
-import Waves from "../client/home/components/waves";
+import Waves from "./waves";
 
 
 export function LoadingPlaceholder() {

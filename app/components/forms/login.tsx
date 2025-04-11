@@ -11,7 +11,7 @@ export default function LoginForm() {
     <div className="flex flex-col w-auto h-auto mt-6 justify-center  text-gray-800 gap-2 font-mono">
       <form
         action={formAction}
-        className="z-10 bg-[rgba(255,255,255,0.3)] p-8 rounded-lg  text-gray-700 flex flex-col items-center gap-4 w-auto max-w-full"
+        className="z-10 bg-[rgba(255,255,255,0.3)] p-8 rounded-lg  text-gray-700 flex flex-col items-center gap-4 w-auto max-w-full reveal"
       >
         <h2 className="text-lg font-semibold text-gray-800">Login</h2>
 
@@ -43,14 +43,14 @@ export default function LoginForm() {
           I forgot password
         </Link>
       </form>
-      <div className="z-10 bg-[rgba(255,255,255,0.3)] px-8 pb-8 rounded-lg text-gray-700 flex flex-col items-center gap-6 w-80 max-w-full">
+      <div className="z-10 bg-[rgba(255,255,255,0.3)] px-8 pb-8 rounded-lg text-gray-700 flex flex-col items-center gap-6 w-80 max-w-full reveal">
         <h2 className="text-black mt-4 text-sm items-center text-center">
           Dont have an Account?
         </h2>
 
         <Link
           className="w-full mx-14 bg-[#ff5795] hover:bg-[#ec4b86] text-white py-2 rounded-md transition duration-150 flex hover:cursor-pointer justify-center items-center text-center text-sm"
-          href="/pages/registration"
+          href="/client/registration"
         >
           Sign Up
         </Link>

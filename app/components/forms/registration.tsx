@@ -14,7 +14,7 @@ export default function RegistrationForm() {
     <div className="flex flex-col w-auto h-auto mt-6 justify-center  text-gray-800 gap-2 font-mono">
       <form
         action={formAction}
-        className="z-10 bg-[rgba(255,255,255,0.3)] p-8 rounded-lg  text-gray-700 flex flex-col items-center gap-4 w-auto max-w-full"
+        className="z-10 bg-[rgba(255,255,255,0.3)] p-8 rounded-lg  text-gray-700 flex flex-col items-center gap-4 w-auto max-w-full reveal"
       >
         <h2 className="text-lg font-semibold text-gray-800">Registration</h2>
 
@@ -47,7 +47,7 @@ export default function RegistrationForm() {
         </button>
         {state?.error && <p>{state.error}</p>}
       </form>
-      <div className="z-10 bg-[rgba(255,255,255,0.3)] px-8 pb-8 rounded-lg text-gray-700 flex flex-col items-center gap-6 w-80 max-w-full">
+      <div className="z-10 bg-[rgba(255,255,255,0.3)] px-8 pb-8 rounded-lg text-gray-700 flex flex-col items-center gap-6 w-80 max-w-full reveal">
         <h2 className="text-black mt-4 text-sm items-center text-center">
           have an Account?
         </h2>

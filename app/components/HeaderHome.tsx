@@ -8,7 +8,7 @@ export default async function HeaderHome() {
   const session = await getSession();
 
   return (
-    <nav className="flex justify-end py-4 mt-2 mr-6 gap-6 font-mono text-xs text-center">
+    <nav className="flex justify-end py-4 mt-2 mr-6 gap-6 font-medium text-xs text-center reveal">
       <Link
         className="text-black px-4 py-1 rounded-lg hover:underline "
         href="/about"

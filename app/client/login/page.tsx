@@ -1,5 +1,5 @@
 import Footer from "@/app/components/footer";
-import Waves from "../home/components/waves";
+import Waves from "../../components/waves";
 
 import { redirect } from "next/navigation";
 import { getSession } from "@/actions/session";
@@ -13,7 +13,7 @@ export default async function Login() {
   }
 
   return (
-    <div className="flex flex-col w-full h-screen justify-between animate-fade-in">
+    <div className="flex flex-col w-full h-screen justify-between">
       <div className="flex flex-col flex-wrap w-auto h-auto items-center ">
         <LoginForm />
       </div>
