@@ -1,5 +1,7 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import SortControls from "./SortControls";
 
 interface Inspection {
   id: string;
@@ -42,16 +44,67 @@ export default function ShipInspectionsTable({
   inspections,
 }: ShipInspectionsProps) {
   const router = useRouter();
+  const [sortConfig, setSortConfig] = useState<{
+    key: keyof Inspection;
+    direction: "ascending" | "descending";
+  }>({ key: "inspectionDate", direction: "ascending" });
+
+  const handleSortChange = (key: string, direction: "ascending" | "descending") => {
+    setSortConfig({ key: key as keyof Inspection, direction });
+  };
+
+  const getSortedInspections = () => {
+    return [...inspections].sort((a, b) => {
+      // Для дат
+      if (sortConfig.key === "inspectionDate" || sortConfig.key === "nextInspectionDate") {
+        const dateA = new Date(a[sortConfig.key] || 0).getTime();
+        const dateB = new Date(b[sortConfig.key] || 0).getTime();
+        return sortConfig.direction === "ascending" ? dateA - dateB : dateB - dateA;
+      }
+
+      // Для чисел
+      if (sortConfig.key === "duration") {
+        const numA = a[sortConfig.key] || 0;
+        const numB = b[sortConfig.key] || 0;
+        return sortConfig.direction === "ascending" ? numA - numB : numB - numA;
+      }
+
+      // Для булевых значений
+      if (sortConfig.key === "isEUCompliance") {
+        return sortConfig.direction === "ascending"
+          ? Number(a.isEUCompliance) - Number(b.isEUCompliance)
+          : Number(b.isEUCompliance) - Number(a.isEUCompliance);
+      }
+
+      // Для строк
+      const valueA = String(a[sortConfig.key] ?? "");
+      const valueB = String(b[sortConfig.key] ?? "");
+      
+      if (valueA < valueB) {
+        return sortConfig.direction === "ascending" ? -1 : 1;
+      }
+      if (valueA > valueB) {
+        return sortConfig.direction === "ascending" ? 1 : -1;
+      }
+      return 0;
+    });
+  };
+
+  const sortedInspections = getSortedInspections();
 
   return (
-    <div className=" w-4/6 flex animate-fade-in flex-col bg-white max-w-7xl mx-auto mt-6 p-6 rounded-lg shadow-md text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
-      <div className="flex items-center mb-4">
+    <div className="w-4/6 flex animate-fade-in flex-col bg-white max-w-7xl mx-auto mt-6 p-6 rounded-lg shadow-md text-black hover:shadow-xl hover:cursor-pointer transform transition-all duration-300">
+      <div className="flex justify-between items-center mb-4">
         <h2 className="text-xs font-bold text-gray-800 border-b-2 border-[#ffa500]">
           Inspections
         </h2>
+        <SortControls 
+          onSortChange={handleSortChange} 
+          currentSort={sortConfig} 
+        />
       </div>
 
-      {inspections && inspections.length > 0 ? (
+      {sortedInspections && sortedInspections.length > 0 ? (
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto bg-white text-xs">
             <thead className="bg-white text-black border-b-4 border-[#57c4ff5b]">
@@ -69,7 +122,8 @@ export default function ShipInspectionsTable({
               </tr>
             </thead>
             <tbody>
-              {inspections.map((inspection, index) => {
+              {/* Остальная часть таблицы без изменений */}
+              {sortedInspections.map((inspection, index) => {
                 const standardColor =
                   standardsColorMap[inspection.complianceStandards] ||
                   standardsColorMap["other"];
