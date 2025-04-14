@@ -10,7 +10,7 @@ interface SortingPanelProps {
 
 export default function SortingPanel({ sortBy, handleSort }: SortingPanelProps) {
   return (
-    <div className="flex items-center gap-3 ml-2">
+    <div className="flex items-center gap-3 ml-2 mr-2">
       <span className="text-gray-500 border-r border-[#57C4FF] pr-2 h-[1.2em] flex items-center">
         Sort by
       </span>

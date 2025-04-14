@@ -84,14 +84,6 @@ export function AddInspectionButton() {
   );
 }
 
-export function InspectionEnhancedButton({ inspectionId, children }: any) {
-  const router = useRouter();
-  function handleClick() {
-    router.push(`/inspections/${inspectionId}`);
-  }
-  return <button onClick={handleClick}>{children}</button>;
-}
-
 export function CertificationEnhancedButton({ inspectionId, children }: any) {
   const router = useRouter();
   function handleClick() {

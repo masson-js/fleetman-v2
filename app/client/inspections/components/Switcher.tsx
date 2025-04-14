@@ -17,9 +17,9 @@ export default function ClientViewSwitcher({
 
   return (
     <>
-      <div className="flex mt-2 flex-col gap-4 animate-fade-in ">
+      <div className="flex mt-2 flex-col animate-fade-in ">
         {/* View Switcher */}
-        <div className="flex gap-2 p-2 bg-white shadow-lg">
+        <div className="flex bg-white shadow-lg mb-2 p-2 rounded-lg">
           <button
             className={`px-3 text-xs ${
               activeView === "ships"

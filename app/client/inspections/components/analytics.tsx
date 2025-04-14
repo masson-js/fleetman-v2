@@ -1,8 +1,6 @@
 "use client";
 
 import { Inspection } from "@/types";
-import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import InspectionTypesChart from "./_analytics/InspectionTypesChart";
 import TopStandardsChart from "./_analytics/TopStandardsChart";
 import MonthlyStatsChart from "./_analytics/MonthlyStatsChart";

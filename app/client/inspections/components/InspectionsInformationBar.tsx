@@ -70,8 +70,8 @@ export default function InformationBar({
   };
 
   return (
-    <div className="flex flex-row justify-start flex-wrap mt-20 bg-white rounded-tl-lg rounded-tr-lg rounded-bl-none rounded-br-none shadow-lg ">
-      <div className="flex flex-col justify-center p-2 w-auto h-auto bg-gradient-to-b from-[#57C4FF] to-[#57C4FF] rounded-tl-lg rounded-tr-none rounded-bl-none rounded-br-none ">
+    <div className="flex flex-row justify-start flex-wrap mt-20 bg-white rounded-lg shadow-lg ">
+      <div className="flex flex-col justify-center p-2 w-auto h-auto bg-gradient-to-b from-[#57C4FF] to-[#57C4FF] rounded-tl-lg rounded-tr-none rounded-bl-lg rounded-br-none ">
         <div className="flex flex-wrap gap-2 justify-center w-auto">
           <h2 className="text-sm font-extralight text-white">
             Total Inspections

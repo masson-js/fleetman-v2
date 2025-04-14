@@ -2,17 +2,11 @@
 import React from "react";
 import Link from "next/link";
 import standartsColors from "@/public/lists/standartsColors.json";
-import { Ship, Inspection } from "@/types";
+import { Inspection } from "@/types";
+import { PreparedShip } from "./useTilesShipsLogic";
 
 interface ShipCardProps {
-  ship: Ship & {
-    inspections: Inspection[];
-    lastInspection: Inspection | null;
-    failedInspections: number;
-    requiresWorkInspections: number;
-    passedInspections: number;
-    hasNoInspections: boolean;
-  };
+  ship: PreparedShip;
 }
 
 export default function ShipCard({ ship }: ShipCardProps) {
@@ -57,7 +51,7 @@ export default function ShipCard({ ship }: ShipCardProps) {
   );
 }
 
-function ShipInfo({ ship }: { ship: ShipCardProps["ship"] }) {
+function ShipInfo({ ship }: { ship: PreparedShip }) {
   return (
     <div className="space-y-1">
       <h3 className="text-lg font-bold inline-block border-b-2 border-[#57C4FF]">
@@ -78,7 +72,7 @@ function ShipInfo({ ship }: { ship: ShipCardProps["ship"] }) {
   );
 }
 
-function ShipStatistics({ ship }: { ship: ShipCardProps["ship"] }) {
+function ShipStatistics({ ship }: { ship: PreparedShip }) {
   // Group inspections by verification status
   const inspectionsByStatus = ship.inspections.reduce((acc, insp) => {
     acc[insp.verificationStatus] = (acc[insp.verificationStatus] || 0) + 1;

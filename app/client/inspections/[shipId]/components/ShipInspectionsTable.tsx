@@ -38,7 +38,7 @@ const standardsColorMap: Record<string, string> = {
   other: "#1E90FF",
 };
 
-export default function ShipInspections({
+export default function ShipInspectionsTable({
   inspections,
 }: ShipInspectionsProps) {
   const router = useRouter();

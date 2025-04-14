@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import Header from "@/app/components/Header";
 import ShipCrew from "../components/ShipCrew";
 import ShipRoutes from "../components/ShipRoutes";
-import ShipInspections from "../components/ShipInspections";
+import ShipInspections from "../components/Shipinspections";
 import ShipCertifications from "../components/ShipCertifications";
 import ShipFuelRecords from "../components/ShipFuelRecords";
 import ShipLogbooks from "../components/ShipLogbooks";

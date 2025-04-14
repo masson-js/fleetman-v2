@@ -159,53 +159,109 @@ export const getInspectionsByShipId = async (shipId: string) => {
   }
 };
 
+
+/////
+
+
 export const getInspectionById = async (inspectionId: string) => {
   const session = await getSession();
-  const prisma = new PrismaClient();
-  const userSesId = session?.userId;
+  const userId = session?.userId;
 
-  if (!userSesId) {
+  if (!userId) {
     throw new Error("User not authenticated");
   }
 
+  const prisma = new PrismaClient();
+
   try {
-    const user = await prisma.user.findUnique({
-      where: { userId: userSesId },
-      include: { ships: true },
-    });
-
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    // Проверяем доступ к судну, связанного с инспекцией
+    // Получаем только инспекцию
     const inspection = await prisma.inspection.findUnique({
-      where: {
-        id: inspectionId,
-      },
-      include: {
-        ship: true, // Информация о судне, которое связано с инспекцией
-      },
+      where: { id: inspectionId },
     });
 
     if (!inspection) {
       throw new Error("Inspection not found");
     }
 
-    // Проверяем, имеет ли пользователь доступ к этому судну
-    const userShipIds = user.ships.map((ship) => ship.id);
-    if (!userShipIds.includes(inspection.shipId)) {
-      throw new Error("User does not have access to this ship");
+    // Проверяем, принадлежит ли судно этому пользователю
+    if (inspection.shipId && !userHasAccessToShip(userId, inspection.shipId)) {
+      throw new Error("Access denied to this ship");
     }
 
     return inspection;
   } catch (error) {
     console.error("Error fetching inspection:", error);
-    throw new Error("Error fetching inspection");
+    throw new Error("Failed to fetch inspection");
   } finally {
     await prisma.$disconnect();
   }
 };
+
+// Функция для проверки доступа пользователя к судну
+const userHasAccessToShip = async (userId: string, shipId: string) => {
+  const prisma = new PrismaClient();
+
+  try {
+    const ship = await prisma.ship.findUnique({
+      where: { id: shipId },
+    });
+
+    return ship?.userId === userId;
+  } catch (error) {
+    console.error("Error checking access to ship:", error);
+    return false;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+// export const getInspectionById = async (inspectionId: string) => {
+//   const session = await getSession();
+//   const prisma = new PrismaClient();
+//   const userSesId = session?.userId;
+
+//   if (!userSesId) {
+//     throw new Error("User not authenticated");
+//   }
+
+//   try {
+//     const user = await prisma.user.findUnique({
+//       where: { userId: userSesId },
+//       include: { ships: true },
+//     });
+
+//     if (!user) {
+//       throw new Error("User not found");
+//     }
+
+//     // Проверяем доступ к судну, связанного с инспекцией
+//     const inspection = await prisma.inspection.findUnique({
+//       where: {
+//         id: inspectionId,
+//       },
+//       include: {
+//         ship: true, // Информация о судне, которое связано с инспекцией
+//       },
+//     });
+
+//     if (!inspection) {
+//       throw new Error("Inspection not found");
+//     }
+
+    // Проверяем, имеет ли пользователь доступ к этому судну
+//     const userShipIds = user.ships.map((ship) => ship.id);
+//     if (!userShipIds.includes(inspection.shipId)) {
+//       throw new Error("User does not have access to this ship");
+//     }
+
+//     return inspection;
+//   } catch (error) {
+//     console.error("Error fetching inspection:", error);
+//     throw new Error("Error fetching inspection");
+//   } finally {
+//     await prisma.$disconnect();
+//   }
+// };
 
 export const deleteInspection = async (inspectionId: string) => {
   const prisma = new PrismaClient();

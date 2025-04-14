@@ -4,7 +4,7 @@ import { Leaf } from "lucide-react";
 import { deleteShip } from "@/actions/ship";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+
 
 interface ShipProps {
   ship: {
@@ -35,7 +35,7 @@ interface ShipProps {
 
 type ShipStatus = "in port" | "on the way" | "waiting" | "fix" | "other";
 
-export default function ShipDetailsTop({ ship }: ShipProps) {
+export default function ShipBarDetailed({ ship }: ShipProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
@@ -84,7 +84,7 @@ export default function ShipDetailsTop({ ship }: ShipProps) {
   return (
     <div className="flex flex-col animate-fade-in bg-blue-50 w-4/6 mx-auto">
       {/* Ship Title Section */}
-      <div className="flex mt-24 p-4  bg-white text-black text-xs rounded-t-lg ">
+      <div className="flex mt-24 p-4  bg-white text-black text-xs rounded-t-lg shadow-lg ">
         <div className="flex flex-col md:flex-row items-center gap-4 w-full">
           <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-white shadow-lg">
             <img
@@ -165,99 +165,12 @@ export default function ShipDetailsTop({ ship }: ShipProps) {
             <div className="grid grid-cols-2 gap-y-2">
               <span className="flex flex-row  gap-1 text-xs text-gray-500">
                 <Leaf size={14} className="text-green-500" />
-                ECO Standard:
+                <span className="text-green-500">ECO Standard:</span>
               </span>
-              <span className="text-xs font-medium">{ship.ecoStandard}</span>
-            </div>
-            <div className="flex flex-row flex-wrap gap-2 justify-end m-2 p-2 text-xs text-white">
-              <button className=" rounded-lg w-16 h-auto p-2 bg-[#ffa500] hover:bg-[rgb(255,123,0)]">
-                edit
-              </button>
-              <button
-                onClick={handleDelete}
-                disabled={isDeleting}
-                className="rounded-lg w-16 h-auto p-2 bg-[#e81416] hover:bg-[#a22628] disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isDeleting ? "Deleting..." : "Delete"}
-              </button>
+              <span className="text-xs font-medium ">{ship.ecoStandard}</span>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Bottom panel */}
-
-      <div className="flex justify-between shadow-sm flex-wrap  bg-white text-black rounded-b-lg text-xs px-2">
-        <Link href="" className="flex flex-col justify-start p-2 w-auto h-auto">
-          <div className="flex items-center gap-2">
-            <h2 className=" text-center border-b-2 w-24 border-[#e81416] transition-all duration-200 ease-in-out  hover:border-[#ffb2b4] ">
-              Fixtures
-            </h2>
-          </div>
-          <span className=" text-center">
-            {ship.fixtures.length}
-          </span>
-        </Link>
-        <Link href="" className="flex flex-col justify-start p-2 w-auto h-auto">
-          <div className="flex items-center gap-2">
-            <h2 className="font-light text-center  border-b-2 w-24 border-[#ffa500] transition-all duration-200 ease-in-out  hover:border-[#ffdfa4]">
-              Inspections
-            </h2>
-          </div>
-          <span className="font-thin text-center">
-            {ship.inspections.length}
-          </span>
-        </Link>
-        <Link href="" className="flex flex-col justify-start p-2 w-auto h-auto">
-          <div className="flex items-center gap-2">
-            <h2 className="font-light text-center text-xs border-b-2 w-24 border-[#79c314] transition-all duration-200 ease-in-out  hover:border-[#d8ffa2] ">
-              Certificates
-            </h2>
-          </div>
-          <span className="text-xs font-thin text-center">
-            {ship.certifications.length}
-          </span>
-        </Link>
-        <Link href="" className="flex flex-col justify-start p-2 w-auto h-auto">
-          <div className="flex items-center gap-2">
-            <h2 className="font-light text-center text-xs border-b-2 w-24 border-[#4b369d] transition-all duration-200 ease-in-out  hover:border-[#ac9bf1]">
-              Fuel Rec
-            </h2>
-          </div>
-          <span className="text-xs font-thin text-center">
-            {ship.fuelRecords.length}
-          </span>
-        </Link>
-        <Link href="" className="flex flex-col justify-start p-2 w-auto h-auto">
-          <div className="flex items-center gap-2">
-            <h2 className="font-light text-center text-xs border-b-2 w-24 border-[#4400ff] transition-all duration-200 ease-in-out  hover:border-[#ac91f8]">
-              Routes
-            </h2>
-          </div>
-          <span className="text-xs font-thin text-center">
-            {ship.routes.length}
-          </span>
-        </Link>
-        <Link href="" className="flex flex-col justify-start p-2 w-auto h-auto">
-          <div className="flex items-center gap-2">
-            <h2 className="font-light text-center text-xs border-b-2 w-24 border-[#70369d] transition-all duration-200 ease-in-out  hover:border-[#cf91ff]">
-              Crew
-            </h2>
-          </div>
-          <span className="text-xs font-thin text-center">
-            {ship.crew.length}
-          </span>
-        </Link>
-        <Link href="" className="flex flex-col justify-start p-2 w-auto h-auto">
-          <div className="flex items-center gap-2">
-            <h2 className="font-light text-center text-xs border-b-2 w-24 border-[#2a0e0e] transition-all duration-200 ease-in-out  hover:border-[#a39999]">
-              Logbooks
-            </h2>
-          </div>
-          <span className="text-xs font-thin text-center">
-            {ship.logbooks.length}
-          </span>
-        </Link>
       </div>
     </div>
   );

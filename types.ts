@@ -95,12 +95,15 @@ export interface Certification {
 /**
  * Inspection model types
  */
+export type InspectionType = 'regular' | 'unscheduled' | 'follow-up';
+export type VerificationStatus = 'passed' | 'pending' | 'failed';
+
 export interface Inspection {
   id: string;
   shipId: string;
   inspectionDate: Date;
   inspectorName: string;
-  inspectionType: string;
+  inspectionType: InspectionType;
   results: string;
   recommendations: string | null;
   nextInspectionDate: Date | null;
@@ -108,10 +111,10 @@ export interface Inspection {
   complianceStandards: string;
   deficienciesFound: string | null;
   correctiveActions: string | null;
-  verificationStatus: string;
+  verificationStatus: VerificationStatus;
   duration: number | null;
   isEUCompliance: boolean;
-  ship: Partial<Ship>;
+  ship?: Partial<Ship>;
 }
 
 /**
